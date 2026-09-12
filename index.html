@@ -96,7 +96,7 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
   <div class="hero-brand">COLLECTOR'S LITTLE HELPER™</div>
   <h1>A free coin catalogue starter kit<br>for <em>every</em> collector</h1>
   <div class="hero-sub">Spreadsheet template · AI-assisted entry form · Quick start guide · Glossary &amp; trusted sources</div>
-  <div class="hero-version">Version 1.0 — September 2026 &nbsp;·&nbsp; Free for personal, non-commercial use</div>
+  <div class="hero-version">Version 1.1 — September 2026 &nbsp;·&nbsp; Free for personal, non-commercial use</div>
   <a href="CLH_Catalogue.xlsx" class="btn-download" download>⬇ Download the Catalogue (Excel)</a>
   <a href="CLH_Entry_Form.html" class="btn-secondary" target="_blank">Open the Entry Form</a>
   <a href="CLH_QuickStart_Guide.html" class="btn-secondary" target="_blank">Open the Quick Start Guide</a>
@@ -171,7 +171,21 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
     </thead>
     <tbody>
       <tr>
-        <td><strong>1.0</strong> <span class="version-badge">CURRENT</span></td>
+        <td><strong>1.1</strong> <span class="version-badge">CURRENT</span></td>
+        <td>Sep 2026</td>
+        <td>
+          <strong>Field alignment with SKC App schema.</strong> Grade field (was "Finish") expanded to full 18-value trade grading ladder. Metal, Treatment, and Packaging dropdowns rebuilt to match app exactly. Treatment is now multi-select. Grade/Condition separate field removed (merged into Grade).<br><br>
+          <strong>⚠ Upgrading from v1.0?</strong> Three quick find-and-replace fixes in your Holdings tab:
+          <ol style="margin:8px 0 0 16px;font-size:12px;line-height:1.8">
+            <li><strong>Grade column:</strong> "BU" → "FDC/BU" &nbsp;·&nbsp; "Circulating" → "Circulating (ungraded)"</li>
+            <li><strong>Metal column:</strong> "AlBr" → "Aluminium Bronze (AlBr)" &nbsp;·&nbsp; "AlBr / Cupro-nickel" → "Bi-metallic (AlBr / Cupro-nickel)" &nbsp;·&nbsp; "Silver" → "Silver (unspecified)" &nbsp;·&nbsp; "Silver (St.)" → "Silver (.925)" &nbsp;·&nbsp; "Other/Uncategorized" → "Other (see notes)"</li>
+            <li><strong>Packaging column:</strong> "Coin Roll" → "Tube/Roll" &nbsp;·&nbsp; "PNC/PMC-Std" → "PNC/PMC — Standard" &nbsp;·&nbsp; "Other Carded" → "Carded (Other)"</li>
+          </ol>
+          <span style="font-size:12px;color:var(--silver)">Your data rows, titles, counts and all other fields are unaffected. The form and guide HTML files are the only files that need replacing — your catalogue workbook data is safe.</span>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>1.0</strong></td>
         <td>Sep 2026</td>
         <td>Initial release. Three-file starter kit: protected Excel catalogue, AI-assisted entry form with accordion How to Use, comprehensive glossary including storage/grading terms and all common Australian mintmarks, 10 ranked research sources.</td>
       </tr>

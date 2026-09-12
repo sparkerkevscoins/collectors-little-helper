@@ -80,7 +80,7 @@ p{margin-bottom:12px;max-width:680px}
   <div class="cover-text">
     <div class="cover-brand">COLLECTOR'S LITTLE HELPER™</div>
     <div class="cover-title">Quick Start Guide<br><em>&amp; Field Reference</em></div>
-    <div class="cover-sub">Version 1.0 — September 2026 &nbsp;·&nbsp; For personal, non-commercial use</div>
+    <div class="cover-sub">Version 1.1 — September 2026 &nbsp;·&nbsp; For personal, non-commercial use</div>
     <div class="cover-contact">
       A <strong style="color:rgba(255,255,255,.8)">Sparker Kev's Coins</strong> initiative by Kevin Burdette<br>
       <a href="mailto:sparkerkevscoins@gmail.com">sparkerkevscoins@gmail.com</a>
@@ -148,7 +148,7 @@ p{margin-bottom:12px;max-width:680px}
       <div class="col-row"><span class="col-name">Title</span><span class="col-req">REQ</span><span class="col-desc">Follow the naming convention above</span></div>
       <div class="col-row"><span class="col-name">Denomination</span><span class="col-req">REQ</span><span class="col-desc">Numeric — 2 for $2, 0.5 for 50c</span></div>
       <div class="col-row"><span class="col-name">Metal</span><span class="col-req">REQ</span><span class="col-desc">AlBr, Cupro-nickel, Silver (.999)…</span></div>
-      <div class="col-row"><span class="col-name">Finish</span><span class="col-req">REQ</span><span class="col-desc">Circulating, UNC, Proof, BU</span></div>
+      <div class="col-row"><span class="col-name">Grade</span><span class="col-req">REQ</span><span class="col-desc">Proof, Specimen, FDC/BU, Gem UNC, Choice UNC, UNC, aUNC, EF/XF, VF, F, VG, G, Circulating (ungraded)</span></div>
       <div class="col-row"><span class="col-name">Status</span><span class="col-req">REQ</span><span class="col-desc">Owned, Wanted, Ordered…</span></div>
       <div class="col-row"><span class="col-name">Qty</span><span class="col-req">REQ</span><span class="col-desc">How many you hold (default 1)</span></div>
     </div>
@@ -185,6 +185,7 @@ p{margin-bottom:12px;max-width:680px}
     <li>eBay "sold" listings (not asking prices) are the most reliable source for current market values — ask the AI to find recent sold comparables</li>
     <li>Save your workbook after every session: Ctrl+S (Windows) or Cmd+S (Mac). Back it up to Google Drive or similar</li>
     <li>Don't clean your coins — cleaning destroys numismatic value permanently</li>
+    <li><strong>Watch out for coin roll scams</strong> — a known fraud where a valuable coin sits on top of a roll of worthless ones. You must destroy the roll to check. Buy coin rolls only from the RAM or a trusted dealer.</li>
   </ul>
 </div>
 
@@ -212,8 +213,8 @@ p{margin-bottom:12px;max-width:680px}
   </style>
 
   <div class="qt-grid">
-    <div class="qt-row"><div class="qt-term">Proof</div><div class="qt-def">Highest manufacturing standard — mirror fields, frosted design. A process, not a grade.</div></div>
-    <div class="qt-row"><div class="qt-term">Uncirculated</div><div class="qt-def">Higher than circulating quality but below Proof. Never spent. Always write in full — never UNC.</div></div>
+    <div class="qt-row"><div class="qt-term">Proof</div><div class="qt-def">Highest manufacturing standard — mirror fields, frosted design. Appears at the top of the Grade dropdown, which combines finish and condition in one field.</div></div>
+    <div class="qt-row"><div class="qt-term">Grade / UNC</div><div class="qt-def">The Grade field covers both finish and condition: Proof → FDC/BU → Gem UNC → Choice UNC → UNC → aUNC → EF → VF → F → VG → G → Circulating. Always write "Uncirculated" in full in titles.</div></div>
     <div class="qt-row"><div class="qt-term">Circulating</div><div class="qt-def">Made for everyday use as currency.</div></div>
     <div class="qt-row"><div class="qt-term">Mintage</div><div class="qt-def">Total coins struck. Lower = rarer = usually more valuable.</div></div>
     <div class="qt-row"><div class="qt-term">NIFC / NCLT</div><div class="qt-def">Not Intended For Circulation / Non-Circulating Legal Tender — legal currency made only for collectors. Both terms mean the same thing.</div></div>
@@ -233,6 +234,12 @@ p{margin-bottom:12px;max-width:680px}
     <div class="qt-row"><div class="qt-term">Privy mark</div><div class="qt-def">Small additional mark denoting a special or limited edition release.</div></div>
   </div>
 
+  <div style="background:var(--gold-lt);border:1px solid var(--rule);padding:12px 14px;border-radius:3px;margin-bottom:16px;font-size:12.5px;color:var(--mid);line-height:1.6">
+    <strong style="color:var(--navy)">Every coin has three layers of value:</strong>
+    <strong>Face value</strong> (what it says on the coin) ·
+    <strong>Ingredient value</strong> (the metal content — a pre-1966 Australian 50c contains silver worth more than 50c at today's prices) ·
+    <strong>Numismatic / market value</strong> (what a collector will actually pay, driven by rarity and demand).
+  </div>
   <h3 style="font-size:15px;color:var(--navy);margin-bottom:12px;font-weight:bold">Trusted research sources — ranked by reliability</h3>
   <div>
     <div class="source-mini"><span class="source-mini-rank">1</span><div class="source-mini-body"><strong>Official mints first:</strong> <a href="https://www.ramint.gov.au" target="_blank" rel="noopener">ramint.gov.au</a>, <a href="https://www.perthmint.com" target="_blank" rel="noopener">perthmint.com</a>, <a href="https://www.royalmint.com" target="_blank" rel="noopener">royalmint.com</a> — definitive mintage data and product descriptions.</div></div>
@@ -240,7 +247,7 @@ p{margin-bottom:12px;max-width:680px}
     <div class="source-mini"><span class="source-mini-rank">3</span><div class="source-mini-body"><strong>Real-world market values:</strong> <a href="https://www.ebay.com.au" target="_blank" rel="noopener">ebay.com.au</a> <em>Sold listings only</em> (filter — asking prices are unreliable), <a href="https://www.coinarchives.com" target="_blank" rel="noopener">coinarchives.com</a> for auction hammer prices.</div></div>
     <div class="source-mini"><span class="source-mini-rank">4</span><div class="source-mini-body"><strong>Specialist dealers (asking prices — use as a guide only):</strong> <a href="https://www.sterlingandcurrency.com.au" target="_blank" rel="noopener">sterlingandcurrency.com.au</a>, <a href="https://www.ensleighcoins.com.au" target="_blank" rel="noopener">ensleighcoins.com.au</a>, <a href="https://www.mycollectables.com.au" target="_blank" rel="noopener">mycollectables.com.au</a></div></div>
   </div>
-  <p style="font-size:12px;color:var(--silver);margin-top:12px">Full glossary and detailed source notes are in the <strong>Glossary &amp; Resources</strong> tab of CLH_Entry_Form.html.</p>
+  <p style="font-size:12px;color:var(--silver);margin-top:12px">Full glossary and detailed source notes are in the <strong>Glossary &amp; Resources</strong> tab of CLH_Entry_Form.html. Also worth bookmarking: <a href="https://www.australiacoins.org" target="_blank" rel="noopener" style="color:var(--navy);border-bottom:1px solid var(--gold);text-decoration:none">australiacoins.org</a> — beginner-friendly guide to identifying and valuing Australian coins.</p>
 </div>
 
 <div class="section">
@@ -266,13 +273,13 @@ p{margin-bottom:12px;max-width:680px}
 <div style="background:#f0f2f5;border-top:1px solid var(--rule);
   padding:10px 24px;font-family:system-ui,sans-serif;font-size:11px;
   color:var(--silver);text-align:center">
-  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.0</strong>
+  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.1</strong>
   &nbsp;·&nbsp; September 2026
   &nbsp;·&nbsp; <a href="CLH_Landing_Page.html" style="color:var(--gold);text-decoration:none">
   Check for updates</a>
 </div>
 <div class="copyright">
-  <strong>Collector's Little Helper™ &nbsp;·&nbsp; Version 1.0 &nbsp;·&nbsp; September 2026</strong><br>
+  <strong>Collector's Little Helper™ &nbsp;·&nbsp; Version 1.1 &nbsp;·&nbsp; September 2026</strong><br>
   © 2026 Kevin Burdette (Sparker Kev's Coins) &nbsp;·&nbsp;
   <a href="mailto:sparkerkevscoins@gmail.com">sparkerkevscoins@gmail.com</a> &nbsp;·&nbsp; +61 (0)438 820 469<br>
   Collector's Little Helper™ is a trademark of Kevin Burdette (Sparker Kev's Coins).<br>
