@@ -250,10 +250,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
     </div>
   </div>
 
-  <div class="actions">
-    <button class="btn btn-primary" onclick="generateNewEntry()">Generate Entry</button>
-    <button class="btn btn-secondary" onclick="clearNew()">Clear Form</button>
+  <!-- Batch entries container -->
+  <div id="batch-entries-container"></div>
+
+  <div class="actions" style="margin-top:16px">
+    <button class="btn btn-primary" onclick="generateAllEntries()">Generate Entry</button>
+    <button class="btn btn-secondary" onclick="addAnotherCoin()">+ Add Another Coin</button>
+    <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
   </div>
+
   <div id="new-output" style="display:none;margin-top:20px">
     <div class="output-box" id="new-output-text"></div>
     <p class="copy-notice">Copy the text above and paste it to your AI assistant with the prompt shown in the "How to Use" tab.</p>
@@ -367,6 +372,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         </div>
         <div class="acc-body">
           <p>Click the <strong>New Entry</strong> tab above. Fill in the gold-highlighted fields — those are the essential ones. Add as much extra detail as you know, but don't worry if you can't fill everything in; the AI will help with the gaps.</p>
+          <p style="margin-top:10px;font-size:13px;color:var(--mid)"><strong>Adding several coins in one session?</strong> Click <strong>+ Add Another Coin</strong> after filling in the first entry. A new collapsible panel appears for each additional coin — fill them all in, then click <strong>Generate Entry</strong> to produce a numbered batch output covering every coin at once. One paste to the AI, one response, one paste into your spreadsheet.</p>
           <div class="acc-tip" style="margin-top:10px"><strong>Tip:</strong> Even a rough description is enough to get started. You can always update entries later as you learn more about a coin.</div>
           <div class="acc-tip" style="margin-top:8px"><strong>⚠ Never clean your coins</strong> — even a gentle clean can scratch the surface and destroy numismatic value permanently. Store coins in capsules or 2×2 holders without cleaning them.</div>
           <div class="acc-tip" style="margin-top:8px"><strong>⚠ Watch out for coin roll scams</strong> — some sellers place a valuable coin on top of a roll of worthless ones. You have to destroy the roll to check the contents. Buy coin rolls only from the RAM or a well-known dealer.</div>
@@ -384,7 +390,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Scroll to the bottom of the New Entry form and click <strong>Generate Entry</strong>. A structured summary of your coin appears in a dark box. Click <strong>Copy to Clipboard</strong> — it's now ready to paste to your AI assistant.</p>
+          <p>Scroll to the bottom of the New Entry form and click <strong>Generate Entry</strong>. A structured summary appears in a dark box — if you added multiple coins using <strong>+ Add Another Coin</strong>, all entries appear together as a numbered batch. Click <strong>Copy to Clipboard</strong> — the whole batch is now ready to paste to your AI assistant in one go.</p>
         </div>
       </div>
 
@@ -409,7 +415,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
             [paste your copied form output here]
           </div>
           <p style="margin-top:8px;font-size:12px;color:var(--silver)">Review the AI's plain-English summary — it will flag anything uncertain. You are always the final authority on your own collection.</p>
-          <div class="acc-tip"><strong>Adding multiple coins at once?</strong> Ask the AI to complete several entries in one conversation — it will return multiple tab-separated rows, one per coin. You can paste all of them into the spreadsheet at once.</div>
+          <div class="acc-tip"><strong>Adding multiple coins at once?</strong> Use the <strong>+ Add Another Coin</strong> button in the New Entry tab to fill in several coins before generating. The output will be a numbered batch — paste it all to the AI at once and it returns multiple tab-separated rows, one per coin, ready to paste straight into your Holdings tab.</div>
         </div>
       </div>
 
@@ -810,21 +816,56 @@ function switchTab(name) {
 function val(id) { return (document.getElementById(id)?.value||'').trim(); }
 
 // ── New entry ─────────────────────────────────────────────────────────────────
-function generateNewEntry() {
-  const collName = localStorage.getItem('clh_collection_name') || 'My Coin Collection';
-  const lines = [`NEW HOLDINGS BATCH — 1 entry`, `Collection: ${collName}`, `--- ENTRY 1 of 1 ---`];
-  const fields = [
-    ['Item Type', val('n-type')], ['Country', val('n-country')], ['Year', val('n-year')],
-    ['Denomination', val('n-denom')], ['Coin Title', val('n-title')], ['Series/Theme', val('n-series')],
-    ['Metal/Composition', val('n-metal')], ['Grade', val('n-finish')],
-    ['Treatment Type', (()=>{const s=document.getElementById('n-treatment');const vals=Array.from(s.selectedOptions).map(o=>o.value).filter(v=>v&&v!=='None');return vals.length?vals.join(' + '):'None';})()], ['Packaging/Format', val('n-pkg')],
-    ['Finish Confidence', val('n-conf')], ['Status', val('n-status')], ['Qty', val('n-qty')],
-    ['Acquisition Date', val('n-acqdate')], ['Acquisition Source', val('n-acqsrc')],
-    ['Acquisition Price', val('n-acqprice')], ['Current Estimated Value', val('n-estval')],
-    ['Mintage', val('n-mintage')], ['CoA Number', val('n-coa')], ['Storage Location', val('n-storage')], ['From Year Proof Set?', val('n-fps')],
-    ['NIFC Release?', val('n-nifc')], ['Notes', val('n-notes')],
+// ── Batch entry management ────────────────────────────────────────────────────
+function val(id) { return (document.getElementById(id)?.value||'').trim(); }
+
+function getEntryFields(prefix) {
+  const s = document.getElementById(prefix+'treatment');
+  const treatments = s ? Array.from(s.selectedOptions).map(o=>o.value)
+    .filter(v=>v&&v!=='None').join(' + ')||'None' : 'None';
+  return [
+    ['Item Type',         val(prefix+'type')],
+    ['Country',           val(prefix+'country')],
+    ['Year',              val(prefix+'year')],
+    ['Denomination',      val(prefix+'denom')],
+    ['Coin Title',        val(prefix+'title')],
+    ['Series/Theme',      val(prefix+'series')],
+    ['Metal/Composition', val(prefix+'metal')],
+    ['Grade',             val(prefix+'finish')],
+    ['Treatment Type',    treatments],
+    ['Packaging/Format',  val(prefix+'pkg')],
+    ['Grade Confidence',  val(prefix+'conf')],
+    ['Status',            val(prefix+'status')],
+    ['Qty',               val(prefix+'qty')],
+    ['Acquisition Date',  val(prefix+'acqdate')],
+    ['Acquisition Source',val(prefix+'acqsrc')],
+    ['Acquisition Price', val(prefix+'acqprice')],
+    ['Current Estimated Value', val(prefix+'estval')],
+    ['Mintage',           val(prefix+'mintage')],
+    ['CoA Number',        val(prefix+'coa')],
+    ['Storage Location',  val(prefix+'storage')],
+    ['From Year Proof Set?', val(prefix+'fps')],
+    ['NIFC Release?',     val(prefix+'nifc')],
+    ['Notes',             val(prefix+'notes')],
   ];
-  fields.forEach(([label, value]) => { if (value) lines.push(`  ${label}: ${value}`); });
+}
+
+function generateAllEntries() {
+  const collName = localStorage.getItem('clh_collection_name') || 'My Coin Collection';
+  const batchCount = document.querySelectorAll('.batch-entry').length;
+  const total = 1 + batchCount;
+  const lines = [`NEW HOLDINGS BATCH — ${total} ${total===1?'entry':'entries'}`,
+                 `Collection: ${collName}`];
+  lines.push(`--- ENTRY 1 of ${total} ---`);
+  getEntryFields('n-').forEach(([label, value]) => {
+    if (value) lines.push(`  ${label}: ${value}`);
+  });
+  for (let i = 0; i < batchCount; i++) {
+    lines.push(`--- ENTRY ${i+2} of ${total} ---`);
+    getEntryFields(`b${i}-`).forEach(([label, value]) => {
+      if (value) lines.push(`  ${label}: ${value}`);
+    });
+  }
   lines.push('--- END OF BATCH ---');
   document.getElementById('new-output-text').textContent = lines.join('\n');
   const out = document.getElementById('new-output');
@@ -832,26 +873,138 @@ function generateNewEntry() {
   out.scrollIntoView({behavior:'smooth'});
 }
 
-// ── Update ────────────────────────────────────────────────────────────────────
-function generateUpdate() {
-  const collName = localStorage.getItem('clh_collection_name') || 'My Coin Collection';
-  const lines = [`UPDATE HOLDINGS — 1 entry`, `Collection: ${collName}`, `--- UPDATE 1 of 1 ---`];
-  const fields = [
-    ['Item ID', val('u-id')], ['Title (reference)', val('u-title-ref')],
-    ['Coin Title', val('u-title')], ['Status', val('u-status')], ['Qty', val('u-qty')],
-    ['Mintage', val('u-mintage')], ['CoA Number', val('u-coa')],
-    ['Acquisition Date', val('u-acqdate')], ['Acquisition Source', val('u-acqsrc')],
-    ['Acquisition Price', val('u-acqprice')], ['Current Estimated Value', val('u-estval')],
-    ['Storage Location', val('u-storage')], ['Order / Shipping Notes', val('u-ordernotes')],
-    ['Notes (append)', val('u-notes')],
-  ];
-  fields.forEach(([label, value]) => { if (value) lines.push(`  ${label}: ${value}`); });
-  lines.push('--- END OF UPDATES ---');
-  document.getElementById('update-output-text').textContent = lines.join('\n');
-  const out = document.getElementById('update-output');
-  out.style.display = 'block';
-  out.scrollIntoView({behavior:'smooth'});
+function generateNewEntry() { generateAllEntries(); }
+
+function addAnotherCoin() {
+  const container = document.getElementById('batch-entries-container');
+  const idx = container.querySelectorAll('.batch-entry').length;
+  const entryNum = idx + 2;
+  const p = `b${idx}-`;
+  const div = document.createElement('div');
+  div.className = 'batch-entry';
+  div.id = `batch-entry-${idx}`;
+  div.innerHTML = `
+    <div class="batch-entry-head" onclick="toggleBatchEntry(${idx})">
+      <h4>Coin ${entryNum}</h4>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="batch-counter">ENTRY ${entryNum}</span>
+        <button class="btn btn-danger" style="padding:4px 10px;font-size:11px"
+          onclick="removeBatchEntry(event,${idx})">✕ Remove</button>
+      </div>
+    </div>
+    <div class="batch-entry-body" id="batch-body-${idx}">
+      <div class="field-grid three" style="margin-top:8px">
+        <div class="field required"><label>Item Type <span class="req">*</span></label>
+          <select id="${p}type"><option value="">Select...</option>
+            <option>Coin</option><option>Set</option><option>PNC</option>
+            <option>PMC</option><option>Banknote</option><option>Error Coin</option><option>Other</option>
+          </select></div>
+        <div class="field required"><label>Country <span class="req">*</span></label>
+          <select id="${p}country"><option value="">Select...</option>
+            <option>Australia</option><option>United Kingdom</option><option>Canada</option>
+            <option>New Zealand</option><option>United States</option><option>Guernsey</option>
+            <option>Solomon Islands</option><option>Kiribati</option><option>Niue</option><option>Other</option>
+          </select></div>
+        <div class="field required"><label>Year <span class="req">*</span></label>
+          <input type="number" id="${p}year" placeholder="2024" min="1900" max="2100"></div>
+      </div>
+      <div class="field-grid full" style="margin-top:8px">
+        <div class="field required"><label>Coin Title <span class="req">*</span></label>
+          <input type="text" id="${p}title" placeholder="2024 Australia $2 ..."></div>
+      </div>
+      <div class="field-grid three" style="margin-top:8px">
+        <div class="field"><label>Series / Theme</label><input type="text" id="${p}series"></div>
+        <div class="field required"><label>Denomination <span class="req">*</span></label>
+          <input type="number" id="${p}denom" step="0.01"></div>
+        <div class="field required"><label>Status <span class="req">*</span></label>
+          <select id="${p}status"><option value="">Select...</option>
+            <option>Owned</option><option>Wanted</option><option>Ordered</option>
+            <option>Duplicate</option><option>Sold</option></select></div>
+      </div>
+      <div class="field-grid three" style="margin-top:8px">
+        <div class="field required"><label>Metal <span class="req">*</span></label>
+          <select id="${p}metal"><option value="">Select...</option>
+            <option>Aluminium Bronze (AlBr)</option><option>Bi-metallic (AlBr / Cupro-nickel)</option>
+            <option>Bronze</option><option>Cupro-nickel</option><option>Silver (unspecified)</option>
+            <option>Silver (.800)</option><option>Silver (.925)</option><option>Silver (.999)</option>
+            <option>Gold (.999)</option><option>Gold Plated</option><option>Other (see notes)</option>
+          </select></div>
+        <div class="field required"><label>Grade <span class="req">*</span></label>
+          <select id="${p}finish"><option value="">Select...</option>
+            <option>Proof</option><option>Specimen</option><option>FDC/BU</option>
+            <option>Gem UNC</option><option>Choice UNC</option><option>UNC</option>
+            <option>aUNC</option><option>gEF/gXF</option><option>EF/XF</option>
+            <option>aEF/aXF</option><option>gVF</option><option>VF</option>
+            <option>F</option><option>VG</option><option>G</option>
+            <option>Fr</option><option>P</option><option>Circulating (ungraded)</option>
+          </select></div>
+        <div class="field"><label>Treatment</label>
+          <select id="${p}treatment" multiple size="3">
+            <option value="">None</option><option>Coloured</option><option>Frosted</option>
+            <option>Gilded</option><option>Gold Plated</option><option>Antiqued</option>
+            <option>Domed</option><option>Ultra High Relief</option><option>Other</option>
+          </select></div>
+        <div class="field"><label>Packaging</label>
+          <select id="${p}pkg"><option value="">Select...</option>
+            <option>Loose/Raw</option><option>Official Mint Case/Box</option>
+            <option>Capsule/Blister</option><option>RAM Card</option><option>Downies Card</option>
+            <option>Carded (Other)</option><option>PNC/PMC — Standard</option>
+            <option>PNC/PMC — C5</option><option>PNC/PMC — DL</option><option>PNC/PMC — Other</option>
+            <option>Tube/Roll</option><option>2×2</option><option>N/A - Not Applicable</option>
+          </select></div>
+        <div class="field"><label>Grade Confidence</label>
+          <select id="${p}conf"><option>Confirmed</option><option>High</option>
+            <option>Medium</option><option>Low</option><option>TBC</option></select></div>
+        <div class="field required"><label>Qty <span class="req">*</span></label>
+          <input type="number" id="${p}qty" value="1" min="1"></div>
+      </div>
+      <div class="field-grid three" style="margin-top:8px">
+        <div class="field"><label>Mintage</label><input type="number" id="${p}mintage"></div>
+        <div class="field"><label>CoA Number</label><input type="text" id="${p}coa"></div>
+        <div class="field"><label>Acq. Date</label><input type="date" id="${p}acqdate"></div>
+        <div class="field"><label>Acq. Source</label><input type="text" id="${p}acqsrc"></div>
+        <div class="field"><label>Acq. Price</label><input type="number" id="${p}acqprice" step="0.01"></div>
+        <div class="field"><label>Est. Value</label><input type="number" id="${p}estval" step="0.01"></div>
+        <div class="field"><label>Storage Location</label><input type="text" id="${p}storage"></div>
+        <div class="field"><label>From Proof Set?</label>
+          <select id="${p}fps"><option>No</option><option>Yes</option></select></div>
+        <div class="field"><label>NIFC?</label>
+          <select id="${p}nifc"><option>No</option><option>Yes</option></select></div>
+      </div>
+      <div class="field-grid full" style="margin-top:8px">
+        <div class="field"><label>Notes</label>
+          <textarea id="${p}notes" style="min-height:50px"></textarea></div>
+      </div>
+    </div>`;
+  container.appendChild(div);
+  div.scrollIntoView({behavior:'smooth'});
 }
+
+function toggleBatchEntry(idx) {
+  const body = document.getElementById(`batch-body-${idx}`);
+  body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function removeBatchEntry(event, idx) {
+  event.stopPropagation();
+  document.getElementById(`batch-entry-${idx}`)?.remove();
+  document.querySelectorAll('.batch-entry').forEach((entry, i) => {
+    const h4 = entry.querySelector('h4');
+    const badge = entry.querySelector('.batch-counter');
+    if (h4) h4.textContent = `Coin ${i+2}`;
+    if (badge) badge.textContent = `ENTRY ${i+2}`;
+  });
+}
+
+function clearAll() {
+  ['n-type','n-country','n-year','n-title','n-series','n-denom','n-status','n-metal',
+   'n-finish','n-treatment','n-pkg','n-conf','n-qty','n-mintage','n-coa',
+   'n-fps','n-nifc','n-acqdate','n-acqsrc','n-acqprice','n-estval','n-storage','n-notes'
+  ].forEach(id => { const el=document.getElementById(id); if(el) el.value=id==='n-qty'?'1':''; });
+  document.getElementById('batch-entries-container').innerHTML = '';
+  document.getElementById('new-output').style.display = 'none';
+}
+function clearNew() { clearAll(); }
 
 function copyOutput(id) {
   navigator.clipboard.writeText(document.getElementById(id).textContent)
