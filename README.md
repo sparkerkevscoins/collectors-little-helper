@@ -1,8 +1,10 @@
 # Collector's Little Helper™
 
-> A free coin catalogue starter kit for personal collectors.
+> A coin catalogue starter kit for personal collectors. Personal, non-commercial use.
 
 **Describe a coin → paste to your AI assistant → get a completed spreadsheet row back in seconds.**
+
+Version 1.4 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
 
 ---
 
@@ -13,7 +15,9 @@
 | `CLH_Catalogue.xlsx` | Protected Excel workbook — your master database |
 | `CLH_Entry_Form.html` | AI-assisted entry form — open in any browser |
 | `CLH_QuickStart_Guide.html` | Printable quick start guide and field reference |
-| `CLH_Landing_Page.html` | Download page — host via GitHub Pages |
+| `CLH_Resources.html` | Curated guide to trusted dealers, communities, books and research sources, plus the kit author's own collecting story |
+
+`index.html` is the live download page (hosted via GitHub Pages) — it's the site itself, not a file you save alongside the others.
 
 ---
 
@@ -36,7 +40,9 @@ Open `CLH_QuickStart_Guide.html` first — it covers:
 - Field guide (required vs optional)
 - How the AI one-paste technique works
 - Glossary of numismatic terms (Proof, UNC, NIFC/NCLT, mintmarks, grading, storage formats and more)
-- 10 ranked research and valuation sources
+- A pre-purchase checklist for first-time buyers
+
+Then `CLH_Resources.html` for a curated guide to trusted dealers, communities, books, YouTube channels, shows and societies — plus the author's own collecting story.
 
 ---
 
