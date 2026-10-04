@@ -69,6 +69,11 @@ p{margin-bottom:12px;max-width:680px}
 .copyright a{color:var(--gold);text-decoration:none}
 
 @media(max-width:640px){.cover{padding:28px 20px;gap:20px}.section{padding:28px 20px}.file-grid{grid-template-columns:1fr}.col-grid{grid-template-columns:1fr}}
+.stuck-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.stuck-table th,.stuck-table td{border-bottom:1px solid #e6e0d0;padding:8px 10px;text-align:left;vertical-align:top;line-height:1.5}
+.stuck-table th{font-size:11px;letter-spacing:.5px;color:#7a8ba0;font-weight:700;text-transform:uppercase}
+.stuck-table td:first-child{font-weight:600;color:#1a2744;width:38%}
+.where{display:inline-block;font-size:11.5px;font-weight:700;color:#1a6b5c;background:#e8f3f0;border-radius:3px;padding:2px 8px;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -94,7 +99,7 @@ p{margin-bottom:12px;max-width:680px}
   <div class="section-eyebrow"><div class="section-label">OVERVIEW</div></div>
   <h2>A simple catalogue system for coin collectors</h2>
   <p>Collector's Little Helper™ gives you everything you need to build a proper digital record of your coin collection — one that works as a daily reference, an insurance record, and an inheritance document for your family.</p>
-  <p>The system has three files. You don't need to be a spreadsheet expert, and you don't need any special software beyond Microsoft Excel and a web browser.</p>
+  <p>The kit's main working files are below. You don't need to be a spreadsheet expert, and you don't need any special software beyond a spreadsheet app (Excel, Google Sheets or LibreOffice) and a web browser.</p>
   <div class="file-grid">
     <div class="file-card">
       <div class="file-name">CLH_Catalogue.xlsx</div>
@@ -104,7 +109,7 @@ p{margin-bottom:12px;max-width:680px}
     <div class="file-card gold-top">
       <div class="file-name">CLH_Entry_Form.html</div>
       <div class="file-type">Web page — open in any browser</div>
-      <div class="file-desc">Fill in the details of a coin, copy the output, and paste it to an AI assistant like Claude. The AI returns a properly formatted catalogue entry for you to add.</div>
+      <div class="file-desc">Describe a coin, ask any AI assistant to complete it, then use the Check &amp; Copy tab to get rows that paste cleanly into your catalogue.</div>
     </div>
     <div class="file-card teal-top">
       <div class="file-name">This document</div>
@@ -182,23 +187,34 @@ p{margin-bottom:12px;max-width:680px}
 </div>
 
 <div class="section">
-  <div class="section-eyebrow"><div class="step-num">3</div><div class="section-label">USING THE FORM WITH AN AI ASSISTANT</div></div>
-  <h2>Getting Claude (or another AI) to help you catalogue</h2>
-  <p>Open <strong>CLH_Entry_Form.html</strong> in any browser. The <strong>How to Use</strong> tab opens by default — read it first, then click across to <strong>New Entry</strong> when you're ready. Fill in the fields for your first coin, then click <strong>+ Add Another Coin</strong> to add more entries before generating — useful when cataloguing several coins in one sitting.</p>
-  <p>Click <strong>Generate Entry</strong> when you're done, then <strong>Copy to Clipboard</strong>. The copied text already includes the full instructions for the AI — paste it into a new chat with any AI assistant. The AI completes what it's confident about and returns one line per coin. Paste its whole reply into the form's <strong>Check &amp; Copy</strong> tab, click <strong>Check</strong>, then <strong>Copy rows for Holdings</strong>. One coin or ten — one paste fills all the rows.</p>
-  <div class="prompt-box">
-    <div class="prompt-label">HOW THE ONE-PASTE TECHNIQUE WORKS</div>
-    The AI returns one line per coin with fields separated by the | character, in the exact column order of the Holdings tab. Chat windows don't always copy cleanly, so the form's <strong>Check &amp; Copy</strong> tab rebuilds each line, checks every value against the catalogue's dropdown lists, and copies rows your spreadsheet can read. Then click column B (Item Type) of the first empty row in Holdings and press Ctrl+V (Windows) or Cmd+V (Mac). Values fill columns B to AC; the grey columns calculate themselves. Works in Microsoft Excel, Google Sheets and LibreOffice Calc.
-  </div>
+  <div class="section-eyebrow"><div class="step-num">3</div><div class="section-label">ADDING COINS — FIVE STEPS</div></div>
+  <h2>Five steps to add a coin</h2>
+  <p>These are the same five steps shown in the Entry Form's <strong>How to Use</strong> tab and the catalogue's <strong>START HERE</strong> tab. One coin or ten — the steps are the same.</p>
+    <div style="display:flex;gap:12px;align-items:flex-start;margin:14px 0">
+      <div class="step-num">1</div>
+      <div><strong style="color:var(--navy)">Describe your coin</strong><br><span class="where">Where: Entry Form → New Entry tab</span><br>Fill in what you know — the gold fields are the must-haves. Adding several coins? Click <b>+ Add Another Coin</b> for each one. Then click <b>Generate Entry</b> and <b>Copy to Clipboard</b>.<br><span style="font-size:12.5px;color:var(--silver)">Not sure of a field? Leave it blank — the AI can often identify a coin from its year, country, denomination and a short description.</span></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;margin:14px 0">
+      <div class="step-num">2</div>
+      <div><strong style="color:var(--navy)">Ask any AI assistant</strong><br><span class="where">Where: A new chat in Claude, ChatGPT, Gemini or Copilot</span><br>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one line per coin) and a short summary of what it filled in and what it left blank.<br><span style="font-size:12.5px;color:var(--silver)">Read the summary. The AI never adds estimated values, and anything it fills from its own knowledge is labelled <i>AI-filled (unverified)</i> in Notes. You are always the final authority on your own collection.</span></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;margin:14px 0">
+      <div class="step-num">3</div>
+      <div><strong style="color:var(--navy)">Check the reply</strong><br><span class="where">Where: Entry Form → Check &amp; Copy tab</span><br>Paste the AI's <b>whole</b> reply and click <b>Check</b>. Yellow cells were tidied automatically; red cells need you. Then click <b>Copy rows for Holdings</b>.<br><span style="font-size:12.5px;color:var(--silver)">Why this step? Chat windows don't always copy cleanly — some turn tabs into spaces or add formatting. The checker rebuilds each row exactly the way your spreadsheet expects, whichever AI you used.</span></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;margin:14px 0">
+      <div class="step-num">4</div>
+      <div><strong style="color:var(--navy)">Paste into your catalogue</strong><br><span class="where">Where: CLH_Catalogue.xlsx → Holdings tab</span><br>Click column <b>B</b> (Item Type) in the first empty row and paste (Ctrl+V on Windows, Cmd+V on Mac). The grey columns fill themselves.<br><span style="font-size:12.5px;color:var(--silver)">Works in Microsoft Excel, Google Sheets and LibreOffice Calc. Apple Numbers can paste, but doesn't keep the dropdowns or sheet protection.</span></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;margin:14px 0">
+      <div class="step-num">5</div>
+      <div><strong style="color:var(--navy)">Save and back up</strong><br><span class="where">Where: Your spreadsheet app</span><br>Save (Ctrl+S / Cmd+S) and keep a copy somewhere other than this computer.</div>
+    </div>
+
+  <h3 style="margin-top:22px;color:var(--navy);font-size:16px">Stuck?</h3>
+  <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the values ran together</td><td>Ask the AI: <i>“Please resend the rows inside a code block, with fields separated by the | character.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. A row with the wrong number of fields isn't copied: ask the AI to resend that row.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
   <ul class="tips">
-    <li>Keep the form open in one browser tab and your AI assistant in another — copy and paste between them</li>
-    <li>For inherited items with unknown details, the AI can often identify the coin from a description alone and fill in mintage, year, and metal</li>
-    <li>Always review the AI's plain-English summary — it lists what it filled in and what it left blank. Anything the AI filled from its own knowledge is labelled <em>AI-filled (unverified)</em> in Notes. You are always the final authority on your own collection</li>
-    <li>Adding multiple coins? Use <strong>+ Add Another Coin</strong> in the New Entry tab to fill in several coins before generating — all entries come out as a numbered batch in one output block, ready to paste to the AI and then into your spreadsheet at once</li>
-    <li>eBay "sold" listings (not asking prices) are the most reliable source for current market values — check them yourself and enter your own figure. The AI won't add values for you, because AI price estimates aren't reliable enough to record</li>
-    <li>Save your workbook after every session: Ctrl+S (Windows) or Cmd+S (Mac). Back it up to Google Drive or similar</li>
-    <li>Don't clean your coins — cleaning destroys numismatic value permanently</li>
-    <li><strong>Watch out for coin roll scams</strong> — a known fraud where a valuable coin sits on top of a roll of worthless ones. You must destroy the roll to check. Buy coin rolls only from the RAM or a trusted dealer.</li>
+    <li>For inherited items with unknown details, the AI can often identify the coin from a description alone and fill in mintage, year, and metal</li><li>eBay "sold" listings (not asking prices) are the most reliable source for current market values — check them yourself and enter your own figure. The AI won't add values for you, because AI price estimates aren't reliable enough to record</li><li>Don't clean your coins — cleaning destroys numismatic value permanently</li><li><strong>Watch out for coin roll scams</strong> — a known fraud where a valuable coin sits on top of a roll of worthless ones. You must destroy the roll to check. Buy coin rolls only from the RAM or a trusted dealer.</li>
   </ul>
 </div>
 
@@ -287,7 +303,7 @@ p{margin-bottom:12px;max-width:680px}
   padding:10px 24px;font-family:system-ui,sans-serif;font-size:11px;
   color:var(--silver);text-align:center">
   Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.5</strong>
-  &nbsp;·&nbsp; September 2026
+  &nbsp;·&nbsp; October 2026
   &nbsp;·&nbsp; <a href="CLH_Landing_Page.html" style="color:var(--gold);text-decoration:none">
   Check for updates</a>
 </div>

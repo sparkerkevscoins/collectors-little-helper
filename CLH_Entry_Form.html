@@ -71,6 +71,11 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 .chk-table th{background:var(--navy);color:#fff;font-weight:600}
 .chk-table td.err{background:#fde7e7}.chk-table td.fix{background:#fff6d6}
 .chk-msgs{font-size:12px;margin:8px 0 0 18px}.chk-msgs li{margin:2px 0}
+.stuck-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.stuck-table th,.stuck-table td{border-bottom:1px solid #e6e0d0;padding:8px 10px;text-align:left;vertical-align:top;line-height:1.5}
+.stuck-table th{font-size:11px;letter-spacing:.5px;color:#7a8ba0;font-weight:700;text-transform:uppercase}
+.stuck-table td:first-child{font-weight:600;color:#1a2744;width:38%}
+.where{display:inline-block;font-size:11.5px;font-weight:700;color:#1a6b5c;background:#e8f3f0;border-radius:3px;padding:2px 8px;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -385,7 +390,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         .val-note strong{color:var(--navy);display:block;margin-bottom:4px}
       </style>
 
-      <p class="acc-intro">Five steps — click any step to see the full instructions. New to this? Start by expanding them all.</p>
+      <p class="acc-intro">Five steps to add a coin — the same five steps you'll see in the Quick Start Guide and the catalogue's START HERE tab. Click any step for the detail. If something goes wrong, open <b>Stuck?</b> at the bottom.</p>
       <span class="expand-all" onclick="toggleAll()">Expand all steps ▼</span>
 
       <!-- Step 1 -->
@@ -393,17 +398,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">1</div>
           <div class="acc-heading">
-            <h4>Fill in this form</h4>
-            <p>Describe your coin — gold fields are the must-haves</p>
+            <h4>Describe your coin</h4>
+            <p>Entry Form → New Entry tab</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Click the <strong>New Entry</strong> tab above. Fill in the gold-highlighted fields — those are the essential ones. Add as much extra detail as you know, but don't worry if you can't fill everything in; the AI will help with the gaps.</p>
-          <p style="margin-top:10px;font-size:13px;color:var(--mid)"><strong>Adding several coins in one session?</strong> Click <strong>+ Add Another Coin</strong> after filling in the first entry. A new collapsible panel appears for each additional coin — fill them all in, then click <strong>Generate Entry</strong> to produce a numbered batch output covering every coin at once. One paste to the AI, one response, one paste into your spreadsheet.</p>
-          <div class="acc-tip" style="margin-top:10px"><strong>Tip:</strong> Even a rough description is enough to get started. You can always update entries later as you learn more about a coin.</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>⚠ Never clean your coins</strong> — even a gentle clean can scratch the surface and destroy numismatic value permanently. Store coins in capsules or 2×2 holders without cleaning them.</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>⚠ Watch out for coin roll scams</strong> — some sellers place a valuable coin on top of a roll of worthless ones. You have to destroy the roll to check the contents. Buy coin rolls only from the RAM or a well-known dealer.</div>
+          <span class="where">Where: Entry Form → New Entry tab</span>
+          <p>Fill in what you know — the gold fields are the must-haves. Adding several coins? Click <b>+ Add Another Coin</b> for each one. Then click <b>Generate Entry</b> and <b>Copy to Clipboard</b>.</p>
+          <div class="acc-tip">Not sure of a field? Leave it blank — the AI can often identify a coin from its year, country, denomination and a short description.</div>
         </div>
       </div>
 
@@ -412,13 +415,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">2</div>
           <div class="acc-heading">
-            <h4>Generate and copy the entry</h4>
-            <p>One button, one click to copy — no typing</p>
+            <h4>Ask any AI assistant</h4>
+            <p>A new chat in Claude, ChatGPT, Gemini or Copilot</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Scroll to the bottom of the New Entry form and click <strong>Generate Entry</strong>. A structured summary appears in a dark box — if you added multiple coins using <strong>+ Add Another Coin</strong>, all entries appear together as a numbered batch. Click <strong>Copy to Clipboard</strong> — the whole batch is now ready to paste to your AI assistant in one go.</p>
+          <span class="where">Where: A new chat in Claude, ChatGPT, Gemini or Copilot</span>
+          <p>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one line per coin) and a short summary of what it filled in and what it left blank.</p>
+          <div class="acc-tip">Read the summary. The AI never adds estimated values, and anything it fills from its own knowledge is labelled <i>AI-filled (unverified)</i> in Notes. You are always the final authority on your own collection.</div>
         </div>
       </div>
 
@@ -427,37 +432,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">3</div>
           <div class="acc-heading">
-            <h4>Ask your AI assistant to complete it</h4>
-            <p>Claude fills in the gaps and formats it ready to paste into your spreadsheet</p>
+            <h4>Check the reply</h4>
+            <p>Entry Form → Check &amp; Copy tab</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Open any AI assistant in your browser — <strong>Claude</strong>, ChatGPT, Gemini or Copilot. Start a <strong>new conversation</strong> and paste what you copied. That's all — the copied text already contains the full instructions, so there's no separate prompt to find.</p>
-          <p style="margin-top:8px">The AI replies with one line per coin inside a grey code box (fields separated by the <strong>|</strong> character), followed by a short plain-English summary of what it filled in and what it left blank.</p>
-          <p style="margin-top:8px;font-size:12px;color:var(--silver)">Read the summary. The AI only fills fields it's confident about, never invents a value, and lists anything it filled from its own knowledge as <em>AI-filled (unverified)</em> in Notes. You are always the final authority on your own collection.</p>
-          <div class="acc-tip"><strong>Adding multiple coins at once?</strong> Use <strong>+ Add Another Coin</strong> in the New Entry tab before generating. Everything goes to the AI in one go and comes back as one line per coin.</div>
-        </div>
-      </div>
-
-      <!-- Step 3b -->
-      <div class="acc-item">
-        <div class="acc-header" onclick="toggleAcc(this)">
-          <div class="acc-num">✓</div>
-          <div class="acc-heading">
-            <h4>Check &amp; Copy the AI's reply</h4>
-            <p>The form checks every field and gives you a clean row to paste</p>
-          </div>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body">
-          <p>Copy the AI's <strong>whole reply</strong>, open the <strong>Check &amp; Copy</strong> tab in this form, paste it in and click <strong>Check</strong>.</p>
-          <ul>
-            <li><strong>Green</strong> — every field is valid. Click <strong>Copy rows for Holdings</strong>.</li>
-            <li><strong>Yellow cells</strong> were tidied automatically (e.g. "10c" → 0.1, "Cupro-Nickel (75% Cu…)" → Cupro-nickel). Glance at them.</li>
-            <li><strong>Red cells</strong> need you: edit the text in the box above and click Check again, or just copy and fix that cell in the spreadsheet afterwards.</li>
-          </ul>
-          <div class="acc-tip"><strong>Why this step?</strong> Chat windows don't copy cleanly — some turn tabs into spaces, some add formatting. The checker rebuilds the row exactly the way your spreadsheet expects, whichever AI you used.</div>
+          <span class="where">Where: Entry Form → Check &amp; Copy tab</span>
+          <p>Paste the AI's <b>whole</b> reply and click <b>Check</b>. Yellow cells were tidied automatically; red cells need you. Then click <b>Copy rows for Holdings</b>.</p>
+          <div class="acc-tip">Why this step? Chat windows don't always copy cleanly — some turn tabs into spaces or add formatting. The checker rebuilds each row exactly the way your spreadsheet expects, whichever AI you used.</div>
         </div>
       </div>
 
@@ -466,14 +449,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">4</div>
           <div class="acc-heading">
-            <h4>Open your catalogue spreadsheet</h4>
-            <p>Open CLH_Catalogue.xlsx and click the Holdings tab</p>
+            <h4>Paste into your catalogue</h4>
+            <p>CLH_Catalogue.xlsx → Holdings tab</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Open <strong>CLH_Catalogue.xlsx</strong> in Microsoft Excel, Google Sheets, or any other spreadsheet app. Click the <strong>Holdings</strong> tab at the bottom of the screen.</p>
-          <div class="acc-tip"><strong>Can't see the Holdings tab?</strong> Look along the very bottom of the window for tabs labelled START HERE, Holdings, INDEX, and Lists. Click <strong>Holdings</strong>.</div>
+          <span class="where">Where: CLH_Catalogue.xlsx → Holdings tab</span>
+          <p>Click column <b>B</b> (Item Type) in the first empty row and paste (Ctrl+V on Windows, Cmd+V on Mac). The grey columns fill themselves.</p>
+          <div class="acc-tip">Works in Microsoft Excel, Google Sheets and LibreOffice Calc. Apple Numbers can paste, but doesn't keep the dropdowns or sheet protection.</div>
         </div>
       </div>
 
@@ -482,22 +466,29 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">5</div>
           <div class="acc-heading">
-            <h4>Paste the entry — no typing required</h4>
-            <p>One paste fills the entire row automatically</p>
+            <h4>Save and back up</h4>
+            <p>Your spreadsheet app</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>After <strong>Copy rows for Holdings</strong> in the Check &amp; Copy tab:</p>
-          <ul>
-            <li><strong>Scroll down</strong> to the first completely empty row in the Holdings tab</li>
-            <li><strong>Click the cell in column B</strong> (Item Type) of that row — just right of the grey Item ID column</li>
-            <li>Press <strong>Ctrl+V</strong> (Windows) or <strong>Cmd+V</strong> (Mac)</li>
-            <li>The values land in columns B to AC. The grey columns — Item ID on the left, Currency, Full Denomination and the two value columns on the far right — fill themselves</li>
-          </ul>
-          <div class="acc-tip"><strong>Several coins?</strong> All the rows paste in one go — they fill downwards from the cell you clicked.</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>Works in:</strong> Microsoft Excel, Google Sheets, LibreOffice Calc. (Apple Numbers: paste works, but Numbers doesn't keep the sheet protection or dropdowns.)</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>Save when you're done:</strong> Press Ctrl+S (Windows) or Cmd+S (Mac), and keep a copy somewhere other than this computer.</div>
+          <span class="where">Where: Your spreadsheet app</span>
+          <p>Save (Ctrl+S / Cmd+S) and keep a copy somewhere other than this computer.</p>
+        </div>
+      </div>
+
+      <!-- Stuck -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-num">?</div>
+          <div class="acc-heading">
+            <h4>Stuck?</h4>
+            <p>Common hiccups and exactly where to go</p>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the values ran together</td><td>Ask the AI: <i>“Please resend the rows inside a code block, with fields separated by the | character.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. A row with the wrong number of fields isn't copied: ask the AI to resend that row.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
         </div>
       </div>
 

@@ -55,7 +55,7 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
 .file-desc{font-size:13px;color:var(--mid);line-height:1.5}
 
 /* How it works */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:24px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:24px}
 .step{text-align:center}
 .step-num{background:var(--navy);color:var(--gold);font-family:system-ui,sans-serif;
   font-size:16px;font-weight:700;width:44px;height:44px;border-radius:50%;
@@ -88,6 +88,11 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
   .steps{grid-template-columns:1fr 1fr}
   .btn-secondary{margin:12px 0 0;display:block;text-align:center}
 }
+.stuck-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.stuck-table th,.stuck-table td{border-bottom:1px solid #e6e0d0;padding:8px 10px;text-align:left;vertical-align:top;line-height:1.5}
+.stuck-table th{font-size:11px;letter-spacing:.5px;color:#7a8ba0;font-weight:700;text-transform:uppercase}
+.stuck-table td:first-child{font-weight:600;color:#1a2744;width:38%}
+.where{display:inline-block;font-size:11.5px;font-weight:700;color:#1a6b5c;background:#e8f3f0;border-radius:3px;padding:2px 8px;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -148,29 +153,37 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
 <!-- ══ HOW IT WORKS ══ -->
 <div class="section">
   <div class="section-label">HOW IT WORKS</div>
-  <h2>Four steps to catalogue a coin</h2>
+  <h2>Five steps to add a coin</h2>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
-      <h4>Fill in the form</h4>
-      <p>Open CLH_Entry_Form.html and describe your coin. Gold fields are required — everything else you can add later.</p>
+      <h4>Describe your coin</h4>
+      <p><span class="where">Entry Form → New Entry tab</span><br>Fill in what you know — the gold fields are the must-haves. Adding several coins? Click <b>+ Add Another Coin</b> for each one. Then click <b>Generate Entry</b> and <b>Copy to Clipboard</b>.</p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <h4>Copy to AI</h4>
-      <p>Click Generate Entry and copy the output — it already includes the full instructions. Paste it into a new chat with Claude, ChatGPT, Gemini or Copilot.</p>
+      <h4>Ask any AI assistant</h4>
+      <p><span class="where">A new chat in Claude, ChatGPT, Gemini or Copilot</span><br>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one line per coin) and a short summary of what it filled in and what it left blank.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <h4>AI completes it</h4>
-      <p>The AI fills in what it's confident about, formats the title, and returns one line per coin. Paste its reply into the form's Check &amp; Copy tab — every field is checked against the catalogue.</p>
+      <h4>Check the reply</h4>
+      <p><span class="where">Entry Form → Check &amp; Copy tab</span><br>Paste the AI's <b>whole</b> reply and click <b>Check</b>. Yellow cells were tidied automatically; red cells need you. Then click <b>Copy rows for Holdings</b>.</p>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <h4>Paste into spreadsheet</h4>
-      <p>Click column B of the first empty row in your Holdings tab and paste — the whole row fills, and the grey columns calculate themselves.</p>
+      <h4>Paste into your catalogue</h4>
+      <p><span class="where">CLH_Catalogue.xlsx → Holdings tab</span><br>Click column <b>B</b> (Item Type) in the first empty row and paste (Ctrl+V on Windows, Cmd+V on Mac). The grey columns fill themselves.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <h4>Save and back up</h4>
+      <p><span class="where">Your spreadsheet app</span><br>Save (Ctrl+S / Cmd+S) and keep a copy somewhere other than this computer.</p>
     </div>
   </div>
+  <h3 style="margin-top:28px;color:var(--navy);font-size:16px">Stuck?</h3>
+  <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the values ran together</td><td>Ask the AI: <i>“Please resend the rows inside a code block, with fields separated by the | character.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. A row with the wrong number of fields isn't copied: ask the AI to resend that row.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
+  <p style="font-size:12.5px;color:var(--mid);margin-top:10px">The same steps and this table are in the Entry Form's <strong>How to Use</strong> tab, the <strong>Quick Start Guide</strong>, and the catalogue's <strong>START HERE</strong> tab.</p>
 </div>
 
 <!-- ══ VERSION LOG ══ -->

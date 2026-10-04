@@ -2,7 +2,7 @@
 
 > A coin catalogue starter kit for personal collectors. Personal, non-commercial use.
 
-**Describe a coin → paste to your AI assistant → get a completed spreadsheet row back in seconds.**
+**Describe a coin → ask any AI assistant → check the reply → paste into your catalogue.**
 
 Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
 
@@ -21,15 +21,30 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 
 ---
 
-## How it works
+## Five steps to add a coin
 
-1. Open `CLH_Entry_Form.html` in a browser and describe your coin
-2. Click **Generate Entry** and copy the output
-3. Paste to any AI assistant — the instructions are included in what you copy
-4. Paste the AI's reply into the form's Check & Copy tab — it checks every field and copies clean rows
-5. Click column B of the first empty row in your Holdings tab and paste — the whole row fills automatically
+1. **Describe your coin** — *Entry Form → New Entry tab*. Fill in what you know — the gold fields are the must-haves. Adding several coins? Click + Add Another Coin for each one. Then click Generate Entry and Copy to Clipboard.
+2. **Ask any AI assistant** — *A new chat in Claude, ChatGPT, Gemini or Copilot*. Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one line per coin) and a short summary of what it filled in and what it left blank.
+3. **Check the reply** — *Entry Form → Check & Copy tab*. Paste the AI's whole reply and click Check. Yellow cells were tidied automatically; red cells need you. Then click Copy rows for Holdings.
+4. **Paste into your catalogue** — *CLH_Catalogue.xlsx → Holdings tab*. Click column B (Item Type) in the first empty row and paste (Ctrl+V on Windows, Cmd+V on Mac). The grey columns fill themselves.
+5. **Save and back up** — *Your spreadsheet app*. Save (Ctrl+S / Cmd+S) and keep a copy somewhere other than this computer.
 
-No macros. No special software. No subscriptions. Works in Microsoft Excel, Google Sheets, LibreOffice Calc, and Apple Numbers.
+### Stuck?
+
+| If this happens… | Do this |
+|---|---|
+| I don't know some of the details | Leave them blank. The AI fills only what it's sure of. For research, see the Resources page. |
+| The AI's reply has no grey code box, or the values ran together | Ask the AI: "Please resend the rows inside a code block, with fields separated by the \| character." |
+| Check & Copy shows red cells | Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. A row with the wrong number of fields isn't copied: ask the AI to resend that row. |
+| Excel says the cell is protected | You clicked a grey column. Click column B of an empty row and paste again. |
+| Item ID or another grey column is blank | Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value. |
+| I need to change a coin I've already added | Entry Form → Update Existing tab. It tells you exactly which column to change. |
+| Where are my totals? | CLH_Catalogue.xlsx → INDEX tab. |
+| What does a term mean? | Entry Form → Glossary & Resources tab, or the Quick Reference in the Quick Start Guide. |
+
+The same five steps and Stuck? table appear in the Entry Form's How to Use tab, the Quick Start Guide, and the catalogue's START HERE tab.
+
+No macros. No special software. No subscriptions. Works in Microsoft Excel, Google Sheets and LibreOffice Calc.
 
 ---
 
@@ -38,7 +53,7 @@ No macros. No special software. No subscriptions. Works in Microsoft Excel, Goog
 Open `CLH_QuickStart_Guide.html` first — it covers:
 - The title naming convention
 - Field guide (required vs optional)
-- How the AI one-paste technique works
+- The five steps to add a coin, and what to do if you get stuck
 - Glossary of numismatic terms (Proof, UNC, NIFC/NCLT, mintmarks, grading, storage formats and more)
 - A pre-purchase checklist for first-time buyers
 
