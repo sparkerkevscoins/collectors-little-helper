@@ -29,8 +29,8 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 .header-title{font-size:15px;font-weight:600;color:#fff}
 .header-collection{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px}
 
-.tabs{background:var(--navy);display:flex;gap:2px;padding:0 24px}
-.tab{padding:10px 20px;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);border-bottom:3px solid transparent;transition:.2s}
+.tabs{background:var(--navy);display:flex;gap:2px;padding:0 24px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:10px 20px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);border-bottom:3px solid transparent;transition:.2s}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 
 .container{max-width:900px;margin:24px auto;padding:0 16px}
@@ -65,6 +65,12 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 .copyright strong{color:rgba(255,255,255,.7)}
 
 @media(max-width:600px){.field-grid,.field-grid.three{grid-template-columns:1fr}}
+.chk-ok{color:#1a6b5c;font-weight:600}.chk-err{color:#b3261e;font-weight:600}.chk-warn{color:#8a6d00}
+.chk-table{border-collapse:collapse;font-size:11px;margin-top:10px;display:block;overflow-x:auto;max-width:100%}
+.chk-table th,.chk-table td{border:1px solid var(--rule);padding:4px 6px;text-align:left;white-space:nowrap;vertical-align:top}
+.chk-table th{background:var(--navy);color:#fff;font-weight:600}
+.chk-table td.err{background:#fde7e7}.chk-table td.fix{background:#fff6d6}
+.chk-msgs{font-size:12px;margin:8px 0 0 18px}.chk-msgs li{margin:2px 0}
 </style>
 </head>
 <body>
@@ -95,6 +101,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 
 <div class="tabs">
   <div class="tab" onclick="switchTab('new')">New Entry</div>
+  <div class="tab" onclick="switchTab('check')">Check &amp; Copy</div>
   <div class="tab" onclick="switchTab('update')">Update Existing</div>
   <div class="tab active" onclick="switchTab('howto')">How to Use</div>
   <div class="tab" onclick="switchTab('glossary')">Glossary &amp; Resources</div>
@@ -264,8 +271,26 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 
   <div id="new-output" style="display:none;margin-top:20px">
     <div class="output-box" id="new-output-text"></div>
-    <p class="copy-notice">Copy the text above and paste it to your AI assistant with the prompt shown in the "How to Use" tab.</p>
-    <button class="btn btn-secondary" onclick="copyOutput('new-output-text')" style="margin-top:8px">Copy to Clipboard</button>
+    <p class="copy-notice">This includes the full instructions for the AI — no separate prompt needed. Copy it, paste it into a new chat with any AI assistant (Claude, ChatGPT, Gemini, Copilot), then bring the AI's reply to the <strong>Check &amp; Copy</strong> tab.</p>
+    <button class="btn btn-primary" onclick="copyOutput('new-output-text')" style="margin-top:8px">Copy to Clipboard</button>
+    <button class="btn btn-secondary" onclick="switchTab('check')" style="margin-top:8px">Go to Check &amp; Copy →</button>
+  </div>
+</div>
+
+<div id="tab-check" class="tab-content">
+  <div class="card">
+    <div class="card-header">Check &amp; Copy <span>paste the AI's reply — get a row that pastes cleanly into Holdings</span></div>
+    <div class="card-body">
+      <p style="font-size:13px;color:var(--mid);margin-bottom:10px">Paste the AI assistant's <strong>whole reply</strong> below (code block, summary and all — the checker finds the data rows itself). It checks every field against the catalogue's dropdown lists and number formats, fixes what it safely can, and tells you about anything it can't.</p>
+      <div class="field-grid full"><div class="field">
+        <textarea id="chk-input" style="min-height:160px;font-family:'Courier New',monospace;font-size:12px" placeholder="Paste the AI's reply here..."></textarea>
+      </div></div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn btn-primary" onclick="checkRows()">Check</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('chk-input').value='';document.getElementById('chk-result').innerHTML='';">Clear</button>
+      </div>
+      <div id="chk-result" style="margin-top:16px"></div>
+    </div>
   </div>
 </div>
 
@@ -408,20 +433,31 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Open <strong>Claude</strong> (claude.ai) or another AI assistant in your browser. Start a new conversation, paste the prompt below, then paste your copied entry after it.</p>
-          <div class="acc-prompt">
-            <div class="acc-prompt-label">COPY THIS PROMPT — then paste your entry below it</div>
-            You are an expert in numismatics, specialising in Australian coins and commemorative issues. Complete the catalogue entry below using the information provided. For any missing fields, research them using your training data where possible.<br><br>
-            <strong>Rules:</strong><br>
-            1. Format the title as: <em>Year Country Denomination Subject — Finish Special-Attributes</em> (example: <em>2024 Australia 50c Echidna — Proof Coloured</em>)<br>
-            2. Return your answer as a <strong>single tab-separated row</strong> in exactly this column order — leave a column empty (two consecutive tabs) if you have no value:<br><br>
-            <em>Item Type | Country | Year | Series/Theme | Title | Denomination | Metal | Finish | Treatment | Packaging | Finish Confidence | Qty | Mintage | CoA Number | Mintmark Ref | From Proof Set? | NIFC? | Status | Acquisition Date | Acquisition Source | Acquisition Price | Estimated Value | Grade | Storage Location | Notes</em><br><br>
-            3. Mark any value you're uncertain about with a <em>?</em> suffix (example: <em>1,500?</em>)<br>
-            4. After the tab-separated row, add a brief plain-English summary — what you filled in from research, and anything flagged uncertain.<br><br>
-            [paste your copied form output here]
+          <p>Open any AI assistant in your browser — <strong>Claude</strong>, ChatGPT, Gemini or Copilot. Start a <strong>new conversation</strong> and paste what you copied. That's all — the copied text already contains the full instructions, so there's no separate prompt to find.</p>
+          <p style="margin-top:8px">The AI replies with one line per coin inside a grey code box (fields separated by the <strong>|</strong> character), followed by a short plain-English summary of what it filled in and what it left blank.</p>
+          <p style="margin-top:8px;font-size:12px;color:var(--silver)">Read the summary. The AI only fills fields it's confident about, never invents a value, and lists anything it filled from its own knowledge as <em>AI-filled (unverified)</em> in Notes. You are always the final authority on your own collection.</p>
+          <div class="acc-tip"><strong>Adding multiple coins at once?</strong> Use <strong>+ Add Another Coin</strong> in the New Entry tab before generating. Everything goes to the AI in one go and comes back as one line per coin.</div>
+        </div>
+      </div>
+
+      <!-- Step 3b -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-num">✓</div>
+          <div class="acc-heading">
+            <h4>Check &amp; Copy the AI's reply</h4>
+            <p>The form checks every field and gives you a clean row to paste</p>
           </div>
-          <p style="margin-top:8px;font-size:12px;color:var(--silver)">Review the AI's plain-English summary — it will flag anything uncertain. You are always the final authority on your own collection.</p>
-          <div class="acc-tip"><strong>Adding multiple coins at once?</strong> Use the <strong>+ Add Another Coin</strong> button in the New Entry tab to fill in several coins before generating. The output will be a numbered batch — paste it all to the AI at once and it returns multiple tab-separated rows, one per coin, ready to paste straight into your Holdings tab.</div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <p>Copy the AI's <strong>whole reply</strong>, open the <strong>Check &amp; Copy</strong> tab in this form, paste it in and click <strong>Check</strong>.</p>
+          <ul>
+            <li><strong>Green</strong> — every field is valid. Click <strong>Copy rows for Holdings</strong>.</li>
+            <li><strong>Yellow cells</strong> were tidied automatically (e.g. "10c" → 0.1, "Cupro-Nickel (75% Cu…)" → Cupro-nickel). Glance at them.</li>
+            <li><strong>Red cells</strong> need you: edit the text in the box above and click Check again, or just copy and fix that cell in the spreadsheet afterwards.</li>
+          </ul>
+          <div class="acc-tip"><strong>Why this step?</strong> Chat windows don't copy cleanly — some turn tabs into spaces, some add formatting. The checker rebuilds the row exactly the way your spreadsheet expects, whichever AI you used.</div>
         </div>
       </div>
 
@@ -452,17 +488,16 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>The AI has formatted the entry as a single row — paste it straight into the spreadsheet and all the values land in the right columns automatically.</p>
+          <p>After <strong>Copy rows for Holdings</strong> in the Check &amp; Copy tab:</p>
           <ul>
-            <li><strong>Scroll down</strong> to the first completely empty row below your existing entries</li>
-            <li><strong>Click the first cell in that row</strong> — it's in the Item Type column (column B, just after the grey Item ID column)</li>
-            <li><strong>Select the tab-separated row</strong> from the AI's response — click just before the first value and drag to the end</li>
-            <li><strong>Copy it</strong> (Ctrl+C on Windows / Cmd+C on Mac)</li>
-            <li><strong>Click back on your spreadsheet</strong> and press Ctrl+V (Windows) or Cmd+V (Mac)</li>
-            <li>The values flow automatically into separate columns — blue cells filled, grey cells (Item ID etc.) fill themselves</li>
+            <li><strong>Scroll down</strong> to the first completely empty row in the Holdings tab</li>
+            <li><strong>Click the cell in column B</strong> (Item Type) of that row — just right of the grey Item ID column</li>
+            <li>Press <strong>Ctrl+V</strong> (Windows) or <strong>Cmd+V</strong> (Mac)</li>
+            <li>The values land in columns B to AC. The grey columns — Item ID on the left, Currency, Full Denomination and the two value columns on the far right — fill themselves</li>
           </ul>
-          <div class="acc-tip"><strong>Works everywhere:</strong> This technique works identically in Microsoft Excel, Google Sheets, LibreOffice Calc, and Apple Numbers.</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>Save when you're done:</strong> Press Ctrl+S (Windows) or Cmd+S (Mac). If you store your file in Google Drive, upload the updated file so it's always backed up.</div>
+          <div class="acc-tip"><strong>Several coins?</strong> All the rows paste in one go — they fill downwards from the cell you clicked.</div>
+          <div class="acc-tip" style="margin-top:8px"><strong>Works in:</strong> Microsoft Excel, Google Sheets, LibreOffice Calc. (Apple Numbers: paste works, but Numbers doesn't keep the sheet protection or dropdowns.)</div>
+          <div class="acc-tip" style="margin-top:8px"><strong>Save when you're done:</strong> Press Ctrl+S (Windows) or Cmd+S (Mac), and keep a copy somewhere other than this computer.</div>
         </div>
       </div>
 
@@ -775,13 +810,13 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 <div style="background:#f0f2f5;border-top:1px solid var(--rule);
   padding:10px 24px;font-family:system-ui,sans-serif;font-size:11px;
   color:var(--silver);text-align:center">
-  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.4</strong>
-  &nbsp;·&nbsp; September 2026
+  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.5</strong>
+  &nbsp;·&nbsp; October 2026
   &nbsp;·&nbsp; <a href="CLH_Landing_Page.html" style="color:var(--gold);text-decoration:none">
   Check for updates</a>
 </div>
 <div class="copyright">
-  <strong>Collector's Little Helper™</strong> — Version 1.4 — September 2026<br>
+  <strong>Collector's Little Helper™</strong> — Version 1.5 — October 2026<br>
   © 2026 Kevin Burdette (Sparker Kev's Coins). All rights reserved.<br>
   Collector's Little Helper™ is a trademark of Kevin Burdette (Sparker Kev's Coins), Brisbane, Australia.<br>
   <a href="mailto:sparkerkevscoins@gmail.com">sparkerkevscoins@gmail.com</a> &nbsp;·&nbsp; +61 (0)438 820 469<br>
@@ -813,7 +848,7 @@ window.addEventListener('load', function() {
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 function switchTab(name) {
-  const names = ['new','update','howto','glossary'];
+  const names = ['new','check','update','howto','glossary'];
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i]===name));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
@@ -856,7 +891,7 @@ function getEntryFields(prefix) {
   ];
 }
 
-function generateAllEntries() {
+function _oldGenerateAllEntries() {
   const collName = localStorage.getItem('clh_collection_name') || 'My Coin Collection';
   const batchCount = document.querySelectorAll('.batch-entry').length;
   const total = 1 + batchCount;
@@ -877,6 +912,227 @@ function generateAllEntries() {
   const out = document.getElementById('new-output');
   out.style.display = 'block';
   out.scrollIntoView({behavior:'smooth'});
+}
+
+
+// ── Holdings schema (CLH v1.5) — columns B..AC, in order ─────────────────────
+const L_TYPE=['Coin','Set','PNC','PMC','Banknote','Error Coin','Other'];
+const L_COUNTRY=['Australia','United Kingdom','Canada','New Zealand','United States','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue','Other'];
+const L_METAL=['Aluminium Bronze (AlBr)','Bi-metallic (AlBr / Cupro-nickel)','Bronze','Cupro-nickel','Silver (unspecified)','Silver (.800)','Silver (.925)','Silver (.999)','Gold (.999)','Gold Plated','Other (see notes)'];
+const L_GRADE=['Proof','Specimen','FDC/BU','Gem UNC','Choice UNC','UNC','aUNC','gEF/gXF','EF/XF','aEF/aXF','gVF','VF','F','VG','G','Fr','P','Circulating (ungraded)'];
+const L_TREAT=['Coloured','Frosted','Gilded','Gold Plated','Antiqued','Domed','Ultra High Relief','Other'];
+const L_PKG=['Loose/Raw','Official Mint Case/Box','Capsule/Blister','RAM Card','Downies Card','Carded (Other)','PNC/PMC — Standard','PNC/PMC — C5','PNC/PMC — DL','PNC/PMC — Other','Tube/Roll','2×2','N/A - Not Applicable'];
+const L_CONF=['Confirmed','High','Medium','Low','TBC'];
+const L_STATUS=['Owned','Wanted','Ordered','Duplicate','Sold'];
+const COLS=[
+ {n:'Item Type',t:'list',l:L_TYPE,req:1},{n:'Country',t:'list',l:L_COUNTRY,req:1},{n:'Year',t:'year',req:1},
+ {n:'Series / Theme',t:'text'},{n:'Title',t:'text',req:1},{n:'Denomination',t:'denom'},
+ {n:'Metal',t:'list',l:L_METAL},{n:'Grade',t:'list',l:L_GRADE},{n:'Treatment',t:'treat'},
+ {n:'Packaging',t:'list',l:L_PKG},{n:'Grade Confidence',t:'list',l:L_CONF},{n:'Qty',t:'int',req:1},
+ {n:'Mintage',t:'int'},{n:'RAM Code',t:'text'},{n:'CoA Number',t:'text'},{n:'PNC Issue No.',t:'text'},
+ {n:'Mintmark Ref',t:'text'},{n:'From Proof Set?',t:'yn'},{n:'NIFC?',t:'yn'},{n:'Status',t:'list',l:L_STATUS,req:1},
+ {n:'Acquisition Date',t:'date'},{n:'Acquisition Source',t:'text'},{n:'Acq. Price',t:'num'},{n:'Est. Value',t:'num'},
+ {n:'Storage Location',t:'text'},{n:'Notes',t:'text'},{n:'Reference Numbers',t:'text'},{n:'Effigy',t:'text'}
+];
+
+const AI_PROMPT = [
+"You are helping me catalogue coins in my Collector's Little Helper spreadsheet. Complete each entry at the bottom of this message.",
+"",
+"OUTPUT FORMAT — follow exactly:",
+"- Put ALL entries inside ONE code block. One line per entry, in the same order as below. Nothing else inside the code block: no header row, no numbering, no blank lines.",
+"- Separate fields with the pipe character |  Every line must have exactly "+COLS.length+" fields ("+(COLS.length-1)+" pipes). An empty field is just two pipes together: ||",
+"- Never put a ? mark, a comment, a range or the word 'unknown' inside a field. If you're not confident, leave the field empty.",
+"- After the code block, write a short plain-English summary: what you filled in, what you left empty and why, and anything I should double-check.",
+"",
+"FIELDS, IN THIS ORDER:",
+" 1. Item Type — exactly one of: "+L_TYPE.join(', '),
+" 2. Country — exactly one of: "+L_COUNTRY.join(', '),
+" 3. Year — 4 digits",
+" 4. Series / Theme — e.g. Remembrance Day, Lyrebird (standard reverse)",
+" 5. Title — format: Year Country Denomination Subject — Grade Special-attributes. Write 'Uncirculated' in full. Example: 2024 Australia 50c Echidna — Proof Coloured",
+" 6. Denomination — a plain number in the main currency unit: 10c = 0.1, 50c = 0.5, $1 = 1, $2 = 2, 50p = 0.5. Empty for sets with mixed denominations.",
+" 7. Metal — exactly one of: "+L_METAL.join(', '),
+" 8. Grade — exactly one of: "+L_GRADE.join(', '),
+" 9. Treatment — None, or one or more of: "+L_TREAT.join(', ')+" (join several with ' + ')",
+"10. Packaging — exactly one of: "+L_PKG.join(', '),
+"11. Grade Confidence — exactly one of: "+L_CONF.join(', '),
+"12. Qty — whole number",
+"13. Mintage — digits only, no commas. Empty if not officially published.",
+"14. RAM Code — the mint's product code, if known",
+"15. CoA Number",
+"16. PNC Issue No.",
+"17. Mintmark Ref — e.g. C, M, or the privy mark name. Empty if none.",
+"18. From Proof Set? — Yes or No",
+"19. NIFC? — Yes or No (Not Issued For Circulation)",
+"20. Status — exactly one of: "+L_STATUS.join(', '),
+"21. Acquisition Date — YYYY-MM-DD",
+"22. Acquisition Source",
+"23. Acq. Price — price paid PER ITEM, number only, no $ sign",
+"24. Est. Value — PER ITEM, number only, no $ sign. Copy MY figure only. If I didn't give one, leave it EMPTY. Do not estimate values.",
+"25. Storage Location — copy mine only",
+"26. Notes — one line, no pipe characters. Keep my notes. If you filled any field from your own knowledge rather than from what I gave you, add at the end: AI-filled (unverified): <field names>",
+"27. Reference Numbers — catalogue references (e.g. KM number) only if you're sure",
+"28. Effigy — obverse portrait and designer, e.g. Charles III — Dan Thorne",
+"",
+"RULES:",
+"- Keep everything I provided. Only correct obvious formatting (e.g. '10c' becomes 0.1 in Denomination).",
+"- Only fill an empty field if you are confident the value is correct for this exact coin. Otherwise leave it empty and mention it in the summary.",
+"- If a value I gave doesn't match an allowed option, use the closest allowed option and say so in the summary.",
+"",
+"MY ENTRIES:"
+].join('\n');
+
+// rewrite generateAllEntries to include the prompt
+function generateAllEntries() {
+  const collName = localStorage.getItem('clh_collection_name') || 'My Coin Collection';
+  const batchCount = document.querySelectorAll('.batch-entry').length;
+  const total = 1 + batchCount;
+  const lines = [AI_PROMPT, '', `Collection: ${collName} — ${total} ${total===1?'entry':'entries'}`];
+  const add = (prefix, i) => {
+    lines.push(`--- ENTRY ${i} of ${total} ---`);
+    getEntryFields(prefix).forEach(([label, value]) => { if (value) lines.push(`  ${label}: ${value}`); });
+  };
+  add('n-',1);
+  for (let i = 0; i < batchCount; i++) add(`b${i}-`, i+2);
+  lines.push('--- END ---');
+  document.getElementById('new-output-text').textContent = lines.join('\n');
+  const out = document.getElementById('new-output');
+  out.style.display = 'block';
+  out.scrollIntoView({behavior:'smooth'});
+}
+
+// ── Check & Copy ─────────────────────────────────────────────────────────────
+const norm = s => s.toLowerCase().replace(/[^a-z0-9.]+/g,'');
+function matchList(v, list){
+  if (list.includes(v)) return {v};
+  const nv=norm(v);
+  let hit=list.find(o=>norm(o)===nv); if(hit) return {v:hit,fixed:1};
+  const aliases={'uncirculated':'UNC','unc':'UNC','circulated':'Circulating (ungraded)','circulation':'Circulating (ungraded)','bu':'FDC/BU',
+    'cupronickel':'Cupro-nickel','aluminiumbronze':'Aluminium Bronze (AlBr)','albr':'Aluminium Bronze (AlBr)','aluminumbronze':'Aluminium Bronze (AlBr)',
+    'bimetallic':'Bi-metallic (AlBr / Cupro-nickel)','sterlingsilver':'Silver (.925)','loose':'Loose/Raw','raw':'Loose/Raw','none':'Loose/Raw','na':'N/A - Not Applicable',
+    'roll':'Tube/Roll','tube':'Tube/Roll','2x2':'2×2','flip':'2×2','capsule':'Capsule/Blister','uk':'United Kingdom','usa':'United States','nz':'New Zealand'};
+  if (aliases[nv] && list.includes(aliases[nv])) return {v:aliases[nv],fixed:1};
+  // starts-with / contains (e.g. "Cupro-Nickel (75% Cu / 25% Ni)")
+  hit=list.filter(o=>{const no=norm(o); return no.length>2 && (nv.startsWith(no)||no.startsWith(nv)&&nv.length>3);})
+          .sort((a,b)=>norm(b).length-norm(a).length)[0];
+  if (hit) return {v:hit,fixed:1};
+  return {err:`"${v}" isn't an allowed option`};
+}
+function checkField(raw, col){
+  let v=(raw||'').trim().replace(/^`+|`+$/g,'').replace(/^\*\*|\*\*$/g,'').trim();
+  const r={v, fixed:0, err:'', unverified:0};
+  if (/\?$/.test(v)) { v=v.replace(/\s*\?+$/,''); r.unverified=1; r.fixed=1; }
+  if (/^(unknown|not known|n\/?a|tbc|tba|-|—)$/i.test(v) && col.t!=='list' && col.t!=='treat') { r.v=''; r.fixed=1; r.unverified=0; if(col.req) r.err='required'; return r; }
+  r.v=v;
+  if (v==='') { if(col.req) r.err='required'; return r; }
+  switch(col.t){
+    case 'list': { const m=matchList(v,col.l); if(m.err) r.err=m.err+' — choose: '+col.l.join(', '); else {if(m.fixed) r.fixed=1; r.v=m.v;} break; }
+    case 'treat': {
+      if (/^none$/i.test(v)) { r.v='None'; break; }
+      const parts=v.split(/\s*[+,&\/]\s*|\s+and\s+/i).filter(Boolean); const out=[];
+      for(const p of parts){ const m=matchList(p,L_TREAT); if(m.err){r.err=`"${p}" isn't a treatment option`;break;} out.push(m.v); if(m.fixed) r.fixed=1; }
+      if(!r.err){ const j=out.join(' + '); if(j!==v) r.fixed=1; r.v=j; } break; }
+    case 'year': if(!/^\d{4}$/.test(v)) r.err='must be a 4-digit year'; break;
+    case 'int': { const c=v.replace(/[,\s]/g,''); if(!/^\d+$/.test(c)) r.err='must be a whole number'; else { if(c!==v) r.fixed=1; r.v=c; } break; }
+    case 'num': { const c=v.replace(/[$£€,\s]|AUD|NZD|CAD|USD|GBP|EUR|A\$|NZ\$|CA\$|US\$/gi,''); if(!/^\d+(\.\d+)?$/.test(c)) r.err='must be a number (no $ sign)'; else { if(c!==v) r.fixed=1; r.v=c; } break; }
+    case 'denom': {
+      let c=v.replace(/\s/g,''); let m;
+      if((m=c.match(/^(\d+(?:\.\d+)?)(c|¢|p|cents?)$/i))) { c=String(+(m[1]/100).toFixed(4)); }
+      else if((m=c.match(/^[$£€]?(\d+(?:\.\d+)?)(dollars?)?$/i))) { c=String(+m[1]); }
+      if(!/^\d+(\.\d+)?$/.test(c)) r.err='must be a number, e.g. 0.1 for 10c, 2 for $2';
+      else { if(c!==v) r.fixed=1; r.v=c; } break; }
+    case 'yn': { if(/^y(es)?$/i.test(v)) r.v='Yes'; else if(/^no?$/i.test(v)) r.v='No'; else r.err='must be Yes or No'; if(!r.err && r.v!==v) r.fixed=1; break; }
+    case 'date': {
+      let m;
+      if(/^\d{4}-\d{2}-\d{2}$/.test(v)) break;
+      if((m=v.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/))) { r.v=`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`; r.fixed=1; }
+      else r.err='use YYYY-MM-DD'; break; }
+    default: r.v=v.replace(/[\t\r\n]+/g,' ');
+  }
+  return r;
+}
+function extractRows(text){
+  const lines=text.replace(/\r/g,'').split('\n');
+  const rows=[];
+  for(let line of lines){
+    let s=line.trim();
+    if(!s || /^```/.test(s)) continue;
+    let parts=null;
+    if(s.includes('\t') && s.split('\t').length>=15) parts=s.split('\t');
+    else if(s.split('|').length>=15){ s=s.replace(/^\|/,'').replace(/\|$/,''); parts=s.split('|'); }
+    if(!parts) continue;
+    if(parts.every(p=>/^[\s:-]*$/.test(p))) continue;           // markdown table divider
+    if(norm(parts[0])==='itemtype') continue;                    // header row
+    rows.push(parts.map(p=>p.trim()));
+  }
+  return rows;
+}
+let CHECKED_TSV='';
+function escHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function checkRows(){
+  const out=document.getElementById('chk-result');
+  const text=document.getElementById('chk-input').value;
+  const rows=extractRows(text);
+  CHECKED_TSV='';
+  if(!rows.length){
+    out.innerHTML=`<p class="chk-err">No data rows found.</p><p style="font-size:12px;color:var(--mid)">The checker looks for lines with fields separated by | (or tabs). If the AI's columns ran together with spaces, ask it: <em>"Please resend the rows inside a code block, with fields separated by the | character."</em></p>`;
+    return;
+  }
+  let html='', tsv=[], totalErr=0, totalFix=0, skipped=0;
+  rows.forEach((parts,ri)=>{
+    const msgs=[];
+    const badCount = parts.length!==COLS.length;
+    if(badCount){ msgs.push(`<li class="chk-err">Row ${ri+1} has ${parts.length} fields — it needs exactly ${COLS.length}, otherwise values land in the wrong columns. This row will NOT be copied. Ask the AI: <em>"Row ${ri+1} has ${parts.length} fields instead of ${COLS.length} — please resend it."</em></li>`); totalErr++; skipped++; }
+    const res=COLS.map((c,i)=>checkField(parts[i]||'',c));
+    const unv=COLS.filter((c,i)=>res[i].unverified).map(c=>c.n);
+    // AI-flagged values: money values are removed (principle: no AI valuations); others kept but labelled
+    COLS.forEach((c,i)=>{ if(res[i].unverified && c.t==='num'){ msgs.push(`<li class="chk-warn">${c.n} "${escHtml(res[i].v)}" was marked uncertain by the AI — removed (unverified values don't go in the value columns).</li>`); res[i].v=''; } });
+    const keep=unv.filter(n=>!['Acq. Price','Est. Value'].includes(n));
+    if(keep.length){ const ni=COLS.findIndex(c=>c.n==='Notes'); const tag='AI-filled (unverified): '+keep.join(', ');
+      if(!res[ni].v.includes(tag)) res[ni].v=(res[ni].v?res[ni].v+' | ':'')+tag; res[ni].v=res[ni].v.replace(/\|/g,'/'); }
+    let rowErr=0;
+    html+=`<h4 style="margin-top:14px;color:var(--navy)">Row ${ri+1}: ${escHtml(res[4].v||'(no title)')}</h4><table class="chk-table"><tr>`+COLS.map(c=>`<th>${escHtml(c.n)}</th>`).join('')+'</tr><tr>';
+    res.forEach((r,i)=>{ const cls=r.err?'err':(r.fixed?'fix':''); if(r.err){rowErr++; msgs.push(`<li class="chk-err">${COLS[i].n}: ${escHtml(r.err)}</li>`);} if(r.fixed) totalFix++;
+      html+=`<td class="${cls}" title="${escHtml(r.err||'')}">${escHtml(r.v)}</td>`; });
+    html+='</tr></table>';
+    if(msgs.length) html+='<ul class="chk-msgs">'+msgs.join('')+'</ul>';
+    totalErr+=rowErr;
+    if(!badCount) tsv.push(res.map(r=>r.v.replace(/[\t\r\n]+/g,' ')).join('\t'));
+  });
+  CHECKED_TSV=tsv.join('\n');
+  const head = totalErr
+    ? `<p class="chk-err">${totalErr} problem${totalErr>1?'s':''} found (red). Fix them in the box above and click Check again — or copy anyway and correct those cells in the spreadsheet.</p>`
+    : `<p class="chk-ok">✓ ${rows.length} row${rows.length>1?'s':''} ready.${totalFix?` ${totalFix} value${totalFix>1?'s were':' was'} tidied automatically (yellow).`:''}</p>`;
+  const n=tsv.length;
+  const btn = n ? `<button class="btn btn-primary" onclick="copyChecked()" style="margin-top:6px">Copy ${n} row${n>1?'s':''} for Holdings</button>
+    <p class="copy-notice">Then in Holdings: click column B of the first empty row and paste.${skipped?` (${skipped} row${skipped>1?'s':''} with the wrong number of fields left out.)`:''}</p>` : '';
+  out.innerHTML = head + btn + html;
+}
+function copyText(t, msg){
+  const done=()=>alert(msg);
+  if(navigator.clipboard && window.isSecureContext!==false){
+    navigator.clipboard.writeText(t).then(done).catch(()=>fallbackCopy(t,done));
+  } else fallbackCopy(t,done);
+}
+function fallbackCopy(t,done){
+  const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done();
+}
+function copyChecked(){ copyText(CHECKED_TSV, 'Copied! In Holdings, click column B of the first empty row and paste.'); }
+
+// ── Update existing ──────────────────────────────────────────────────────────
+function generateUpdate(){
+  const id=val('u-id'), ref=val('u-title-ref');
+  const map=[['u-status','Status','U'],['u-title','Title','F'],['u-qty','Qty','M'],['u-mintage','Mintage','N'],['u-coa','CoA Number','P'],
+    ['u-acqdate','Acquisition Date','V'],['u-acqsrc','Acquisition Source','W'],['u-acqprice','Acq. Price','X'],['u-estval','Est. Value','Y'],['u-storage','Storage Location','Z']];
+  const lines=[`UPDATE — ${id||'(no Item ID)'}${ref?' — '+ref:''}`, `In the Holdings tab, find the row with Item ID ${id||'?'} (column A), then change:`];
+  let n=0;
+  map.forEach(([fid,name,col])=>{ const v=val(fid); if(v){ lines.push(`  Column ${col} — ${name}: ${v}`); n++; } });
+  const notes=[val('u-ordernotes'),val('u-notes')].filter(Boolean).join(' / ');
+  if(notes){ lines.push(`  Column AA — Notes: add to the end → ${notes}`); n++; }
+  if(!n) lines.push('  (nothing to change — fill in at least one field)');
+  document.getElementById('update-output-text').textContent=lines.join('\n');
+  document.getElementById('update-output').style.display='block';
 }
 
 function generateNewEntry() { generateAllEntries(); }
@@ -1013,8 +1269,7 @@ function clearAll() {
 function clearNew() { clearAll(); }
 
 function copyOutput(id) {
-  navigator.clipboard.writeText(document.getElementById(id).textContent)
-    .then(() => alert('Copied to clipboard!'));
+  copyText(document.getElementById(id).textContent, 'Copied to clipboard!');
 }
 
 function clearNew() {

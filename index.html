@@ -98,7 +98,7 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
   <div class="hero-brand">COLLECTOR'S LITTLE HELPER™</div>
   <h1>A coin catalogue starter kit<br>for <em>every</em> collector</h1>
   <div class="hero-sub">Spreadsheet template · AI-assisted entry form · Quick start guide · Curated resources &amp; references</div>
-  <div class="hero-version">Version 1.4 — September 2026</div>
+  <div class="hero-version">Version 1.5 — October 2026</div>
   <div class="hero-btns">
   <a href="CLH_Catalogue.xlsx" class="btn-download" download>⬇ Download the Catalogue</a>
   <a href="CLH_Entry_Form.html" class="btn-secondary" download>⬇ Download the Entry Form</a>
@@ -158,17 +158,17 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
     <div class="step">
       <div class="step-num">2</div>
       <h4>Copy to AI</h4>
-      <p>Click Generate Entry, copy the output, and paste it to Claude or another AI assistant with the provided prompt.</p>
+      <p>Click Generate Entry and copy the output — it already includes the full instructions. Paste it into a new chat with Claude, ChatGPT, Gemini or Copilot.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <h4>AI completes it</h4>
-      <p>The AI fills in missing details, formats the title correctly, and returns a tab-separated row ready to paste.</p>
+      <p>The AI fills in what it's confident about, formats the title, and returns one line per coin. Paste its reply into the form's Check &amp; Copy tab — every field is checked against the catalogue.</p>
     </div>
     <div class="step">
       <div class="step-num">4</div>
       <h4>Paste into spreadsheet</h4>
-      <p>Click the first empty cell in your Holdings tab, paste — the entire row fills automatically. No typing required.</p>
+      <p>Click column B of the first empty row in your Holdings tab and paste — the whole row fills, and the grey columns calculate themselves.</p>
     </div>
   </div>
 </div>
@@ -183,7 +183,17 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
     </thead>
     <tbody>
       <tr>
-        <td><strong>1.4</strong> <span class="version-badge">CURRENT</span></td>
+        <td><strong>1.5</strong> <span class="version-badge">CURRENT</span></td>
+        <td>Oct 2026</td>
+        <td>
+          <strong>Reliable AI-to-spreadsheet paste, end to end.</strong> The Entry Form's output now contains the complete AI instructions (no separate prompt to copy), works with any AI assistant, and asks for values from the catalogue's own dropdown lists. A new <strong>Check &amp; Copy</strong> tab takes the AI's reply, checks every field, tidies what it safely can, and copies rows that paste cleanly into Holdings. The AI no longer adds estimated values, and anything it fills from its own knowledge is labelled <em>AI-filled (unverified)</em> in Notes.<br><br>
+          <strong>Workbook fixes:</strong> input columns now sit together (B–AC) with the grey calculated columns moved to the far right (AD–AG), so a pasted row no longer hits protected cells. Calculated columns are now filled for all 2,000 rows — previously only the example row calculated, so the INDEX value totals missed new entries. Metal, Packaging (adds Loose/Raw), Country and NIFC? dropdowns fixed. The hidden deprecated Grade column has been removed.<br><br>
+          <strong>Form fix:</strong> the Update Existing tab's Generate Update button now works, and tells you exactly which column to change.<br><br>
+          <strong>Upgrading from v1.4?</strong> Column positions have changed, so copy your data across in blocks — see the instructions in the new workbook's START HERE tab (section ⑦).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>1.4</strong></td>
         <td>Sep 2026</td>
         <td>
           <strong>Preferred currency field added to START HERE.</strong> Choose your reporting currency (AUD, GBP, CAD, NZD, USD, EUR, SBD) — Holdings and the INDEX summary report convert and relabel automatically. Defaults to AUD; nothing changes if you leave it as-is.<br><br>

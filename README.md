@@ -4,7 +4,7 @@
 
 **Describe a coin → paste to your AI assistant → get a completed spreadsheet row back in seconds.**
 
-Version 1.4 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
+Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
 
 ---
 
@@ -25,9 +25,9 @@ Version 1.4 — see the [version history](https://sparkerkevscoins.github.io/col
 
 1. Open `CLH_Entry_Form.html` in a browser and describe your coin
 2. Click **Generate Entry** and copy the output
-3. Paste to your AI assistant with the provided prompt
-4. The AI returns a completed, tab-separated row ready to paste
-5. Click the first empty cell in your Holdings tab and paste — the entire row fills automatically
+3. Paste to any AI assistant — the instructions are included in what you copy
+4. Paste the AI's reply into the form's Check & Copy tab — it checks every field and copies clean rows
+5. Click column B of the first empty row in your Holdings tab and paste — the whole row fills automatically
 
 No macros. No special software. No subscriptions. Works in Microsoft Excel, Google Sheets, LibreOffice Calc, and Apple Numbers.
 
