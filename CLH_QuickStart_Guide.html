@@ -136,20 +136,21 @@ p{margin-bottom:12px;max-width:680px}
   <div class="section-eyebrow"><div class="step-num">1</div><div class="section-label">THE MOST IMPORTANT THING</div></div>
   <h2>How to name your coins consistently</h2>
   <p>Every item in the catalogue should follow this title format. It makes your catalogue sortable, searchable, and readable by anyone — including a coin dealer or executor.</p>
-  <div class="formula-box">[Year] [Country] [Denomination] [Subject/Theme] — [Finish] [Special Attributes]</div>
+  <div class="formula-box">[Year] [Country] [Denomination] [Subject] — [Mintmark] [Treatment] [Metal] [Finish] [Format]</div>
   <div class="formula-parts">
     <div class="formula-part"><strong>YEAR</strong>4-digit, always first</div>
     <div class="formula-part"><strong>COUNTRY</strong>Australia, United Kingdom, Canada…</div>
     <div class="formula-part"><strong>DENOMINATION</strong>$2, 50c, £5, CAD$20</div>
     <div class="formula-part"><strong>SUBJECT</strong>Plain English — no eBay clutter</div>
-    <div class="formula-part"><strong>FINISH</strong>After the dash — Silver Proof, Uncirculated…</div>
-    <div class="formula-part"><strong>SPECIAL</strong>C-Mintmark, Coloured, PNC, shape note…</div>
+    <div class="formula-part"><strong>AFTER THE DASH</strong>Only what applies, always in this order: Mintmark → Treatment → Metal (Silver/Gold only) → Finish → Format</div>
+    <div class="formula-part"><strong>FOR EXAMPLE</strong>C-Mintmark · Coloured · Silver · Proof or Uncirculated · RAM Card or PNC — then any shape note in brackets</div>
   </div>
   <div style="margin-top:20px">
     <div class="example-good">✅ <strong>2023 Australia $2 Vietnam War 50th Anniversary — C-Mintmark Coloured Uncirculated RAM Card</strong></div>
     <div class="example-good">✅ <strong>2015 Australia $5 ANZAC Centenary — Silver Proof (triangular, cased)</strong></div>
     <div class="example-good">✅ <strong>2008 Canada 25c Remembrance Day Poppy — Coloured Uncirculated</strong></div>
     <div class="example-bad">❌ <span style="text-decoration:line-through">$2 C mintmark poppy 2023 coloured RAM unc card vietnam</span> — year not first, abbreviations, no country</div>
+    <div class="example-bad">❌ <span style="text-decoration:line-through">2024 Australia $2 Remembrance Day — Uncirculated Coloured</span> — treatment must come before the finish</div>
   </div>
   <p style="margin-top:16px;font-size:13px;color:var(--mid)">One rule: always write <strong>Uncirculated</strong> in full — never UNC or Unc.</p>
 </div>
@@ -196,7 +197,7 @@ p{margin-bottom:12px;max-width:680px}
     </div>
     <div style="display:flex;gap:12px;align-items:flex-start;margin:14px 0">
       <div class="step-num">2</div>
-      <div><strong style="color:var(--navy)">Ask any AI assistant</strong><br><span class="where">Where: A new chat in Claude, ChatGPT, Gemini or Copilot</span><br>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one line per coin) and a short summary of what it filled in and what it left blank.<br><span style="font-size:12.5px;color:var(--silver)">Read the summary. The AI never adds estimated values, and anything it fills from its own knowledge is labelled <i>AI-filled (unverified)</i> in Notes. You are always the final authority on your own collection.</span></div>
+      <div><strong style="color:var(--navy)">Ask any AI assistant</strong><br><span class="where">Where: A new chat in Claude, ChatGPT, Gemini or Copilot</span><br>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one block of labelled lines per coin) and a short summary of what it filled in and what it left blank.<br><span style="font-size:12.5px;color:var(--silver)">Read the summary. The AI never adds estimated values, and anything it fills from its own knowledge is labelled <i>AI-filled (unverified)</i> in Notes. You are always the final authority on your own collection.</span></div>
     </div>
     <div style="display:flex;gap:12px;align-items:flex-start;margin:14px 0">
       <div class="step-num">3</div>
@@ -212,7 +213,7 @@ p{margin-bottom:12px;max-width:680px}
     </div>
 
   <h3 style="margin-top:22px;color:var(--navy);font-size:16px">Stuck?</h3>
-  <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the values ran together</td><td>Ask the AI: <i>“Please resend the rows inside a code block, with fields separated by the | character.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. A row with the wrong number of fields isn't copied: ask the AI to resend that row.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
+  <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
   <ul class="tips">
     <li>For inherited items with unknown details, the AI can often identify the coin from a description alone and fill in mintage, year, and metal</li><li>eBay "sold" listings (not asking prices) are the most reliable source for current market values — check them yourself and enter your own figure. The AI won't add values for you, because AI price estimates aren't reliable enough to record</li><li>Don't clean your coins — cleaning destroys numismatic value permanently</li><li><strong>Watch out for coin roll scams</strong> — a known fraud where a valuable coin sits on top of a roll of worthless ones. You must destroy the roll to check. Buy coin rolls only from the RAM or a trusted dealer.</li>
   </ul>

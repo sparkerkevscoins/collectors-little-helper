@@ -138,7 +138,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
       </div>
       <div class="field-grid full" style="margin-top:12px">
         <div class="field required"><label>Coin Title <span class="req">*</span>
-          <span class="hint">[Year] [Country] [Denom] [Subject] — [Finish] [Special]</span></label>
+          <span class="hint">[Year] [Country] [Denom] [Subject] — [Mintmark] [Treatment] [Metal] [Finish] [Format]</span></label>
           <input type="text" id="n-title" placeholder="2024 Australia $2 Remembrance Day — C-Mintmark Uncirculated RAM Card"></div>
       </div>
       <div class="field-grid three" style="margin-top:12px">
@@ -422,7 +422,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         </div>
         <div class="acc-body">
           <span class="where">Where: A new chat in Claude, ChatGPT, Gemini or Copilot</span>
-          <p>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one line per coin) and a short summary of what it filled in and what it left blank.</p>
+          <p>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one block of labelled lines per coin) and a short summary of what it filled in and what it left blank.</p>
           <div class="acc-tip">Read the summary. The AI never adds estimated values, and anything it fills from its own knowledge is labelled <i>AI-filled (unverified)</i> in Notes. You are always the final authority on your own collection.</div>
         </div>
       </div>
@@ -488,7 +488,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the values ran together</td><td>Ask the AI: <i>“Please resend the rows inside a code block, with fields separated by the | character.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. A row with the wrong number of fields isn't copied: ask the AI to resend that row.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
+          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
         </div>
       </div>
 
@@ -930,17 +930,27 @@ const AI_PROMPT = [
 "You are helping me catalogue coins in my Collector's Little Helper spreadsheet. Complete each entry at the bottom of this message.",
 "",
 "OUTPUT FORMAT — follow exactly:",
-"- Put ALL entries inside ONE code block. One line per entry, in the same order as below. Nothing else inside the code block: no header row, no numbering, no blank lines.",
-"- Separate fields with the pipe character |  Every line must have exactly "+COLS.length+" fields ("+(COLS.length-1)+" pipes). An empty field is just two pipes together: ||",
+"- Put ALL entries inside ONE code block.",
+"- Start each entry with a line: === ENTRY 1 ===  (then === ENTRY 2 === and so on).",
+"- Under it, write every one of the "+COLS.length+" fields below on its own line, as   Field name: value   using the field names exactly as written. Include every field, even when it's empty (e.g.  Mintage: ).",
+"- One line per field. Nothing else inside the code block.",
 "- Never put a ? mark, a comment, a range or the word 'unknown' inside a field. If you're not confident, leave the field empty.",
 "- After the code block, write a short plain-English summary: what you filled in, what you left empty and why, and anything I should double-check.",
 "",
-"FIELDS, IN THIS ORDER:",
+"FIELDS (use these exact names, in this order):",
 " 1. Item Type — exactly one of: "+L_TYPE.join(', '),
 " 2. Country — exactly one of: "+L_COUNTRY.join(', '),
 " 3. Year — 4 digits",
 " 4. Series / Theme — e.g. Remembrance Day, Lyrebird (standard reverse)",
-" 5. Title — format: Year Country Denomination Subject — Grade Special-attributes. Write 'Uncirculated' in full. Example: 2024 Australia 50c Echidna — Proof Coloured",
+" 5. Title — build it from the other fields in exactly this order:",
+"      Year Country Denomination Subject — Mintmark Treatment Metal Finish Packaging",
+"      Before the dash: 4-digit year, full country name (same as the Country field), denomination as written ($2, 50c, £5), then a plain-English subject.",
+"      After the dash, only what applies, in this order: mintmark (e.g. C-Mintmark), treatment (e.g. Coloured), precious metal only (Silver or Gold — never AlBr or cupro-nickel), the finish in words (Proof, Uncirculated — always write Uncirculated in full, never UNC), then the format (RAM Card, PNC).",
+"      Correct: 2023 Australia $2 Vietnam War 50th Anniversary — C-Mintmark Coloured Uncirculated RAM Card",
+"      Correct: 2015 Australia $5 ANZAC Centenary — Silver Proof (triangular, cased)",
+"      Correct: 2008 Canada 25c Remembrance Day Poppy — Coloured Uncirculated",
+"      Wrong: 2024 Australia $2 Poppy — Uncirculated Coloured   (treatment must come before the finish)",
+"      If my title doesn't follow this rule, rewrite it.",
 " 6. Denomination — a plain number in the main currency unit: 10c = 0.1, 50c = 0.5, $1 = 1, $2 = 2, 50p = 0.5. Empty for sets with mixed denominations.",
 " 7. Metal — exactly one of: "+L_METAL.join(', '),
 " 8. Grade — exactly one of: "+L_GRADE.join(', '),
@@ -965,8 +975,16 @@ const AI_PROMPT = [
 "27. Reference Numbers — catalogue references (e.g. KM number) only if you're sure",
 "28. Effigy — obverse portrait and designer, e.g. Charles III — Dan Thorne",
 "",
+"EXAMPLE OF ONE ENTRY:",
+"=== ENTRY 1 ===",
+"Item Type: Coin",
+"Country: Australia",
+"Year: 2024",
+"…and so on for all "+COLS.length+" fields, ending with",
+"Effigy: Charles III — Dan Thorne",
+"",
 "RULES:",
-"- Keep everything I provided. Only correct obvious formatting (e.g. '10c' becomes 0.1 in Denomination).",
+"- Keep everything I provided (except the Title, which must follow the rule above). Only correct obvious formatting (e.g. '10c' becomes 0.1 in Denomination).",
 "- Only fill an empty field if you are confident the value is correct for this exact coin. Otherwise leave it empty and mention it in the summary.",
 "- If a value I gave doesn't match an allowed option, use the closest allowed option and say so in the summary.",
 "",
@@ -1042,22 +1060,101 @@ function checkField(raw, col){
   }
   return r;
 }
+const LABELS=(()=>{ const m={};
+  COLS.forEach((c,i)=>m[norm(c.n)]=i);
+  const al={cointitle:'Title',seriestheme:'Series / Theme',series:'Series / Theme',theme:'Series / Theme',metalcomposition:'Metal',composition:'Metal',
+    finish:'Grade',gradefinish:'Grade',treatmenttype:'Treatment',packagingformat:'Packaging',format:'Packaging',finishconfidence:'Grade Confidence',confidence:'Grade Confidence',
+    quantity:'Qty',ramproductcode:'RAM Code',coa:'CoA Number',pncissuenumber:'PNC Issue No.',pncissue:'PNC Issue No.',mintmark:'Mintmark Ref',privymark:'Mintmark Ref',
+    fromyearproofset:'From Proof Set?',fromproofset:'From Proof Set?',nifcrelease:'NIFC?',nifc:'NIFC?',ncl:'NIFC?',acqdate:'Acquisition Date',dateacquired:'Acquisition Date',
+    acqsource:'Acquisition Source',source:'Acquisition Source',acquisitionprice:'Acq. Price',price:'Acq. Price',pricepaid:'Acq. Price',
+    estimatedvalue:'Est. Value',currentestimatedvalue:'Est. Value',value:'Est. Value',storage:'Storage Location',location:'Storage Location',
+    note:'Notes',references:'Reference Numbers',referencenumber:'Reference Numbers',catalogueref:'Reference Numbers',obverse:'Effigy',portrait:'Effigy'};
+  for(const k in al){ const i=COLS.findIndex(c=>c.n===al[k]); if(i>=0 && m[k]===undefined) m[k]=i; }
+  return m; })();
+function labelIndex(lbl){ const k=norm(lbl.replace(/\(.*?\)/g,'')); return LABELS[k]!==undefined?LABELS[k]:(LABELS[norm(lbl)]!==undefined?LABELS[norm(lbl)]:-1); }
 function extractRows(text){
-  const lines=text.replace(/\r/g,'').split('\n');
-  const rows=[];
-  for(let line of lines){
-    let s=line.trim();
-    if(!s || /^```/.test(s)) continue;
+  text=text.replace(/\r/g,'');
+  // if the reply still has its code-block fences, only read what's inside them (ignores the summary)
+  const fenced=[...text.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map(m=>m[1]);
+  if(fenced.length) text=fenced.join('\n');
+  const lines=text.split('\n');
+  const rows=[]; let cur=null, ignoring=false;
+  const newEntry=()=>({labelled:true,parts:Array(COLS.length).fill(''),seen:new Set()});
+  const flush=()=>{ if(cur && cur.seen.size>=3){ cur.missing=COLS.filter((c,i)=>!cur.seen.has(i)).map(c=>c.n); rows.push(cur); } cur=null; };
+  for(const line of lines){
+    let s=line.trim().replace(/^`+|`+$/g,'').trim();
+    if(!s) continue;
+    if(/^=+\s*(entry|coin|item|row)\b/i.test(s)){ flush(); cur=newEntry(); ignoring=false; continue; }
+    const m=s.match(/^(?:[-*•]\s*)?(?:\d{1,2}[.)]\s*)?\**\s*([A-Za-z][A-Za-z0-9 .?/()&'-]{0,40}?)\s*\**\s*[:=]\s*\**(.*)$/);
+    if(m){ const i=labelIndex(m[1]);
+      if(i>=0){
+        const v=m[2].trim().replace(/\*+$/,'').trim();
+        if(i===0 && !matchList(v.replace(/\?$/,''),L_TYPE).err){ flush(); cur=newEntry(); ignoring=false; }
+        if(ignoring || !cur) continue;
+        if(cur.seen.has(i)){ flush(); ignoring=true; continue; }   // a repeated field name = we've reached the summary
+        cur.parts[i]=v; cur.seen.add(i);
+        if(i===COLS.length-1){ flush(); ignoring=true; }            // last field reached
+        continue; } }
     let parts=null;
     if(s.includes('\t') && s.split('\t').length>=15) parts=s.split('\t');
     else if(s.split('|').length>=15){ s=s.replace(/^\|/,'').replace(/\|$/,''); parts=s.split('|'); }
     if(!parts) continue;
-    if(parts.every(p=>/^[\s:-]*$/.test(p))) continue;           // markdown table divider
-    if(norm(parts[0])==='itemtype') continue;                    // header row
-    rows.push(parts.map(p=>p.trim()));
+    if(parts.every(p=>/^[\s:-]*$/.test(p))) continue;
+    if(norm(parts[0])==='itemtype') continue;
+    flush(); ignoring=true; rows.push(parts.map(p=>p.trim()));
   }
+  flush();
   return rows;
 }
+
+// ── Title rule (agreed convention) ───────────────────────────────────────────
+// Year Country Denomination Subject — Mintmark Treatment Metal Finish Packaging (+ any extra notes)
+const GRADE_WORDS={'Proof':'Proof','Specimen':'Specimen','FDC/BU':'Brilliant Uncirculated','Gem UNC':'Gem Uncirculated','Choice UNC':'Choice Uncirculated',
+ 'UNC':'Uncirculated','aUNC':'About Uncirculated','gEF/gXF':'Good Extremely Fine','EF/XF':'Extremely Fine','aEF/aXF':'About Extremely Fine','gVF':'Good Very Fine',
+ 'VF':'Very Fine','F':'Fine','VG':'Very Good','G':'Good','Fr':'Fair','P':'Poor','Circulating (ungraded)':'Circulated'};
+const CUR_SYM={'Australia':['$','c'],'Kiribati':['$','c'],'Solomon Islands':['$','c'],'United Kingdom':['£','p'],'Guernsey':['£','p'],
+ 'Canada':['CAD$','c'],'New Zealand':['NZ$','c'],'Niue':['NZ$','c'],'United States':['US$','c'],'Eurozone':['€','c']};
+const COUNTRY_ALIASES=['Australia','United Kingdom','UK','Great Britain','Britain','Canada','New Zealand','NZ','United States','USA','US','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue'];
+function fmtDenom(d,country){ const n=+d; if(!d||isNaN(n)||n===0) return ''; const [big,small]=CUR_SYM[country]||['$','c'];
+  return n<1 ? Math.round(n*100)+small : big+(Number.isInteger(n)?n:n.toFixed(2)); }
+function buildTitle(res){
+  const f=n=>res[COLS.findIndex(c=>c.n===n)].v;
+  const year=f('Year'), country=f('Country'); let denom=fmtDenom(f('Denomination'),country);
+  const ai=(f('Title')||'').trim(); const warn=[];
+  let [pre,...post]=ai.split(/\s+[—–]\s+|\s+-\s+/); let suf=post.join(' ');
+  // subject: strip leading year / country / denomination tokens from the part before the dash
+  let subj=(pre||'').replace(/^\s*\d{4}\s+/,'');
+  for(let k=0;k<3;k++){
+    const c=COUNTRY_ALIASES.find(a=>subj.toLowerCase().startsWith(a.toLowerCase()+' '));
+    if(c){ if(norm(c)!==norm(country) && !(country==='United Kingdom'&&/^(uk|great britain|britain)$/i.test(c)) && !(country==='United States'&&/^(usa|us)$/i.test(c)) && !(country==='New Zealand'&&/^nz$/i.test(c)))
+             warn.push(`the title said "${c}" but Country is ${country}`);
+           subj=subj.slice(c.length).trim(); continue; }
+    const dm=subj.match(/^((?:[A-Z]{2,3})?[$£€]\s?(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s?(?:c|p|cents?))\s+/i);
+    if(dm){ const val=dm[2]!==undefined? +dm[2] : +dm[3]/100;
+      if(Math.abs(val-(+f('Denomination')))<1e-9) denom=dm[1].replace(/\s/g,'');   // keep the AI's own symbol when the value matches
+      subj=subj.slice(dm[0].length); continue; }
+    break; }
+  subj=subj.trim() || f('Series / Theme');
+  // after the dash
+  const mm0=f('Mintmark Ref'); const mm=/^(no|none|n\/?a|nil|-)$/i.test(mm0)?'':mm0; const mint = !mm ? '' : (/^[A-Z]$/i.test(mm) ? mm.toUpperCase()+'-Mintmark' : (/mint ?mark|privy/i.test(mm)?mm:mm+' Privy'));
+  let treat=(f('Treatment')&&f('Treatment')!=='None') ? f('Treatment').split(' + ') : [];
+  const metalF=f('Metal'); const metal=/^Silver/.test(metalF)?'Silver':/^Gold \(/.test(metalF)?'Gold':metalF==='Gold Plated'?'Gold-Plated':'';
+  const finish=GRADE_WORDS[f('Grade')]||'';
+  const it=f('Item Type'), pk=f('Packaging');
+  const pack = /^PNC\/PMC/.test(pk)||it==='PNC'||it==='PMC' ? (it==='PMC'?'PMC':'PNC') : pk==='RAM Card'?'RAM Card':pk==='Downies Card'?'Downies Card':'';
+  // keep anything extra the AI wrote after the dash (e.g. "(triangular, cased)", "Limited Edition")
+  const known=new Set(['unc','uncirculated','proof','silver','gold','fine','pure','.999','.925','999','925','sterling','gold-plated','plated','mintmark','c-mintmark','privy','pnc','pmc','ram','card','roll','downies','carded','brilliant','gem','choice','about','specimen','circulated',
+    ...L_TREAT.map(t=>t.toLowerCase()), ...(finish.toLowerCase().split(' ')), ...(mint.toLowerCase().split(/[\s-]+/)), mm.toLowerCase()]);
+  const parens=(suf.match(/\([^)]*\)/g)||[]); let rest=suf.replace(/\([^)]*\)/g,' ');
+  L_TREAT.forEach(t=>{ if(new RegExp('\\b'+t+'\\b','i').test(rest) && !treat.includes(t) && t!=='Other'){ warn.push(`the title said "${t}" but Treatment doesn't`); treat.push(t);} });
+  const extras=rest.split(/\s+/).filter(w=>w && !known.has(w.toLowerCase().replace(/[,;]$/,'')));
+  if(pack && new RegExp('\\s'+pack+'$','i').test(subj)) subj=subj.replace(new RegExp('\\s'+pack+'$','i'),'');
+  const tail=[mint,...treat,metal,finish,pack,...extras,...parens].filter(Boolean);
+  const dedup=tail.filter((w,i)=>tail.findIndex(x=>x.toLowerCase()===w.toLowerCase())===i);
+  const title=[year,country,denom,subj].filter(Boolean).join(' ')+(dedup.length?' — '+dedup.join(' '):'');
+  return {title, warn};
+}
+
 let CHECKED_TSV='';
 function escHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function checkRows(){
@@ -1066,15 +1163,23 @@ function checkRows(){
   const rows=extractRows(text);
   CHECKED_TSV='';
   if(!rows.length){
-    out.innerHTML=`<p class="chk-err">No data rows found.</p><p style="font-size:12px;color:var(--mid)">The checker looks for lines with fields separated by | (or tabs). If the AI's columns ran together with spaces, ask it: <em>"Please resend the rows inside a code block, with fields separated by the | character."</em></p>`;
+    out.innerHTML=`<p class="chk-err">No data rows found.</p><p style="font-size:12px;color:var(--mid)">The checker looks for lines like <em>Country: Australia</em>. Ask the AI: <em>"Please resend each entry inside a code block, with every field on its own line as Field name: value."</em></p>`;
     return;
   }
   let html='', tsv=[], totalErr=0, totalFix=0, skipped=0;
-  rows.forEach((parts,ri)=>{
+  rows.forEach((row,ri)=>{
     const msgs=[];
-    const badCount = parts.length!==COLS.length;
-    if(badCount){ msgs.push(`<li class="chk-err">Row ${ri+1} has ${parts.length} fields — it needs exactly ${COLS.length}, otherwise values land in the wrong columns. This row will NOT be copied. Ask the AI: <em>"Row ${ri+1} has ${parts.length} fields instead of ${COLS.length} — please resend it."</em></li>`); totalErr++; skipped++; }
+    const parts = row.labelled ? row.parts : row;
+    const badCount = !row.labelled && parts.length!==COLS.length;
+    if(row.labelled && row.missing.length) msgs.push(`<li class="chk-warn">The AI left out ${row.missing.length} field${row.missing.length>1?'s':''} (${escHtml(row.missing.join(', '))}) — left blank.</li>`);
+    if(badCount){ msgs.push(`<li class="chk-err">Row ${ri+1} has ${parts.length} fields — it needs exactly ${COLS.length}, otherwise values land in the wrong columns. This row will NOT be copied. Ask the AI: <em>"Please resend row ${ri+1} as labelled lines, one Field name: value per line."</em></li>`); totalErr++; skipped++; }
     const res=COLS.map((c,i)=>checkField(parts[i]||'',c));
+    { const ti=COLS.findIndex(c=>c.n==='Title');
+      if(!badCount && !res[ti].err && !res[0].err && !res[1].err && !res[2].err){
+        const bt=buildTitle(res);
+        if(bt.title!==res[ti].v){ msgs.push(`<li class="chk-warn">Title rebuilt to the naming rule (the AI wrote: "${escHtml(res[ti].v)}").</li>`); res[ti].v=bt.title; res[ti].fixed=1; }
+        bt.warn.forEach(w=>msgs.push(`<li class="chk-warn">Check: ${escHtml(w)}.</li>`));
+      } }
     const unv=COLS.filter((c,i)=>res[i].unverified).map(c=>c.n);
     // AI-flagged values: money values are removed (principle: no AI valuations); others kept but labelled
     COLS.forEach((c,i)=>{ if(res[i].unverified && c.t==='num'){ msgs.push(`<li class="chk-warn">${c.n} "${escHtml(res[i].v)}" was marked uncertain by the AI — removed (unverified values don't go in the value columns).</li>`); res[i].v=''; } });

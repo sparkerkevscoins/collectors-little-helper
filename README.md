@@ -24,7 +24,7 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 ## Five steps to add a coin
 
 1. **Describe your coin** — *Entry Form → New Entry tab*. Fill in what you know — the gold fields are the must-haves. Adding several coins? Click + Add Another Coin for each one. Then click Generate Entry and Copy to Clipboard.
-2. **Ask any AI assistant** — *A new chat in Claude, ChatGPT, Gemini or Copilot*. Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one line per coin) and a short summary of what it filled in and what it left blank.
+2. **Ask any AI assistant** — *A new chat in Claude, ChatGPT, Gemini or Copilot*. Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one block of labelled lines per coin) and a short summary of what it filled in and what it left blank.
 3. **Check the reply** — *Entry Form → Check & Copy tab*. Paste the AI's whole reply and click Check. Yellow cells were tidied automatically; red cells need you. Then click Copy rows for Holdings.
 4. **Paste into your catalogue** — *CLH_Catalogue.xlsx → Holdings tab*. Click column B (Item Type) in the first empty row and paste (Ctrl+V on Windows, Cmd+V on Mac). The grey columns fill themselves.
 5. **Save and back up** — *Your spreadsheet app*. Save (Ctrl+S / Cmd+S) and keep a copy somewhere other than this computer.
@@ -34,8 +34,8 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 | If this happens… | Do this |
 |---|---|
 | I don't know some of the details | Leave them blank. The AI fills only what it's sure of. For research, see the Resources page. |
-| The AI's reply has no grey code box, or the values ran together | Ask the AI: "Please resend the rows inside a code block, with fields separated by the \| character." |
-| Check & Copy shows red cells | Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. A row with the wrong number of fields isn't copied: ask the AI to resend that row. |
+| The AI's reply has no grey code box, or the checker finds no entries | Ask the AI: "Please resend each entry inside a code block, with every field on its own line as Field name: value." |
+| Check & Copy shows red cells | Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note. |
 | Excel says the cell is protected | You clicked a grey column. Click column B of an empty row and paste again. |
 | Item ID or another grey column is blank | Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value. |
 | I need to change a coin I've already added | Entry Form → Update Existing tab. It tells you exactly which column to change. |
