@@ -944,7 +944,7 @@ const AI_PROMPT = [
 " 4. Series / Theme — e.g. Remembrance Day, Lyrebird (standard reverse)",
 " 5. Title — build it from the other fields in exactly this order:",
 "      Year Country Denomination Subject — Mintmark Treatment Metal Finish Packaging",
-"      Before the dash: 4-digit year, full country name (same as the Country field), denomination as written ($2, 50c, £5), then a plain-English subject.",
+"      Before the dash: 4-digit year, full country name (same as the Country field), denomination as written ($2, 50c, £5, 50p — Canadian dollars as CAD$20), then a plain-English subject.",
 "      After the dash, only what applies, in this order: mintmark (e.g. C-Mintmark), treatment (e.g. Coloured), precious metal only (Silver or Gold — never AlBr or cupro-nickel), the finish in words (Proof, Uncirculated — always write Uncirculated in full, never UNC), then the format (RAM Card, PNC).",
 "      Correct: 2023 Australia $2 Vietnam War 50th Anniversary — C-Mintmark Coloured Uncirculated RAM Card",
 "      Correct: 2015 Australia $5 ANZAC Centenary — Silver Proof (triangular, cased)",
@@ -1131,7 +1131,7 @@ function buildTitle(res){
            subj=subj.slice(c.length).trim(); continue; }
     const dm=subj.match(/^((?:[A-Z]{2,3})?[$£€]\s?(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s?(?:c|p|cents?))\s+/i);
     if(dm){ const val=dm[2]!==undefined? +dm[2] : +dm[3]/100;
-      if(Math.abs(val-(+f('Denomination')))<1e-9) denom=dm[1].replace(/\s/g,'');   // keep the AI's own symbol when the value matches
+      if(Math.abs(val-(+f('Denomination')))<1e-9 && !(country==='Canada' && (+f('Denomination'))>=1)) denom=dm[1].replace(/\s/g,'');   // Canadian dollars are always written CAD$   // keep the AI's own symbol when the value matches
       subj=subj.slice(dm[0].length); continue; }
     break; }
   subj=subj.trim() || f('Series / Theme');
