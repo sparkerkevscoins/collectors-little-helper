@@ -1146,6 +1146,9 @@ function buildTitle(res){
   const known=new Set(['unc','uncirculated','proof','silver','gold','fine','pure','.999','.925','999','925','sterling','gold-plated','plated','mintmark','c-mintmark','privy','pnc','pmc','ram','card','roll','downies','carded','brilliant','gem','choice','about','specimen','circulated',
     ...L_TREAT.map(t=>t.toLowerCase()), ...(finish.toLowerCase().split(' ')), ...(mint.toLowerCase().split(/[\s-]+/)), mm.toLowerCase()]);
   const parens=(suf.match(/\([^)]*\)/g)||[]); let rest=suf.replace(/\([^)]*\)/g,' ');
+  // drop packaging-list wording the AI copied into the title (e.g. "PNC/PMC — C5", "Official Mint Case/Box")
+  L_PKG.forEach(p=>{ rest=rest.replace(new RegExp(p.replace(/[.*+?^${}()|[\]\\\/]/g,'\\$&'),'ig'),' '); });
+  rest=rest.replace(/\bPNC\/PMC\b(\s*[—–-]?\s*(C5|DL|Standard|Other)\b)?/gi,' ').replace(/\s[—–-]\s/g,' ');
   L_TREAT.forEach(t=>{ if(new RegExp('\\b'+t+'\\b','i').test(rest) && !treat.includes(t) && t!=='Other'){ warn.push(`the title said "${t}" but Treatment doesn't`); treat.push(t);} });
   const extras=rest.split(/\s+/).filter(w=>w && !known.has(w.toLowerCase().replace(/[,;]$/,'')));
   if(pack && new RegExp('\\s'+pack+'$','i').test(subj)) subj=subj.replace(new RegExp('\\s'+pack+'$','i'),'');
