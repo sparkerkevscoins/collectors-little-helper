@@ -1002,7 +1002,7 @@ function generateAllEntries() {
     getEntryFields(prefix).forEach(([label, value]) => { if (value) lines.push(`  ${label}: ${value}`); });
   };
   add('n-',1);
-  for (let i = 0; i < batchCount; i++) add(`b${i}-`, i+2);
+  [...document.querySelectorAll('.batch-entry')].forEach((el,i)=>add('b'+el.id.replace('batch-entry-','')+'-', i+2));
   lines.push('--- END ---');
   document.getElementById('new-output-text').textContent = lines.join('\n');
   const out = document.getElementById('new-output');
@@ -1236,10 +1236,20 @@ function generateUpdate(){
 
 function generateNewEntry() { generateAllEntries(); }
 
+// Each added coin is an exact copy of the first coin's form (same labels, hints and examples), with its own ids.
+function cloneFirstEntry(p){
+  const cards=[...document.querySelectorAll('#tab-new > .card')];
+  return cards.map(card=>{
+    const head=card.querySelector('.card-header');
+    const title=head ? head.childNodes[0].textContent.trim() : '';
+    const body=card.querySelector('.card-body').innerHTML.replace(/id="n-/g,'id="'+p);
+    return `<div style="font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--silver);margin:14px 0 4px;text-transform:uppercase">${title}</div>${body}`;
+  }).join('');
+}
 function addAnotherCoin() {
   const container = document.getElementById('batch-entries-container');
-  const idx = container.querySelectorAll('.batch-entry').length;
-  const entryNum = idx + 2;
+  const idx = (window._batchSeq = (window._batchSeq||0) + 1) - 1;   // unique, never reused after a removal
+  const entryNum = container.querySelectorAll('.batch-entry').length + 2;
   const p = `b${idx}-`;
   const div = document.createElement('div');
   div.className = 'batch-entry';
@@ -1253,90 +1263,7 @@ function addAnotherCoin() {
           onclick="removeBatchEntry(event,${idx})">✕ Remove</button>
       </div>
     </div>
-    <div class="batch-entry-body" id="batch-body-${idx}">
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field required"><label>Item Type <span class="req">*</span></label>
-          <select id="${p}type"><option value="">Select...</option>
-            <option>Coin</option><option>Set</option><option>PNC</option>
-            <option>PMC</option><option>Banknote</option><option>Error Coin</option><option>Other</option>
-          </select></div>
-        <div class="field required"><label>Country <span class="req">*</span></label>
-          <select id="${p}country"><option value="">Select...</option>
-            <option>Australia</option><option>United Kingdom</option><option>Canada</option>
-            <option>New Zealand</option><option>United States</option><option>Guernsey</option>
-            <option>Solomon Islands</option><option>Kiribati</option><option>Niue</option><option>Other</option>
-          </select></div>
-        <div class="field required"><label>Year <span class="req">*</span></label>
-          <input type="number" id="${p}year" placeholder="2024" min="1900" max="2100"></div>
-      </div>
-      <div class="field-grid full" style="margin-top:8px">
-        <div class="field required"><label>Coin Title <span class="req">*</span></label>
-          <input type="text" id="${p}title" placeholder="2024 Australia $2 ..."></div>
-      </div>
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field"><label>Series / Theme</label><input type="text" id="${p}series"></div>
-        <div class="field required"><label>Denomination <span class="req">*</span></label>
-          <input type="number" id="${p}denom" step="0.01"></div>
-        <div class="field required"><label>Status <span class="req">*</span></label>
-          <select id="${p}status"><option value="">Select...</option>
-            <option>Owned</option><option>Wanted</option><option>Ordered</option>
-            <option>Duplicate</option><option>Sold</option></select></div>
-      </div>
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field required"><label>Metal <span class="req">*</span></label>
-          <select id="${p}metal"><option value="">Select...</option>
-            <option>Aluminium Bronze (AlBr)</option><option>Bi-metallic (AlBr / Cupro-nickel)</option>
-            <option>Bronze</option><option>Cupro-nickel</option><option>Silver (unspecified)</option>
-            <option>Silver (.800)</option><option>Silver (.925)</option><option>Silver (.999)</option>
-            <option>Gold (.999)</option><option>Gold Plated</option><option>Other (see notes)</option>
-          </select></div>
-        <div class="field required"><label>Grade <span class="req">*</span></label>
-          <select id="${p}finish"><option value="">Select...</option>
-            <option>Proof</option><option>Specimen</option><option>FDC/BU</option>
-            <option>Gem UNC</option><option>Choice UNC</option><option>UNC</option>
-            <option>aUNC</option><option>gEF/gXF</option><option>EF/XF</option>
-            <option>aEF/aXF</option><option>gVF</option><option>VF</option>
-            <option>F</option><option>VG</option><option>G</option>
-            <option>Fr</option><option>P</option><option>Circulating (ungraded)</option>
-          </select></div>
-        <div class="field"><label>Treatment</label>
-          <select id="${p}treatment" multiple size="3">
-            <option value="">None</option><option>Coloured</option><option>Frosted</option>
-            <option>Gilded</option><option>Gold Plated</option><option>Antiqued</option>
-            <option>Domed</option><option>Ultra High Relief</option><option>Other</option>
-          </select></div>
-        <div class="field"><label>Packaging</label>
-          <select id="${p}pkg"><option value="">Select...</option>
-            <option>Loose/Raw</option><option>Official Mint Case/Box</option>
-            <option>Capsule/Blister</option><option>RAM Card</option><option>Downies Card</option>
-            <option>Carded (Other)</option><option>PNC/PMC — Standard</option>
-            <option>PNC/PMC — C5</option><option>PNC/PMC — DL</option><option>PNC/PMC — Other</option>
-            <option>Tube/Roll</option><option>2×2</option><option>N/A - Not Applicable</option>
-          </select></div>
-        <div class="field"><label>Grade Confidence</label>
-          <select id="${p}conf"><option>Confirmed</option><option>High</option>
-            <option>Medium</option><option>Low</option><option>TBC</option></select></div>
-        <div class="field required"><label>Qty <span class="req">*</span></label>
-          <input type="number" id="${p}qty" value="1" min="1"></div>
-      </div>
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field"><label>Mintage</label><input type="number" id="${p}mintage"></div>
-        <div class="field"><label>CoA Number</label><input type="text" id="${p}coa"></div>
-        <div class="field"><label>Acq. Date</label><input type="date" id="${p}acqdate"></div>
-        <div class="field"><label>Acq. Source</label><input type="text" id="${p}acqsrc"></div>
-        <div class="field"><label>Acq. Price</label><input type="number" id="${p}acqprice" step="0.01"></div>
-        <div class="field"><label>Est. Value</label><input type="number" id="${p}estval" step="0.01"></div>
-        <div class="field"><label>Storage Location</label><input type="text" id="${p}storage"></div>
-        <div class="field"><label>From Proof Set?</label>
-          <select id="${p}fps"><option>No</option><option>Yes</option></select></div>
-        <div class="field"><label>NIFC?</label>
-          <select id="${p}nifc"><option>No</option><option>Yes</option></select></div>
-      </div>
-      <div class="field-grid full" style="margin-top:8px">
-        <div class="field"><label>Notes</label>
-          <textarea id="${p}notes" style="min-height:50px"></textarea></div>
-      </div>
-    </div>`;
+    <div class="batch-entry-body" id="batch-body-${idx}">${cloneFirstEntry(p)}</div>`;
   container.appendChild(div);
   div.scrollIntoView({behavior:'smooth'});
 }
