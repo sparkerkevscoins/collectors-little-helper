@@ -29,8 +29,8 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 .header-title{font-size:15px;font-weight:600;color:#fff}
 .header-collection{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px}
 
-.tabs{background:var(--navy);display:flex;gap:2px;padding:0 24px}
-.tab{padding:10px 20px;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);border-bottom:3px solid transparent;transition:.2s}
+.tabs{background:var(--navy);display:flex;gap:2px;padding:0 24px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:10px 20px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);border-bottom:3px solid transparent;transition:.2s}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 
 .container{max-width:900px;margin:24px auto;padding:0 16px}
@@ -65,6 +65,17 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 .copyright strong{color:rgba(255,255,255,.7)}
 
 @media(max-width:600px){.field-grid,.field-grid.three{grid-template-columns:1fr}}
+.chk-ok{color:#1a6b5c;font-weight:600}.chk-err{color:#b3261e;font-weight:600}.chk-warn{color:#8a6d00}
+.chk-table{border-collapse:collapse;font-size:11px;margin-top:10px;display:block;overflow-x:auto;max-width:100%}
+.chk-table th,.chk-table td{border:1px solid var(--rule);padding:4px 6px;text-align:left;white-space:nowrap;vertical-align:top}
+.chk-table th{background:var(--navy);color:#fff;font-weight:600}
+.chk-table td.err{background:#fde7e7}.chk-table td.fix{background:#fff6d6}
+.chk-msgs{font-size:12px;margin:8px 0 0 18px}.chk-msgs li{margin:2px 0}
+.stuck-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.stuck-table th,.stuck-table td{border-bottom:1px solid #e6e0d0;padding:8px 10px;text-align:left;vertical-align:top;line-height:1.5}
+.stuck-table th{font-size:11px;letter-spacing:.5px;color:#7a8ba0;font-weight:700;text-transform:uppercase}
+.stuck-table td:first-child{font-weight:600;color:#1a2744;width:38%}
+.where{display:inline-block;font-size:11.5px;font-weight:700;color:#1a6b5c;background:#e8f3f0;border-radius:3px;padding:2px 8px;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -95,6 +106,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 
 <div class="tabs">
   <div class="tab" onclick="switchTab('new')">New Entry</div>
+  <div class="tab" onclick="switchTab('check')">Check &amp; Copy</div>
   <div class="tab" onclick="switchTab('update')">Update Existing</div>
   <div class="tab active" onclick="switchTab('howto')">How to Use</div>
   <div class="tab" onclick="switchTab('glossary')">Glossary &amp; Resources</div>
@@ -126,7 +138,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
       </div>
       <div class="field-grid full" style="margin-top:12px">
         <div class="field required"><label>Coin Title <span class="req">*</span>
-          <span class="hint">[Year] [Country] [Denom] [Subject] — [Finish] [Special]</span></label>
+          <span class="hint">[Year] [Country] [Denom] [Subject] — [Mintmark] [Treatment] [Metal] [Finish] [Format]</span></label>
           <input type="text" id="n-title" placeholder="2024 Australia $2 Remembrance Day — C-Mintmark Uncirculated RAM Card"></div>
       </div>
       <div class="field-grid three" style="margin-top:12px">
@@ -264,8 +276,26 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 
   <div id="new-output" style="display:none;margin-top:20px">
     <div class="output-box" id="new-output-text"></div>
-    <p class="copy-notice">Copy the text above and paste it to your AI assistant with the prompt shown in the "How to Use" tab.</p>
-    <button class="btn btn-secondary" onclick="copyOutput('new-output-text')" style="margin-top:8px">Copy to Clipboard</button>
+    <p class="copy-notice">This includes the full instructions for the AI — no separate prompt needed. Copy it, paste it into a new chat with any AI assistant (Claude, ChatGPT, Gemini, Copilot), then bring the AI's reply to the <strong>Check &amp; Copy</strong> tab.</p>
+    <button class="btn btn-primary" onclick="copyOutput('new-output-text')" style="margin-top:8px">Copy to Clipboard</button>
+    <button class="btn btn-secondary" onclick="switchTab('check')" style="margin-top:8px">Go to Check &amp; Copy →</button>
+  </div>
+</div>
+
+<div id="tab-check" class="tab-content">
+  <div class="card">
+    <div class="card-header">Check &amp; Copy <span>paste the AI's reply — get a row that pastes cleanly into Holdings</span></div>
+    <div class="card-body">
+      <p style="font-size:13px;color:var(--mid);margin-bottom:10px">Paste the AI assistant's <strong>whole reply</strong> below (code block, summary and all — the checker finds the data rows itself). It checks every field against the catalogue's dropdown lists and number formats, fixes what it safely can, and tells you about anything it can't.</p>
+      <div class="field-grid full"><div class="field">
+        <textarea id="chk-input" style="min-height:160px;font-family:'Courier New',monospace;font-size:12px" placeholder="Paste the AI's reply here..."></textarea>
+      </div></div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn btn-primary" onclick="checkRows()">Check</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('chk-input').value='';document.getElementById('chk-result').innerHTML='';">Clear</button>
+      </div>
+      <div id="chk-result" style="margin-top:16px"></div>
+    </div>
   </div>
 </div>
 
@@ -360,7 +390,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         .val-note strong{color:var(--navy);display:block;margin-bottom:4px}
       </style>
 
-      <p class="acc-intro">Five steps — click any step to see the full instructions. New to this? Start by expanding them all.</p>
+      <p class="acc-intro">Five steps to add a coin — the same five steps you'll see in the Quick Start Guide and the catalogue's START HERE tab. Click any step for the detail. If something goes wrong, open <b>Stuck?</b> at the bottom.</p>
       <span class="expand-all" onclick="toggleAll()">Expand all steps ▼</span>
 
       <!-- Step 1 -->
@@ -368,17 +398,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">1</div>
           <div class="acc-heading">
-            <h4>Fill in this form</h4>
-            <p>Describe your coin — gold fields are the must-haves</p>
+            <h4>Describe your coin</h4>
+            <p>Entry Form → New Entry tab</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Click the <strong>New Entry</strong> tab above. Fill in the gold-highlighted fields — those are the essential ones. Add as much extra detail as you know, but don't worry if you can't fill everything in; the AI will help with the gaps.</p>
-          <p style="margin-top:10px;font-size:13px;color:var(--mid)"><strong>Adding several coins in one session?</strong> Click <strong>+ Add Another Coin</strong> after filling in the first entry. A new collapsible panel appears for each additional coin — fill them all in, then click <strong>Generate Entry</strong> to produce a numbered batch output covering every coin at once. One paste to the AI, one response, one paste into your spreadsheet.</p>
-          <div class="acc-tip" style="margin-top:10px"><strong>Tip:</strong> Even a rough description is enough to get started. You can always update entries later as you learn more about a coin.</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>⚠ Never clean your coins</strong> — even a gentle clean can scratch the surface and destroy numismatic value permanently. Store coins in capsules or 2×2 holders without cleaning them.</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>⚠ Watch out for coin roll scams</strong> — some sellers place a valuable coin on top of a roll of worthless ones. You have to destroy the roll to check the contents. Buy coin rolls only from the RAM or a well-known dealer.</div>
+          <span class="where">Where: Entry Form → New Entry tab</span>
+          <p>Fill in what you know — the gold fields are the must-haves. Adding several coins? Click <b>+ Add Another Coin</b> for each one. Then click <b>Generate Entry</b> and <b>Copy to Clipboard</b>.</p>
+          <div class="acc-tip">Not sure of a field? Leave it blank — the AI can often identify a coin from its year, country, denomination and a short description.</div>
         </div>
       </div>
 
@@ -387,13 +415,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">2</div>
           <div class="acc-heading">
-            <h4>Generate and copy the entry</h4>
-            <p>One button, one click to copy — no typing</p>
+            <h4>Ask any AI assistant</h4>
+            <p>A new chat in Claude, ChatGPT, Gemini or Copilot</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Scroll to the bottom of the New Entry form and click <strong>Generate Entry</strong>. A structured summary appears in a dark box — if you added multiple coins using <strong>+ Add Another Coin</strong>, all entries appear together as a numbered batch. Click <strong>Copy to Clipboard</strong> — the whole batch is now ready to paste to your AI assistant in one go.</p>
+          <span class="where">Where: A new chat in Claude, ChatGPT, Gemini or Copilot</span>
+          <p>Paste what you copied — the full instructions are already included. The AI replies with a grey code box (one block of labelled lines per coin) and a short summary of what it filled in and what it left blank.</p>
+          <div class="acc-tip">Read the summary. The AI never adds estimated values, and anything it fills from its own knowledge is labelled <i>AI-filled (unverified)</i> in Notes. You are always the final authority on your own collection.</div>
         </div>
       </div>
 
@@ -402,26 +432,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">3</div>
           <div class="acc-heading">
-            <h4>Ask your AI assistant to complete it</h4>
-            <p>Claude fills in the gaps and formats it ready to paste into your spreadsheet</p>
+            <h4>Check the reply</h4>
+            <p>Entry Form → Check &amp; Copy tab</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Open <strong>Claude</strong> (claude.ai) or another AI assistant in your browser. Start a new conversation, paste the prompt below, then paste your copied entry after it.</p>
-          <div class="acc-prompt">
-            <div class="acc-prompt-label">COPY THIS PROMPT — then paste your entry below it</div>
-            You are an expert in numismatics, specialising in Australian coins and commemorative issues. Complete the catalogue entry below using the information provided. For any missing fields, research them using your training data where possible.<br><br>
-            <strong>Rules:</strong><br>
-            1. Format the title as: <em>Year Country Denomination Subject — Finish Special-Attributes</em> (example: <em>2024 Australia 50c Echidna — Proof Coloured</em>)<br>
-            2. Return your answer as a <strong>single tab-separated row</strong> in exactly this column order — leave a column empty (two consecutive tabs) if you have no value:<br><br>
-            <em>Item Type | Country | Year | Series/Theme | Title | Denomination | Metal | Finish | Treatment | Packaging | Finish Confidence | Qty | Mintage | CoA Number | Mintmark Ref | From Proof Set? | NIFC? | Status | Acquisition Date | Acquisition Source | Acquisition Price | Estimated Value | Grade | Storage Location | Notes</em><br><br>
-            3. Mark any value you're uncertain about with a <em>?</em> suffix (example: <em>1,500?</em>)<br>
-            4. After the tab-separated row, add a brief plain-English summary — what you filled in from research, and anything flagged uncertain.<br><br>
-            [paste your copied form output here]
-          </div>
-          <p style="margin-top:8px;font-size:12px;color:var(--silver)">Review the AI's plain-English summary — it will flag anything uncertain. You are always the final authority on your own collection.</p>
-          <div class="acc-tip"><strong>Adding multiple coins at once?</strong> Use the <strong>+ Add Another Coin</strong> button in the New Entry tab to fill in several coins before generating. The output will be a numbered batch — paste it all to the AI at once and it returns multiple tab-separated rows, one per coin, ready to paste straight into your Holdings tab.</div>
+          <span class="where">Where: Entry Form → Check &amp; Copy tab</span>
+          <p>Paste the AI's <b>whole</b> reply and click <b>Check</b>. Yellow cells were tidied automatically; red cells need you. Then click <b>Copy rows for Holdings</b>.</p>
+          <div class="acc-tip">Why this step? Chat windows don't always copy cleanly — some turn tabs into spaces or add formatting. The checker rebuilds each row exactly the way your spreadsheet expects, whichever AI you used.</div>
         </div>
       </div>
 
@@ -430,14 +449,15 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">4</div>
           <div class="acc-heading">
-            <h4>Open your catalogue spreadsheet</h4>
-            <p>Open CLH_Catalogue.xlsx and click the Holdings tab</p>
+            <h4>Paste into your catalogue</h4>
+            <p>CLH_Catalogue.xlsx → Holdings tab</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>Open <strong>CLH_Catalogue.xlsx</strong> in Microsoft Excel, Google Sheets, or any other spreadsheet app. Click the <strong>Holdings</strong> tab at the bottom of the screen.</p>
-          <div class="acc-tip"><strong>Can't see the Holdings tab?</strong> Look along the very bottom of the window for tabs labelled START HERE, Holdings, INDEX, and Lists. Click <strong>Holdings</strong>.</div>
+          <span class="where">Where: CLH_Catalogue.xlsx → Holdings tab</span>
+          <p>Click column <b>B</b> (Item Type) in the first empty row and paste (Ctrl+V on Windows, Cmd+V on Mac). The grey columns fill themselves.</p>
+          <div class="acc-tip">Works in Microsoft Excel, Google Sheets and LibreOffice Calc. Apple Numbers can paste, but doesn't keep the dropdowns or sheet protection.</div>
         </div>
       </div>
 
@@ -446,23 +466,29 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="acc-header" onclick="toggleAcc(this)">
           <div class="acc-num">5</div>
           <div class="acc-heading">
-            <h4>Paste the entry — no typing required</h4>
-            <p>One paste fills the entire row automatically</p>
+            <h4>Save and back up</h4>
+            <p>Your spreadsheet app</p>
           </div>
           <span class="acc-arrow">▼</span>
         </div>
         <div class="acc-body">
-          <p>The AI has formatted the entry as a single row — paste it straight into the spreadsheet and all the values land in the right columns automatically.</p>
-          <ul>
-            <li><strong>Scroll down</strong> to the first completely empty row below your existing entries</li>
-            <li><strong>Click the first cell in that row</strong> — it's in the Item Type column (column B, just after the grey Item ID column)</li>
-            <li><strong>Select the tab-separated row</strong> from the AI's response — click just before the first value and drag to the end</li>
-            <li><strong>Copy it</strong> (Ctrl+C on Windows / Cmd+C on Mac)</li>
-            <li><strong>Click back on your spreadsheet</strong> and press Ctrl+V (Windows) or Cmd+V (Mac)</li>
-            <li>The values flow automatically into separate columns — blue cells filled, grey cells (Item ID etc.) fill themselves</li>
-          </ul>
-          <div class="acc-tip"><strong>Works everywhere:</strong> This technique works identically in Microsoft Excel, Google Sheets, LibreOffice Calc, and Apple Numbers.</div>
-          <div class="acc-tip" style="margin-top:8px"><strong>Save when you're done:</strong> Press Ctrl+S (Windows) or Cmd+S (Mac). If you store your file in Google Drive, upload the updated file so it's always backed up.</div>
+          <span class="where">Where: Your spreadsheet app</span>
+          <p>Save (Ctrl+S / Cmd+S) and keep a copy somewhere other than this computer.</p>
+        </div>
+      </div>
+
+      <!-- Stuck -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-num">?</div>
+          <div class="acc-heading">
+            <h4>Stuck?</h4>
+            <p>Common hiccups and exactly where to go</p>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Existing tab. It tells you exactly which column to change.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
         </div>
       </div>
 
@@ -775,13 +801,13 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 <div style="background:#f0f2f5;border-top:1px solid var(--rule);
   padding:10px 24px;font-family:system-ui,sans-serif;font-size:11px;
   color:var(--silver);text-align:center">
-  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.4</strong>
-  &nbsp;·&nbsp; September 2026
+  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.5</strong>
+  &nbsp;·&nbsp; October 2026
   &nbsp;·&nbsp; <a href="CLH_Landing_Page.html" style="color:var(--gold);text-decoration:none">
   Check for updates</a>
 </div>
 <div class="copyright">
-  <strong>Collector's Little Helper™</strong> — Version 1.4 — September 2026<br>
+  <strong>Collector's Little Helper™</strong> — Version 1.5 — October 2026<br>
   © 2026 Kevin Burdette (Sparker Kev's Coins). All rights reserved.<br>
   Collector's Little Helper™ is a trademark of Kevin Burdette (Sparker Kev's Coins), Brisbane, Australia.<br>
   <a href="mailto:sparkerkevscoins@gmail.com">sparkerkevscoins@gmail.com</a> &nbsp;·&nbsp; +61 (0)438 820 469<br>
@@ -813,7 +839,7 @@ window.addEventListener('load', function() {
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 function switchTab(name) {
-  const names = ['new','update','howto','glossary'];
+  const names = ['new','check','update','howto','glossary'];
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i]===name));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
@@ -856,7 +882,7 @@ function getEntryFields(prefix) {
   ];
 }
 
-function generateAllEntries() {
+function _oldGenerateAllEntries() {
   const collName = localStorage.getItem('clh_collection_name') || 'My Coin Collection';
   const batchCount = document.querySelectorAll('.batch-entry').length;
   const total = 1 + batchCount;
@@ -879,12 +905,351 @@ function generateAllEntries() {
   out.scrollIntoView({behavior:'smooth'});
 }
 
+
+// ── Holdings schema (CLH v1.5) — columns B..AC, in order ─────────────────────
+const L_TYPE=['Coin','Set','PNC','PMC','Banknote','Error Coin','Other'];
+const L_COUNTRY=['Australia','United Kingdom','Canada','New Zealand','United States','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue','Other'];
+const L_METAL=['Aluminium Bronze (AlBr)','Bi-metallic (AlBr / Cupro-nickel)','Bronze','Cupro-nickel','Silver (unspecified)','Silver (.800)','Silver (.925)','Silver (.999)','Gold (.999)','Gold Plated','Other (see notes)'];
+const L_GRADE=['Proof','Specimen','FDC/BU','Gem UNC','Choice UNC','UNC','aUNC','gEF/gXF','EF/XF','aEF/aXF','gVF','VF','F','VG','G','Fr','P','Circulating (ungraded)'];
+const L_TREAT=['Coloured','Frosted','Gilded','Gold Plated','Antiqued','Domed','Ultra High Relief','Other'];
+const L_PKG=['Loose/Raw','Official Mint Case/Box','Capsule/Blister','RAM Card','Downies Card','Carded (Other)','PNC/PMC — Standard','PNC/PMC — C5','PNC/PMC — DL','PNC/PMC — Other','Tube/Roll','2×2','N/A - Not Applicable'];
+const L_CONF=['Confirmed','High','Medium','Low','TBC'];
+const L_STATUS=['Owned','Wanted','Ordered','Duplicate','Sold'];
+const COLS=[
+ {n:'Item Type',t:'list',l:L_TYPE,req:1},{n:'Country',t:'list',l:L_COUNTRY,req:1},{n:'Year',t:'year',req:1},
+ {n:'Series / Theme',t:'text'},{n:'Title',t:'text',req:1},{n:'Denomination',t:'denom'},
+ {n:'Metal',t:'list',l:L_METAL},{n:'Grade',t:'list',l:L_GRADE},{n:'Treatment',t:'treat'},
+ {n:'Packaging',t:'list',l:L_PKG},{n:'Grade Confidence',t:'list',l:L_CONF},{n:'Qty',t:'int',req:1},
+ {n:'Mintage',t:'int'},{n:'RAM Code',t:'text'},{n:'CoA Number',t:'text'},{n:'PNC Issue No.',t:'text'},
+ {n:'Mintmark Ref',t:'text'},{n:'From Proof Set?',t:'yn'},{n:'NIFC?',t:'yn'},{n:'Status',t:'list',l:L_STATUS,req:1},
+ {n:'Acquisition Date',t:'date'},{n:'Acquisition Source',t:'text'},{n:'Acq. Price',t:'num'},{n:'Est. Value',t:'num'},
+ {n:'Storage Location',t:'text'},{n:'Notes',t:'text'},{n:'Reference Numbers',t:'text'},{n:'Effigy',t:'text'}
+];
+
+const AI_PROMPT = [
+"You are helping me catalogue coins in my Collector's Little Helper spreadsheet. Complete each entry at the bottom of this message.",
+"",
+"OUTPUT FORMAT — follow exactly:",
+"- Put ALL entries inside ONE code block.",
+"- Start each entry with a line: === ENTRY 1 ===  (then === ENTRY 2 === and so on).",
+"- Under it, write every one of the "+COLS.length+" fields below on its own line, as   Field name: value   using the field names exactly as written. Include every field, even when it's empty (e.g.  Mintage: ).",
+"- One line per field. Nothing else inside the code block.",
+"- Never put a ? mark, a comment, a range or the word 'unknown' inside a field. If you're not confident, leave the field empty.",
+"- After the code block, write a short plain-English summary: what you filled in, what you left empty and why, and anything I should double-check.",
+"",
+"FIELDS (use these exact names, in this order):",
+" 1. Item Type — exactly one of: "+L_TYPE.join(', '),
+" 2. Country — exactly one of: "+L_COUNTRY.join(', '),
+" 3. Year — 4 digits",
+" 4. Series / Theme — e.g. Remembrance Day, Lyrebird (standard reverse)",
+" 5. Title — build it from the other fields in exactly this order:",
+"      Year Country Denomination Subject — Mintmark Treatment Metal Finish Packaging",
+"      Before the dash: 4-digit year, full country name (same as the Country field), denomination as written ($2, 50c, £5, 50p — Canadian dollars as CAD$20), then a plain-English subject.",
+"      After the dash, only what applies, in this order: mintmark (e.g. C-Mintmark), treatment (e.g. Coloured), precious metal only (Silver or Gold — never AlBr or cupro-nickel), the finish in words (Proof, Uncirculated — always write Uncirculated in full, never UNC), then the format (RAM Card, PNC).",
+"      Correct: 2023 Australia $2 Vietnam War 50th Anniversary — C-Mintmark Coloured Uncirculated RAM Card",
+"      Correct: 2015 Australia $5 ANZAC Centenary — Silver Proof (triangular, cased)",
+"      Correct: 2008 Canada 25c Remembrance Day Poppy — Coloured Uncirculated",
+"      Wrong: 2024 Australia $2 Poppy — Uncirculated Coloured   (treatment must come before the finish)",
+"      If my title doesn't follow this rule, rewrite it.",
+" 6. Denomination — a plain number in the main currency unit: 10c = 0.1, 50c = 0.5, $1 = 1, $2 = 2, 50p = 0.5. Empty for sets with mixed denominations.",
+" 7. Metal — exactly one of: "+L_METAL.join(', '),
+" 8. Grade — exactly one of: "+L_GRADE.join(', '),
+" 9. Treatment — None, or one or more of: "+L_TREAT.join(', ')+" (join several with ' + ')",
+"10. Packaging — exactly one of: "+L_PKG.join(', '),
+"11. Grade Confidence — exactly one of: "+L_CONF.join(', '),
+"12. Qty — whole number",
+"13. Mintage — digits only, no commas. Empty if not officially published.",
+"14. RAM Code — the mint's product code, if known",
+"15. CoA Number",
+"16. PNC Issue No.",
+"17. Mintmark Ref — e.g. C, M, or the privy mark name. Empty if none.",
+"18. From Proof Set? — Yes or No",
+"19. NIFC? — Yes or No (Not Issued For Circulation)",
+"20. Status — exactly one of: "+L_STATUS.join(', '),
+"21. Acquisition Date — YYYY-MM-DD",
+"22. Acquisition Source",
+"23. Acq. Price — price paid PER ITEM, number only, no $ sign",
+"24. Est. Value — PER ITEM, number only, no $ sign. Copy MY figure only. If I didn't give one, leave it EMPTY. Do not estimate values.",
+"25. Storage Location — copy mine only",
+"26. Notes — one line, no pipe characters. Keep my notes. If you filled any field from your own knowledge rather than from what I gave you, add at the end: AI-filled (unverified): <field names>",
+"27. Reference Numbers — catalogue references (e.g. KM number) only if you're sure",
+"28. Effigy — obverse portrait and designer, e.g. Charles III — Dan Thorne",
+"",
+"EXAMPLE OF ONE ENTRY:",
+"=== ENTRY 1 ===",
+"Item Type: Coin",
+"Country: Australia",
+"Year: 2024",
+"…and so on for all "+COLS.length+" fields, ending with",
+"Effigy: Charles III — Dan Thorne",
+"",
+"RULES:",
+"- Keep everything I provided (except the Title, which must follow the rule above). Only correct obvious formatting (e.g. '10c' becomes 0.1 in Denomination).",
+"- Only fill an empty field if you are confident the value is correct for this exact coin. Otherwise leave it empty and mention it in the summary.",
+"- If a value I gave doesn't match an allowed option, use the closest allowed option and say so in the summary.",
+"",
+"MY ENTRIES:"
+].join('\n');
+
+// rewrite generateAllEntries to include the prompt
+function generateAllEntries() {
+  const collName = localStorage.getItem('clh_collection_name') || 'My Coin Collection';
+  const batchCount = document.querySelectorAll('.batch-entry').length;
+  const total = 1 + batchCount;
+  const lines = [AI_PROMPT, '', `Collection: ${collName} — ${total} ${total===1?'entry':'entries'}`];
+  const add = (prefix, i) => {
+    lines.push(`--- ENTRY ${i} of ${total} ---`);
+    getEntryFields(prefix).forEach(([label, value]) => { if (value) lines.push(`  ${label}: ${value}`); });
+  };
+  add('n-',1);
+  [...document.querySelectorAll('.batch-entry')].forEach((el,i)=>add('b'+el.id.replace('batch-entry-','')+'-', i+2));
+  lines.push('--- END ---');
+  document.getElementById('new-output-text').textContent = lines.join('\n');
+  const out = document.getElementById('new-output');
+  out.style.display = 'block';
+  out.scrollIntoView({behavior:'smooth'});
+}
+
+// ── Check & Copy ─────────────────────────────────────────────────────────────
+const norm = s => s.toLowerCase().replace(/[^a-z0-9.]+/g,'');
+function matchList(v, list){
+  if (list.includes(v)) return {v};
+  const nv=norm(v);
+  let hit=list.find(o=>norm(o)===nv); if(hit) return {v:hit,fixed:1};
+  const aliases={'uncirculated':'UNC','unc':'UNC','circulated':'Circulating (ungraded)','circulation':'Circulating (ungraded)','bu':'FDC/BU',
+    'cupronickel':'Cupro-nickel','aluminiumbronze':'Aluminium Bronze (AlBr)','albr':'Aluminium Bronze (AlBr)','aluminumbronze':'Aluminium Bronze (AlBr)',
+    'bimetallic':'Bi-metallic (AlBr / Cupro-nickel)','sterlingsilver':'Silver (.925)','loose':'Loose/Raw','raw':'Loose/Raw','none':'Loose/Raw','na':'N/A - Not Applicable',
+    'roll':'Tube/Roll','tube':'Tube/Roll','2x2':'2×2','flip':'2×2','capsule':'Capsule/Blister','uk':'United Kingdom','usa':'United States','nz':'New Zealand'};
+  if (aliases[nv] && list.includes(aliases[nv])) return {v:aliases[nv],fixed:1};
+  // starts-with / contains (e.g. "Cupro-Nickel (75% Cu / 25% Ni)")
+  hit=list.filter(o=>{const no=norm(o); return no.length>2 && (nv.startsWith(no)||no.startsWith(nv)&&nv.length>3);})
+          .sort((a,b)=>norm(b).length-norm(a).length)[0];
+  if (hit) return {v:hit,fixed:1};
+  return {err:`"${v}" isn't an allowed option`};
+}
+function checkField(raw, col){
+  let v=(raw||'').trim().replace(/^`+|`+$/g,'').replace(/^\*\*|\*\*$/g,'').trim();
+  const r={v, fixed:0, err:'', unverified:0};
+  if (/\?$/.test(v)) { v=v.replace(/\s*\?+$/,''); r.unverified=1; r.fixed=1; }
+  if (/^(unknown|not known|n\/?a|tbc|tba|-|—)$/i.test(v) && col.t!=='list' && col.t!=='treat') { r.v=''; r.fixed=1; r.unverified=0; if(col.req) r.err='required'; return r; }
+  r.v=v;
+  if (v==='') { if(col.req) r.err='required'; return r; }
+  switch(col.t){
+    case 'list': { const m=matchList(v,col.l); if(m.err) r.err=m.err+' — choose: '+col.l.join(', '); else {if(m.fixed) r.fixed=1; r.v=m.v;} break; }
+    case 'treat': {
+      if (/^none$/i.test(v)) { r.v='None'; break; }
+      const parts=v.split(/\s*[+,&\/]\s*|\s+and\s+/i).filter(Boolean); const out=[];
+      for(const p of parts){ const m=matchList(p,L_TREAT); if(m.err){r.err=`"${p}" isn't a treatment option`;break;} out.push(m.v); if(m.fixed) r.fixed=1; }
+      if(!r.err){ const j=out.join(' + '); if(j!==v) r.fixed=1; r.v=j; } break; }
+    case 'year': if(!/^\d{4}$/.test(v)) r.err='must be a 4-digit year'; break;
+    case 'int': { const c=v.replace(/[,\s]/g,''); if(!/^\d+$/.test(c)) r.err='must be a whole number'; else { if(c!==v) r.fixed=1; r.v=c; } break; }
+    case 'num': { const c=v.replace(/[$£€,\s]|AUD|NZD|CAD|USD|GBP|EUR|A\$|NZ\$|CA\$|US\$/gi,''); if(!/^\d+(\.\d+)?$/.test(c)) r.err='must be a number (no $ sign)'; else { if(c!==v) r.fixed=1; r.v=c; } break; }
+    case 'denom': {
+      let c=v.replace(/\s/g,''); let m;
+      if((m=c.match(/^(\d+(?:\.\d+)?)(c|¢|p|cents?)$/i))) { c=String(+(m[1]/100).toFixed(4)); }
+      else if((m=c.match(/^[$£€]?(\d+(?:\.\d+)?)(dollars?)?$/i))) { c=String(+m[1]); }
+      if(!/^\d+(\.\d+)?$/.test(c)) r.err='must be a number, e.g. 0.1 for 10c, 2 for $2';
+      else { if(c!==v) r.fixed=1; r.v=c; } break; }
+    case 'yn': { if(/^y(es)?$/i.test(v)) r.v='Yes'; else if(/^no?$/i.test(v)) r.v='No'; else r.err='must be Yes or No'; if(!r.err && r.v!==v) r.fixed=1; break; }
+    case 'date': {
+      let m;
+      if(/^\d{4}-\d{2}-\d{2}$/.test(v)) break;
+      if((m=v.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/))) { r.v=`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`; r.fixed=1; }
+      else r.err='use YYYY-MM-DD'; break; }
+    default: r.v=v.replace(/[\t\r\n]+/g,' ');
+  }
+  return r;
+}
+const LABELS=(()=>{ const m={};
+  COLS.forEach((c,i)=>m[norm(c.n)]=i);
+  const al={cointitle:'Title',seriestheme:'Series / Theme',series:'Series / Theme',theme:'Series / Theme',metalcomposition:'Metal',composition:'Metal',
+    finish:'Grade',gradefinish:'Grade',treatmenttype:'Treatment',packagingformat:'Packaging',format:'Packaging',finishconfidence:'Grade Confidence',confidence:'Grade Confidence',
+    quantity:'Qty',ramproductcode:'RAM Code',coa:'CoA Number',pncissuenumber:'PNC Issue No.',pncissue:'PNC Issue No.',mintmark:'Mintmark Ref',privymark:'Mintmark Ref',
+    fromyearproofset:'From Proof Set?',fromproofset:'From Proof Set?',nifcrelease:'NIFC?',nifc:'NIFC?',ncl:'NIFC?',acqdate:'Acquisition Date',dateacquired:'Acquisition Date',
+    acqsource:'Acquisition Source',source:'Acquisition Source',acquisitionprice:'Acq. Price',price:'Acq. Price',pricepaid:'Acq. Price',
+    estimatedvalue:'Est. Value',currentestimatedvalue:'Est. Value',value:'Est. Value',storage:'Storage Location',location:'Storage Location',
+    note:'Notes',references:'Reference Numbers',referencenumber:'Reference Numbers',catalogueref:'Reference Numbers',obverse:'Effigy',portrait:'Effigy'};
+  for(const k in al){ const i=COLS.findIndex(c=>c.n===al[k]); if(i>=0 && m[k]===undefined) m[k]=i; }
+  return m; })();
+function labelIndex(lbl){ const k=norm(lbl.replace(/\(.*?\)/g,'')); return LABELS[k]!==undefined?LABELS[k]:(LABELS[norm(lbl)]!==undefined?LABELS[norm(lbl)]:-1); }
+function extractRows(text){
+  text=text.replace(/\r/g,'');
+  // if the reply still has its code-block fences, only read what's inside them (ignores the summary)
+  const fenced=[...text.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map(m=>m[1]);
+  if(fenced.length) text=fenced.join('\n');
+  const lines=text.split('\n');
+  const rows=[]; let cur=null, ignoring=false;
+  const newEntry=()=>({labelled:true,parts:Array(COLS.length).fill(''),seen:new Set()});
+  const flush=()=>{ if(cur && cur.seen.size>=3){ cur.missing=COLS.filter((c,i)=>!cur.seen.has(i)).map(c=>c.n); rows.push(cur); } cur=null; };
+  for(const line of lines){
+    let s=line.trim().replace(/^`+|`+$/g,'').trim();
+    if(!s) continue;
+    if(/^=+\s*(entry|coin|item|row)\b/i.test(s)){ flush(); cur=newEntry(); ignoring=false; continue; }
+    const m=s.match(/^(?:[-*•]\s*)?(?:\d{1,2}[.)]\s*)?\**\s*([A-Za-z][A-Za-z0-9 .?/()&'-]{0,40}?)\s*\**\s*[:=]\s*\**(.*)$/);
+    if(m){ const i=labelIndex(m[1]);
+      if(i>=0){
+        const v=m[2].trim().replace(/\*+$/,'').trim();
+        if(i===0 && !matchList(v.replace(/\?$/,''),L_TYPE).err){ flush(); cur=newEntry(); ignoring=false; }
+        if(ignoring || !cur) continue;
+        if(cur.seen.has(i)){ flush(); ignoring=true; continue; }   // a repeated field name = we've reached the summary
+        cur.parts[i]=v; cur.seen.add(i);
+        if(i===COLS.length-1){ flush(); ignoring=true; }            // last field reached
+        continue; } }
+    let parts=null;
+    if(s.includes('\t') && s.split('\t').length>=15) parts=s.split('\t');
+    else if(s.split('|').length>=15){ s=s.replace(/^\|/,'').replace(/\|$/,''); parts=s.split('|'); }
+    if(!parts) continue;
+    if(parts.every(p=>/^[\s:-]*$/.test(p))) continue;
+    if(norm(parts[0])==='itemtype') continue;
+    flush(); ignoring=true; rows.push(parts.map(p=>p.trim()));
+  }
+  flush();
+  return rows;
+}
+
+// ── Title rule (agreed convention) ───────────────────────────────────────────
+// Year Country Denomination Subject — Mintmark Treatment Metal Finish Packaging (+ any extra notes)
+const GRADE_WORDS={'Proof':'Proof','Specimen':'Specimen','FDC/BU':'Brilliant Uncirculated','Gem UNC':'Gem Uncirculated','Choice UNC':'Choice Uncirculated',
+ 'UNC':'Uncirculated','aUNC':'About Uncirculated','gEF/gXF':'Good Extremely Fine','EF/XF':'Extremely Fine','aEF/aXF':'About Extremely Fine','gVF':'Good Very Fine',
+ 'VF':'Very Fine','F':'Fine','VG':'Very Good','G':'Good','Fr':'Fair','P':'Poor','Circulating (ungraded)':'Circulated'};
+const CUR_SYM={'Australia':['$','c'],'Kiribati':['$','c'],'Solomon Islands':['$','c'],'United Kingdom':['£','p'],'Guernsey':['£','p'],
+ 'Canada':['CAD$','c'],'New Zealand':['NZ$','c'],'Niue':['NZ$','c'],'United States':['US$','c'],'Eurozone':['€','c']};
+const COUNTRY_ALIASES=['Australia','United Kingdom','UK','Great Britain','Britain','Canada','New Zealand','NZ','United States','USA','US','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue'];
+function fmtDenom(d,country){ const n=+d; if(!d||isNaN(n)||n===0) return ''; const [big,small]=CUR_SYM[country]||['$','c'];
+  return n<1 ? Math.round(n*100)+small : big+(Number.isInteger(n)?n:n.toFixed(2)); }
+function buildTitle(res){
+  const f=n=>res[COLS.findIndex(c=>c.n===n)].v;
+  const year=f('Year'), country=f('Country'); let denom=fmtDenom(f('Denomination'),country);
+  const ai=(f('Title')||'').trim(); const warn=[];
+  let [pre,...post]=ai.split(/\s+[—–]\s+|\s+-\s+/); let suf=post.join(' ');
+  // subject: strip leading year / country / denomination tokens from the part before the dash
+  let subj=(pre||'').replace(/^\s*\d{4}\s+/,'');
+  for(let k=0;k<3;k++){
+    const c=COUNTRY_ALIASES.find(a=>subj.toLowerCase().startsWith(a.toLowerCase()+' '));
+    if(c){ if(norm(c)!==norm(country) && !(country==='United Kingdom'&&/^(uk|great britain|britain)$/i.test(c)) && !(country==='United States'&&/^(usa|us)$/i.test(c)) && !(country==='New Zealand'&&/^nz$/i.test(c)))
+             warn.push(`the title said "${c}" but Country is ${country}`);
+           subj=subj.slice(c.length).trim(); continue; }
+    const dm=subj.match(/^((?:[A-Z]{2,3})?[$£€]\s?(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s?(?:c|p|cents?))\s+/i);
+    if(dm){ const val=dm[2]!==undefined? +dm[2] : +dm[3]/100;
+      if(Math.abs(val-(+f('Denomination')))<1e-9 && !(country==='Canada' && (+f('Denomination'))>=1)) denom=dm[1].replace(/\s/g,'');   // Canadian dollars are always written CAD$   // keep the AI's own symbol when the value matches
+      subj=subj.slice(dm[0].length); continue; }
+    break; }
+  subj=subj.trim() || f('Series / Theme');
+  // after the dash
+  const mm0=f('Mintmark Ref'); const mm=/^(no|none|n\/?a|nil|-)$/i.test(mm0)?'':mm0; const mint = !mm ? '' : (/^[A-Z]$/i.test(mm) ? mm.toUpperCase()+'-Mintmark' : (/mint ?mark|privy/i.test(mm)?mm:mm+' Privy'));
+  let treat=(f('Treatment')&&f('Treatment')!=='None') ? f('Treatment').split(' + ') : [];
+  const metalF=f('Metal'); const metal=/^Silver/.test(metalF)?'Silver':/^Gold \(/.test(metalF)?'Gold':metalF==='Gold Plated'?'Gold-Plated':'';
+  const finish=GRADE_WORDS[f('Grade')]||'';
+  const it=f('Item Type'), pk=f('Packaging');
+  const pack = /^PNC\/PMC/.test(pk)||it==='PNC'||it==='PMC' ? (it==='PMC'?'PMC':'PNC') : pk==='RAM Card'?'RAM Card':pk==='Downies Card'?'Downies Card':'';
+  // keep anything extra the AI wrote after the dash (e.g. "(triangular, cased)", "Limited Edition")
+  const known=new Set(['unc','uncirculated','proof','silver','gold','fine','pure','.999','.925','999','925','sterling','gold-plated','plated','mintmark','c-mintmark','privy','pnc','pmc','ram','card','roll','downies','carded','brilliant','gem','choice','about','specimen','circulated',
+    ...L_TREAT.map(t=>t.toLowerCase()), ...(finish.toLowerCase().split(' ')), ...(mint.toLowerCase().split(/[\s-]+/)), mm.toLowerCase()]);
+  const parens=(suf.match(/\([^)]*\)/g)||[]); let rest=suf.replace(/\([^)]*\)/g,' ');
+  // drop packaging-list wording the AI copied into the title (e.g. "PNC/PMC — C5", "Official Mint Case/Box")
+  L_PKG.forEach(p=>{ rest=rest.replace(new RegExp(p.replace(/[.*+?^${}()|[\]\\\/]/g,'\\$&'),'ig'),' '); });
+  rest=rest.replace(/\bPNC\/PMC\b(\s*[—–-]?\s*(C5|DL|Standard|Other)\b)?/gi,' ').replace(/\s[—–-]\s/g,' ');
+  L_TREAT.forEach(t=>{ if(new RegExp('\\b'+t+'\\b','i').test(rest) && !treat.includes(t) && t!=='Other'){ warn.push(`the title said "${t}" but Treatment doesn't`); treat.push(t);} });
+  const extras=rest.split(/\s+/).filter(w=>w && !known.has(w.toLowerCase().replace(/[,;]$/,'')));
+  if(pack && new RegExp('\\s'+pack+'$','i').test(subj)) subj=subj.replace(new RegExp('\\s'+pack+'$','i'),'');
+  const tail=[mint,...treat,metal,finish,pack,...extras,...parens].filter(Boolean);
+  const dedup=tail.filter((w,i)=>tail.findIndex(x=>x.toLowerCase()===w.toLowerCase())===i);
+  const title=[year,country,denom,subj].filter(Boolean).join(' ')+(dedup.length?' — '+dedup.join(' '):'');
+  return {title, warn};
+}
+
+let CHECKED_TSV='';
+function escHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function checkRows(){
+  const out=document.getElementById('chk-result');
+  const text=document.getElementById('chk-input').value;
+  const rows=extractRows(text);
+  CHECKED_TSV='';
+  if(!rows.length){
+    out.innerHTML=`<p class="chk-err">No data rows found.</p><p style="font-size:12px;color:var(--mid)">The checker looks for lines like <em>Country: Australia</em>. Ask the AI: <em>"Please resend each entry inside a code block, with every field on its own line as Field name: value."</em></p>`;
+    return;
+  }
+  let html='', tsv=[], totalErr=0, totalFix=0, skipped=0;
+  rows.forEach((row,ri)=>{
+    const msgs=[];
+    const parts = row.labelled ? row.parts : row;
+    const badCount = !row.labelled && parts.length!==COLS.length;
+    if(row.labelled && row.missing.length) msgs.push(`<li class="chk-warn">The AI left out ${row.missing.length} field${row.missing.length>1?'s':''} (${escHtml(row.missing.join(', '))}) — left blank.</li>`);
+    if(badCount){ msgs.push(`<li class="chk-err">Row ${ri+1} has ${parts.length} fields — it needs exactly ${COLS.length}, otherwise values land in the wrong columns. This row will NOT be copied. Ask the AI: <em>"Please resend row ${ri+1} as labelled lines, one Field name: value per line."</em></li>`); totalErr++; skipped++; }
+    const res=COLS.map((c,i)=>checkField(parts[i]||'',c));
+    { const ti=COLS.findIndex(c=>c.n==='Title');
+      if(!badCount && !res[ti].err && !res[0].err && !res[1].err && !res[2].err){
+        const bt=buildTitle(res);
+        if(bt.title!==res[ti].v){ msgs.push(`<li class="chk-warn">Title rebuilt to the naming rule (the AI wrote: "${escHtml(res[ti].v)}").</li>`); res[ti].v=bt.title; res[ti].fixed=1; }
+        bt.warn.forEach(w=>msgs.push(`<li class="chk-warn">Check: ${escHtml(w)}.</li>`));
+      } }
+    const unv=COLS.filter((c,i)=>res[i].unverified).map(c=>c.n);
+    // AI-flagged values: money values are removed (principle: no AI valuations); others kept but labelled
+    COLS.forEach((c,i)=>{ if(res[i].unverified && c.t==='num'){ msgs.push(`<li class="chk-warn">${c.n} "${escHtml(res[i].v)}" was marked uncertain by the AI — removed (unverified values don't go in the value columns).</li>`); res[i].v=''; } });
+    const keep=unv.filter(n=>!['Acq. Price','Est. Value'].includes(n));
+    if(keep.length){ const ni=COLS.findIndex(c=>c.n==='Notes'); const tag='AI-filled (unverified): '+keep.join(', ');
+      if(!res[ni].v.includes(tag)) res[ni].v=(res[ni].v?res[ni].v+' | ':'')+tag; res[ni].v=res[ni].v.replace(/\|/g,'/'); }
+    let rowErr=0;
+    html+=`<h4 style="margin-top:14px;color:var(--navy)">Row ${ri+1}: ${escHtml(res[4].v||'(no title)')}</h4><table class="chk-table"><tr>`+COLS.map(c=>`<th>${escHtml(c.n)}</th>`).join('')+'</tr><tr>';
+    res.forEach((r,i)=>{ const cls=r.err?'err':(r.fixed?'fix':''); if(r.err){rowErr++; msgs.push(`<li class="chk-err">${COLS[i].n}: ${escHtml(r.err)}</li>`);} if(r.fixed) totalFix++;
+      html+=`<td class="${cls}" title="${escHtml(r.err||'')}">${escHtml(r.v)}</td>`; });
+    html+='</tr></table>';
+    if(msgs.length) html+='<ul class="chk-msgs">'+msgs.join('')+'</ul>';
+    totalErr+=rowErr;
+    if(!badCount) tsv.push(res.map(r=>r.v.replace(/[\t\r\n]+/g,' ')).join('\t'));
+  });
+  CHECKED_TSV=tsv.join('\n');
+  const head = totalErr
+    ? `<p class="chk-err">${totalErr} problem${totalErr>1?'s':''} found (red). Fix them in the box above and click Check again — or copy anyway and correct those cells in the spreadsheet.</p>`
+    : `<p class="chk-ok">✓ ${rows.length} row${rows.length>1?'s':''} ready.${totalFix?` ${totalFix} value${totalFix>1?'s were':' was'} tidied automatically (yellow).`:''}</p>`;
+  const n=tsv.length;
+  const btn = n ? `<button class="btn btn-primary" onclick="copyChecked()" style="margin-top:6px">Copy ${n} row${n>1?'s':''} for Holdings</button>
+    <p class="copy-notice">Then in Holdings: click column B of the first empty row and paste.${skipped?` (${skipped} row${skipped>1?'s':''} with the wrong number of fields left out.)`:''}</p>` : '';
+  out.innerHTML = head + btn + html;
+}
+function copyText(t, msg){
+  const done=()=>alert(msg);
+  if(navigator.clipboard && window.isSecureContext!==false){
+    navigator.clipboard.writeText(t).then(done).catch(()=>fallbackCopy(t,done));
+  } else fallbackCopy(t,done);
+}
+function fallbackCopy(t,done){
+  const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done();
+}
+function copyChecked(){ copyText(CHECKED_TSV, 'Copied! In Holdings, click column B of the first empty row and paste.'); }
+
+// ── Update existing ──────────────────────────────────────────────────────────
+function generateUpdate(){
+  const id=val('u-id'), ref=val('u-title-ref');
+  const map=[['u-status','Status','U'],['u-title','Title','F'],['u-qty','Qty','M'],['u-mintage','Mintage','N'],['u-coa','CoA Number','P'],
+    ['u-acqdate','Acquisition Date','V'],['u-acqsrc','Acquisition Source','W'],['u-acqprice','Acq. Price','X'],['u-estval','Est. Value','Y'],['u-storage','Storage Location','Z']];
+  const lines=[`UPDATE — ${id||'(no Item ID)'}${ref?' — '+ref:''}`, `In the Holdings tab, find the row with Item ID ${id||'?'} (column A), then change:`];
+  let n=0;
+  map.forEach(([fid,name,col])=>{ const v=val(fid); if(v){ lines.push(`  Column ${col} — ${name}: ${v}`); n++; } });
+  const notes=[val('u-ordernotes'),val('u-notes')].filter(Boolean).join(' / ');
+  if(notes){ lines.push(`  Column AA — Notes: add to the end → ${notes}`); n++; }
+  if(!n) lines.push('  (nothing to change — fill in at least one field)');
+  document.getElementById('update-output-text').textContent=lines.join('\n');
+  document.getElementById('update-output').style.display='block';
+}
+
 function generateNewEntry() { generateAllEntries(); }
 
+// Each added coin is an exact copy of the first coin's form (same labels, hints and examples), with its own ids.
+function cloneFirstEntry(p){
+  const cards=[...document.querySelectorAll('#tab-new > .card')];
+  return cards.map(card=>{
+    const head=card.querySelector('.card-header');
+    const title=head ? head.childNodes[0].textContent.trim() : '';
+    const body=card.querySelector('.card-body').innerHTML.replace(/id="n-/g,'id="'+p);
+    return `<div style="font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--silver);margin:14px 0 4px;text-transform:uppercase">${title}</div>${body}`;
+  }).join('');
+}
 function addAnotherCoin() {
   const container = document.getElementById('batch-entries-container');
-  const idx = container.querySelectorAll('.batch-entry').length;
-  const entryNum = idx + 2;
+  const idx = (window._batchSeq = (window._batchSeq||0) + 1) - 1;   // unique, never reused after a removal
+  const entryNum = container.querySelectorAll('.batch-entry').length + 2;
   const p = `b${idx}-`;
   const div = document.createElement('div');
   div.className = 'batch-entry';
@@ -898,90 +1263,7 @@ function addAnotherCoin() {
           onclick="removeBatchEntry(event,${idx})">✕ Remove</button>
       </div>
     </div>
-    <div class="batch-entry-body" id="batch-body-${idx}">
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field required"><label>Item Type <span class="req">*</span></label>
-          <select id="${p}type"><option value="">Select...</option>
-            <option>Coin</option><option>Set</option><option>PNC</option>
-            <option>PMC</option><option>Banknote</option><option>Error Coin</option><option>Other</option>
-          </select></div>
-        <div class="field required"><label>Country <span class="req">*</span></label>
-          <select id="${p}country"><option value="">Select...</option>
-            <option>Australia</option><option>United Kingdom</option><option>Canada</option>
-            <option>New Zealand</option><option>United States</option><option>Guernsey</option>
-            <option>Solomon Islands</option><option>Kiribati</option><option>Niue</option><option>Other</option>
-          </select></div>
-        <div class="field required"><label>Year <span class="req">*</span></label>
-          <input type="number" id="${p}year" placeholder="2024" min="1900" max="2100"></div>
-      </div>
-      <div class="field-grid full" style="margin-top:8px">
-        <div class="field required"><label>Coin Title <span class="req">*</span></label>
-          <input type="text" id="${p}title" placeholder="2024 Australia $2 ..."></div>
-      </div>
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field"><label>Series / Theme</label><input type="text" id="${p}series"></div>
-        <div class="field required"><label>Denomination <span class="req">*</span></label>
-          <input type="number" id="${p}denom" step="0.01"></div>
-        <div class="field required"><label>Status <span class="req">*</span></label>
-          <select id="${p}status"><option value="">Select...</option>
-            <option>Owned</option><option>Wanted</option><option>Ordered</option>
-            <option>Duplicate</option><option>Sold</option></select></div>
-      </div>
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field required"><label>Metal <span class="req">*</span></label>
-          <select id="${p}metal"><option value="">Select...</option>
-            <option>Aluminium Bronze (AlBr)</option><option>Bi-metallic (AlBr / Cupro-nickel)</option>
-            <option>Bronze</option><option>Cupro-nickel</option><option>Silver (unspecified)</option>
-            <option>Silver (.800)</option><option>Silver (.925)</option><option>Silver (.999)</option>
-            <option>Gold (.999)</option><option>Gold Plated</option><option>Other (see notes)</option>
-          </select></div>
-        <div class="field required"><label>Grade <span class="req">*</span></label>
-          <select id="${p}finish"><option value="">Select...</option>
-            <option>Proof</option><option>Specimen</option><option>FDC/BU</option>
-            <option>Gem UNC</option><option>Choice UNC</option><option>UNC</option>
-            <option>aUNC</option><option>gEF/gXF</option><option>EF/XF</option>
-            <option>aEF/aXF</option><option>gVF</option><option>VF</option>
-            <option>F</option><option>VG</option><option>G</option>
-            <option>Fr</option><option>P</option><option>Circulating (ungraded)</option>
-          </select></div>
-        <div class="field"><label>Treatment</label>
-          <select id="${p}treatment" multiple size="3">
-            <option value="">None</option><option>Coloured</option><option>Frosted</option>
-            <option>Gilded</option><option>Gold Plated</option><option>Antiqued</option>
-            <option>Domed</option><option>Ultra High Relief</option><option>Other</option>
-          </select></div>
-        <div class="field"><label>Packaging</label>
-          <select id="${p}pkg"><option value="">Select...</option>
-            <option>Loose/Raw</option><option>Official Mint Case/Box</option>
-            <option>Capsule/Blister</option><option>RAM Card</option><option>Downies Card</option>
-            <option>Carded (Other)</option><option>PNC/PMC — Standard</option>
-            <option>PNC/PMC — C5</option><option>PNC/PMC — DL</option><option>PNC/PMC — Other</option>
-            <option>Tube/Roll</option><option>2×2</option><option>N/A - Not Applicable</option>
-          </select></div>
-        <div class="field"><label>Grade Confidence</label>
-          <select id="${p}conf"><option>Confirmed</option><option>High</option>
-            <option>Medium</option><option>Low</option><option>TBC</option></select></div>
-        <div class="field required"><label>Qty <span class="req">*</span></label>
-          <input type="number" id="${p}qty" value="1" min="1"></div>
-      </div>
-      <div class="field-grid three" style="margin-top:8px">
-        <div class="field"><label>Mintage</label><input type="number" id="${p}mintage"></div>
-        <div class="field"><label>CoA Number</label><input type="text" id="${p}coa"></div>
-        <div class="field"><label>Acq. Date</label><input type="date" id="${p}acqdate"></div>
-        <div class="field"><label>Acq. Source</label><input type="text" id="${p}acqsrc"></div>
-        <div class="field"><label>Acq. Price</label><input type="number" id="${p}acqprice" step="0.01"></div>
-        <div class="field"><label>Est. Value</label><input type="number" id="${p}estval" step="0.01"></div>
-        <div class="field"><label>Storage Location</label><input type="text" id="${p}storage"></div>
-        <div class="field"><label>From Proof Set?</label>
-          <select id="${p}fps"><option>No</option><option>Yes</option></select></div>
-        <div class="field"><label>NIFC?</label>
-          <select id="${p}nifc"><option>No</option><option>Yes</option></select></div>
-      </div>
-      <div class="field-grid full" style="margin-top:8px">
-        <div class="field"><label>Notes</label>
-          <textarea id="${p}notes" style="min-height:50px"></textarea></div>
-      </div>
-    </div>`;
+    <div class="batch-entry-body" id="batch-body-${idx}">${cloneFirstEntry(p)}</div>`;
   container.appendChild(div);
   div.scrollIntoView({behavior:'smooth'});
 }
@@ -1013,8 +1295,7 @@ function clearAll() {
 function clearNew() { clearAll(); }
 
 function copyOutput(id) {
-  navigator.clipboard.writeText(document.getElementById(id).textContent)
-    .then(() => alert('Copied to clipboard!'));
+  copyText(document.getElementById(id).textContent, 'Copied to clipboard!');
 }
 
 function clearNew() {
