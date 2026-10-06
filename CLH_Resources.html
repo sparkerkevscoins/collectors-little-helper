@@ -78,23 +78,24 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
   cursor:pointer;background:#fff;user-select:none;transition:background .15s;
 }
 .acc-head:hover{background:var(--gold-lt)}
-.acc-head.open{background:var(--navy)}
+details[open]>.acc-head{background:var(--navy)}
+.acc-head{list-style:none}.acc-head::-webkit-details-marker{display:none}.acc-head::marker{content:""}
 .acc-icon{
   background:var(--navy);color:var(--gold);font-family:system-ui,sans-serif;
   font-size:12px;font-weight:700;width:30px;height:30px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;
 }
-.acc-head.open .acc-icon{background:var(--gold);color:var(--navy)}
+details[open]>.acc-head .acc-icon{background:var(--gold);color:var(--navy)}
 .acc-heading{flex:1}
 .acc-heading h3{font-size:15px;font-family:system-ui,sans-serif;font-weight:700;
   color:var(--navy);margin:0 0 2px;transition:color .15s}
-.acc-head.open .acc-heading h3{color:var(--gold)}
+details[open]>.acc-head .acc-heading h3{color:var(--gold)}
 .acc-heading p{font-size:12px;color:var(--silver);margin:0;font-family:system-ui,sans-serif}
-.acc-head.open .acc-heading p{color:rgba(255,255,255,.5)}
+details[open]>.acc-head .acc-heading p{color:rgba(255,255,255,.5)}
 .acc-arrow{font-size:13px;color:var(--silver);transition:transform .2s;flex-shrink:0}
-.acc-head.open .acc-arrow{transform:rotate(180deg);color:var(--gold)}
-.acc-body{display:none;padding:20px 22px;background:#fdfcfa;border-top:1px solid var(--rule)}
-.acc-body.open{display:block}
+details[open]>.acc-head .acc-arrow{transform:rotate(180deg);color:var(--gold)}
+.acc-body{padding:20px 22px;background:#fdfcfa;border-top:1px solid var(--rule)}
+@media print{details.acc>.acc-body{display:block}}
 
 /* ── Resource entries ── */
 .res-item{padding:12px 0;border-bottom:1px solid #ece8df;display:flex;gap:14px;align-items:flex-start}
@@ -207,19 +208,19 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
     <div class="resources-eyebrow">CURATED RESOURCES</div>
     <h2>Where to go from here</h2>
     <p class="resources-intro">Eight categories covering the best places I've found — click any category to expand. Start with the first two if you're just beginning. Come back to the rest as your collecting focus develops.</p>
-    <span class="expand-all" onclick="toggleAll()">Expand all ▼</span>
+    <span class="expand-all" onclick="toggleAll()" role="button" tabindex="0">Expand all ▼</span>
   </div>
 
   <!-- 1. START HERE -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">1</div>
       <div class="acc-heading">
         <h3>Start here — the essentials</h3>
         <p>Three or four places that cover most of what a beginner needs to know</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <div class="res-item">
         <div class="res-dot"></div>
@@ -257,18 +258,18 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         </div>
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- 2. COMMUNITY -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">2</div>
       <div class="acc-heading">
         <h3>Finding your community</h3>
         <p>Facebook groups where collectors actually talk to each other — with an important caveat</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <div class="warn-box">
         <strong>Important:</strong> It's very easy to join a large number of Facebook coin groups, but the vast majority are buyer/seller groups and can be quite predatory — even abusive at times. It took me a while to find a few where members are willing to have a positive dialogue, share information and insights, and act with courtesy. The groups below are the ones I've found genuinely worthwhile.
@@ -326,18 +327,18 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         <strong>Tip:</strong> In any buy/sell Facebook group, only purchase from sellers verified by the page administrators. Be alert to scammers who infiltrate these groups — if a deal looks too good to be true, it usually is. eBay's buyer protection makes it a safer platform for purchases if you're not confident in a seller.
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- 3. RESEARCHING & VALUING -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">3</div>
       <div class="acc-heading">
         <h3>Researching &amp; valuing coins</h3>
         <p>Where to find mintage data, identify coins, and research real market values</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <div class="res-item">
         <div class="res-dot"></div>
@@ -409,18 +410,18 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         </div>
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- 4. BUYING COINS -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">4</div>
       <div class="acc-heading">
         <h3>Buying coins</h3>
         <p>Trusted sources — official mints, reputable dealers, and how to buy safely online</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <div style="margin-bottom:16px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
         letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
@@ -505,18 +506,18 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         <strong>Local fairs and markets:</strong> Be careful — many dealers at local collectors fairs and general markets are happy to sell you anything at any price, knowing you may not understand what you're doing. Always research a coin's value before attending, and don't let the atmosphere pressure you into a quick decision.
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- 5. BOOKS & DEEPER READING -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">5</div>
       <div class="acc-heading">
         <h3>Books &amp; deeper reading</h3>
         <p>The references worth having on your shelf</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <div class="res-item">
         <div class="res-dot"></div>
@@ -554,18 +555,18 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         </div>
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- 6. CLUBS & SHOWS -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">6</div>
       <div class="acc-heading">
         <h3>Clubs, societies &amp; shows</h3>
         <p>Where to find your people in person</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <p style="font-size:13.5px;color:var(--mid);margin-bottom:16px;line-height:1.7">Joining a local numismatic society is one of the best things you can do early in the hobby. Monthly meetings give you access to knowledgeable collectors, member trade tables, auctions without dealer markups, guest presentations, and — most importantly — people who are genuinely happy to answer the dumb questions. The Redcliffe Numismatic Society also maintains what is widely regarded as the most comprehensive numismatic library in the country.</p>
 
@@ -639,18 +640,18 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         <strong>Finding your local show:</strong> The best way to find events near you is through the Facebook groups listed above — shows are typically advertised there well in advance. Your local numismatic society will also have advance notice of upcoming events.
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- 7. YOUTUBE -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">7</div>
       <div class="acc-heading">
         <h3>YouTube channels</h3>
         <p>Watch and learn — the best Australian coin channels</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <div class="res-item">
         <div class="res-dot"></div>
@@ -695,18 +696,18 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         </div>
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- 8. PEOPLE WORTH KNOWING -->
-  <div class="acc">
-    <div class="acc-head" onclick="toggleAcc(this)">
+  <details class="acc">
+    <summary class="acc-head">
       <div class="acc-icon">8</div>
       <div class="acc-heading">
         <h3>People worth knowing</h3>
         <p>Generous, knowledgeable voices in the Australian collecting community</p>
       </div>
       <span class="acc-arrow">▼</span>
-    </div>
+    </summary>
     <div class="acc-body">
       <p style="font-size:13.5px;color:var(--mid);margin-bottom:16px;line-height:1.7">
         The single most valuable thing in this hobby isn't a website or a book — it's finding people who know more than you do and are willing to share it. These are some of the people who've been generous with their time and knowledge on my journey. You'll find most of them in the communities and channels listed above.
@@ -743,7 +744,7 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
         <strong>The best advice I can give:</strong> Find your version of these people — patient, knowledgeable, willing to answer the questions you feel embarrassed to ask. They exist in every community listed here. The hobby is full of them, once you know where to look.
       </div>
     </div>
-  </div>
+  </details>
 
 </div>
 
@@ -783,25 +784,21 @@ body{background:var(--cream);color:var(--ink);font:15px/1.75 Georgia,serif}
 </div>
 
 <script>
-function toggleAcc(head) {
-  const body = head.nextElementSibling;
-  const isOpen = head.classList.contains('open');
-  head.classList.toggle('open', !isOpen);
-  body.classList.toggle('open', !isOpen);
-  updateExpandLabel();
+// Sections are native <details>, so they open and close without any script.
+// This script only adds "Expand all" and opens everything when printing.
+function toggleAll(){
+  const all=[...document.querySelectorAll('details.acc')];
+  const open=!all.every(d=>d.open);
+  all.forEach(d=>d.open=open); updateExpandLabel();
 }
-function toggleAll() {
-  const heads = document.querySelectorAll('.acc-head');
-  const bodies = document.querySelectorAll('.acc-body');
-  const anyOpen = document.querySelector('.acc-head.open');
-  heads.forEach(h => h.classList.toggle('open', !anyOpen));
-  bodies.forEach(b => b.classList.toggle('open', !anyOpen));
-  updateExpandLabel();
+function updateExpandLabel(){
+  const btn=document.querySelector('.expand-all'); if(!btn) return;
+  btn.textContent=[...document.querySelectorAll('details.acc')].every(d=>d.open)?'Collapse all ▲':'Expand all ▼';
 }
-function updateExpandLabel() {
-  const btn = document.querySelector('.expand-all');
-  btn.textContent = document.querySelector('.acc-head.open') ? 'Collapse all ▲' : 'Expand all ▼';
-}
+document.querySelectorAll('details.acc').forEach(d=>d.addEventListener('toggle',updateExpandLabel));
+let _printState=null;
+window.addEventListener('beforeprint',()=>{_printState=[...document.querySelectorAll('details.acc')].map(d=>d.open);document.querySelectorAll('details.acc').forEach(d=>d.open=true);});
+window.addEventListener('afterprint',()=>{if(_printState)document.querySelectorAll('details.acc').forEach((d,i)=>d.open=_printState[i]);updateExpandLabel();});
 </script>
 
 </body></html>
