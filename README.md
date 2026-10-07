@@ -54,6 +54,7 @@ Open `CLH_QuickStart_Guide.html` first — it covers:
 - The title naming convention
 - Field guide (required vs optional)
 - The five steps to add a coin, and what to do if you get stuck
+- Finishes and mintage explained, looking after your coins, and what to do if you've inherited a collection
 - Glossary of numismatic terms (Proof, UNC, NIFC/NCLT, mintmarks, grading, storage formats and more)
 - A pre-purchase checklist for first-time buyers
 
