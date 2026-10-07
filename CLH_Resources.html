@@ -142,6 +142,39 @@ details[open]>.acc-head .acc-arrow{transform:rotate(180deg);color:var(--gold)}
   .header{padding:20px;gap:14px}
   .intro,.advice,.resources,.closing{padding-left:20px;padding-right:20px}
 }
+
+/* ── v1.5 Resources layout ── */
+.story-short{font-size:15px;line-height:1.8;color:var(--ink)}
+details.story{margin:12px 0 32px}
+details.story>summary{cursor:pointer;list-style:none;font-family:system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--navy);
+  border-bottom:1px solid var(--gold);display:inline-block;padding-bottom:1px}
+details.story>summary::-webkit-details-marker{display:none}
+details.story[open]>summary{margin-bottom:14px}
+.quick{max-width:760px;margin:0 auto;padding:0 40px}
+.quick-label{font-family:system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--gold);margin-bottom:10px}
+.quick-list{display:grid;gap:10px}
+.qp{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--rule);border-left:3px solid var(--gold);
+  padding:12px 16px;border-radius:0 4px 4px 0;text-decoration:none;color:var(--mid);font-size:13.5px;line-height:1.55}
+.qp:hover{background:var(--gold-lt)}
+.qp-t{color:var(--navy);font-family:system-ui,sans-serif;font-size:14px;font-weight:700}
+.qp b{color:var(--ink)}
+.qp-n{background:var(--navy);color:var(--gold);font-family:system-ui,sans-serif;font-weight:700;font-size:13px;min-width:28px;height:28px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.chip{font-family:system-ui,sans-serif;font-size:12.5px;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--rule);
+  border-radius:20px;padding:6px 14px;text-decoration:none}
+.chip:hover{background:var(--navy);color:var(--gold)}
+.res-group{font-family:system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver);
+  margin:18px 0 2px;padding-bottom:4px;border-bottom:1px solid var(--rule)}
+.res-group:first-child{margin-top:0}
+.res-para{font-size:13.5px;color:var(--mid);line-height:1.7;margin:8px 0}
+.res-para a,.res-desc a,.tip-box a,.warn-box a{color:var(--navy)}
+.res-note{font-size:12.5px;color:var(--silver)}
+.res-more{font-family:system-ui,sans-serif;font-size:12px;white-space:normal}
+.tag-local{background:var(--navy);color:var(--gold)}
+.acc{scroll-margin-top:12px}
+@media(max-width:640px){.quick{padding-left:20px;padding-right:20px}.qp{font-size:13px}}
+@media print{.chips,.expand-all,details.story>summary{display:none}}
 </style>
 </head>
 <body>
@@ -158,9 +191,12 @@ details[open]>.acc-head .acc-arrow{transform:rotate(180deg);color:var(--gold)}
 
 <!-- PERSONAL INTRO -->
 <div class="intro">
-  <div class="intro-eyebrow">MY COLLECTING JOURNEY</div>
-  <h2>How I got here — and why this list exists</h2>
-
+  <div class="intro-eyebrow">WHY THIS LIST EXISTS</div>
+  <h2>What I wish I’d had on day one</h2>
+  <p class="story-short">When Dad passed away in early 2024, he left behind what he called “a few coins here and there.” It turned out to be decades of careful collecting — and I had no idea where to start. I made mistakes I’d undo if I could. This list is the places, people and communities that got me back on track, and the things I wish someone had pointed me to on day one.</p>
+  <details class="story">
+    <summary>Read my full story ▾</summary>
+    <div class="story-body">
   <p>I came to coin collecting the way many people do — not by choice, but through loss.</p>
 
   <p>When my Dad passed away in early 2024, he left behind what he always described as "a few coins here and there." What I discovered, about a year later when I was finally ready to face it, was something far more significant — a collection stashed all over his home, carefully built over decades. Full sets of every Australian decimal denomination, collected from circulation in the early years after decimalisation and kept in surprisingly good condition. Mint and proof year sets, coloured $2 sets and boxes of carded and other commemoratives I'd never heard of…and absolutely no idea where to start.</p>
@@ -191,6 +227,18 @@ details[open]>.acc-head .acc-arrow{transform:rotate(180deg);color:var(--gold)}
   <p>The resources and references that follow are the places I've found genuinely useful on that journey. Not a definitive list — just the ones I kept coming back to, the communities that helped me learn, and a few things I wish someone had pointed me to right at the start. I truly hope this helps folks streamline their journey and get to an enjoyable place without the roadblocks or potholes I had to encounter. It's a wonderful hobby. I wish you all the best with yours.</p>
 
   <p style="font-style:italic;color:var(--silver);font-size:13px;margin-top:8px">— Kevin Burdette, Sparker Kev's Coins, Brisbane</p>
+
+    </div>
+  </details>
+</div>
+
+<div class="quick">
+  <div class="quick-label">IF YOU ONLY DO THREE THINGS</div>
+  <div class="quick-list">
+    <a class="qp" href="#s1" onclick="openSection('s1')"><span class="qp-n">1</span><span><span class="qp-t">Learn the language</span><br>The Pirate Guide and australiacoins.org (free) — before you buy, sell or value anything.</span></a>
+    <a class="qp" href="#s2" onclick="openSection('s2')"><span class="qp-n">2</span><span><span class="qp-t">Find your people</span><br>Join one friendly online group, and look up your local coin club.</span></a>
+    <a class="qp" href="#s3" onclick="openSection('s3')"><span class="qp-n">3</span><span><span class="qp-t">Check before you pay</span><br>eBay <b>sold</b> listings, never asking prices. What it actually sold for is the only number that matters.</span></a>
+  </div>
 </div>
 
 <!-- THE ONE PIECE OF ADVICE -->
@@ -204,545 +252,240 @@ details[open]>.acc-head .acc-arrow{transform:rotate(180deg);color:var(--gold)}
 
 <!-- RESOURCES -->
 <div class="resources">
-  <div style="margin-top:48px">
+  <div style="margin-top:40px">
     <div class="resources-eyebrow">CURATED RESOURCES</div>
     <h2>Where to go from here</h2>
-    <p class="resources-intro">Eight categories covering the best places I've found — click any category to expand. Start with the first two if you're just beginning. Come back to the rest as your collecting focus develops.</p>
+    <p class="resources-intro">Five sections, roughly in the order you’ll need them. Tap a section to open it. Not a complete directory — just the places and people I’d point a friend to.</p>
+    <div class="chips"><a class="chip" href="#s1" onclick="openSection('s1')">Just Getting Started</a><a class="chip" href="#s2" onclick="openSection('s2')">Find Your People</a><a class="chip" href="#s3" onclick="openSection('s3')">Research &amp; Value</a><a class="chip" href="#s4" onclick="openSection('s4')">Buying Coins</a><a class="chip" href="#s5" onclick="openSection('s5')">Go Deeper</a></div>
     <span class="expand-all" onclick="toggleAll()" role="button" tabindex="0">Expand all ▼</span>
   </div>
 
-  <!-- 1. START HERE -->
-  <details class="acc">
+  <details class="acc" id="s1">
     <summary class="acc-head">
       <div class="acc-icon">1</div>
-      <div class="acc-heading">
-        <h3>Start here — the essentials</h3>
-        <p>Three or four places that cover most of what a beginner needs to know</p>
-      </div>
+      <div class="acc-heading"><h3>Just Getting Started</h3><p>Learn the language first · 4 picks</p></div>
       <span class="acc-arrow">▼</span>
     </summary>
     <div class="acc-body">
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.australiacoins.org" target="_blank" rel="noopener">australiacoins.org</a> — Australia Coins (Damian Walker) <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">Damian's plain-English guide to finding the value of your coins is the single best starting point I found. His three-types-of-value framework (face / ingredient / numismatic) gave me a mental model I still use. His Facebook page (Australia Coins) is equally worth following.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.ramint.gov.au/collect/national-coin-collection/circulating-coins" target="_blank" rel="noopener">ramint.gov.au — Circulating Coins</a></div>
-          <div class="res-desc">The RAM's own reference for Australian circulating coin mintages by year and denomination. Essential if you're trying to understand what's common and what isn't. The Annual Report appendices (also on the RAM site) carry the definitive production figures for collector releases.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.independentcoinnews.com" target="_blank" rel="noopener">independentcoinnews.com</a> — Independent Coin News (Peter Andrews) <span class="res-tag tag-free">free</span></div>
-          <div class="res-desc">Peter Andrews is one of the most respected voices in Australian numismatics. His newsletter and magazine subscription is free and covers industry news, new releases, and market commentary with genuine independence. Also worth following on Facebook.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.australiacoins.com.au/products/pirate-guide-to-collecting-australian-coins-paperback" target="_blank" rel="noopener">Pirate Guide to Collecting Australian Coins</a> — Damian &amp; Leisha Walker <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">The most accessible introduction to the Australian coin collecting hobby I've come across. Plain English, practically focused, and written by the team behind australiacoins.org. If someone in your life has just inherited a collection and doesn't know where to start — this is the book to hand them first.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.australiancoinreview.com.au" target="_blank" rel="noopener">australiancoinreview.com.au</a> — Australian Coin Review</div>
-          <div class="res-desc">Australia's dedicated coin collecting magazine. A useful regular read for keeping up with new releases, market trends and collector stories.</div>
-        </div>
-      </div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.australiacoins.org" target="_blank" rel="noopener">australiacoins.org — Damian &amp; Leisha Walker</a><span class="res-tag tag-personal">Kev’s pick</span><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">The best single starting point I found. Plain-English guides, free worksheets and downloads (including <i>How to Find the Value of Your Coins</i> and guides to buying and storing safely), and a three-types-of-value framework I still use. <span class="res-more"><a href="https://www.australiacoins.com.au" target="_blank" rel="noopener">Shop &amp; guides</a> · <a href="https://www.youtube.com/@AustraliaCoins" target="_blank" rel="noopener">YouTube</a> · <a href="https://www.facebook.com/AustraliaCoins" target="_blank" rel="noopener">Facebook</a></span></div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.australiacoins.com.au/products/pirate-guide-to-collecting-australian-coins-paperback" target="_blank" rel="noopener">Pirate Guide to Collecting Australian Coins</a><span class="res-tag tag-personal">Kev’s pick</span></div>
+        <div class="res-desc">The book I’d hand to anyone who’s just inherited a collection. Read this first — the catalogues make far more sense afterwards.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.ramint.gov.au/collect/national-coin-collection/circulating-coins" target="_blank" rel="noopener">Royal Australian Mint — circulating coins</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">The official reference for what was made, by year and denomination. The quickest way to see what’s common and what isn’t.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.independentcoinnews.com" target="_blank" rel="noopener">Independent Coin News — Peter Andrews</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">Free, independent and peer-reviewed. Good insights without a sales pitch, plus a state-by-state list of coin clubs in each issue. <span class="res-more"><a href="https://www.facebook.com/groups/1998954263780361" target="_blank" rel="noopener">Facebook</a></span></div>
+      </div></div>
     </div>
   </details>
 
-  <!-- 2. COMMUNITY -->
-  <details class="acc">
+  <details class="acc" id="s2">
     <summary class="acc-head">
       <div class="acc-icon">2</div>
-      <div class="acc-heading">
-        <h3>Finding your community</h3>
-        <p>Facebook groups where collectors actually talk to each other — with an important caveat</p>
-      </div>
+      <div class="acc-heading"><h3>Find Your People</h3><p>Communities, clubs and shows · 4 picks</p></div>
       <span class="acc-arrow">▼</span>
     </summary>
     <div class="acc-body">
-      <div class="warn-box">
-        <strong>Important:</strong> It's very easy to join a large number of Facebook coin groups, but the vast majority are buyer/seller groups and can be quite predatory — even abusive at times. It took me a while to find a few where members are willing to have a positive dialogue, share information and insights, and act with courtesy. The groups below are the ones I've found genuinely worthwhile.
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.facebook.com/groups/pnccollectorsaustralia" target="_blank" rel="noopener">PNC Collectors Australia</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">The best Australian community specifically for Philatelic Numismatic Cover collectors. Knowledgeable members, good discussion, strong on identification and valuation of PNCs.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.facebook.com/groups/455285999193710" target="_blank" rel="noopener">Aussie Coin Noodlers</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">A strictly no-buy/sell group — discussion only. Welcoming to beginners. Particularly good for those who enjoy noodling (searching through rolls of circulating coins from the bank for rarities and varieties). Great for picking up identification tips and learning what to look for.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.facebook.com/AustraliaCoins" target="_blank" rel="noopener">Australia Coins</a> — Damian Walker's Facebook page</div>
-          <div class="res-desc">Damian's public Facebook presence, linked to australiacoins.org. Worth following for new content, tips and educational posts from a trusted and well-regarded voice in the hobby.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.facebook.com/groups/1998954263780361" target="_blank" rel="noopener">Independent Coin News</a> — Facebook community</div>
-          <div class="res-desc">The Facebook companion to Peter Andrews' newsletter. Good for industry news, release announcements and collector discussion.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.facebook.com/search/top?q=coinxchange" target="_blank" rel="noopener">CoinXchange</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">Has a separate buy/sell platform but the Facebook page itself is a good source of discussion and show-and-tell — often with generous and positive feedback from the community. Worth joining for the conversation as much as the trading.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.facebook.com/groups/172231941691602" target="_blank" rel="noopener"># FIFTY FIFTY #</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">Primarily focused on the 50c collector community. Mix of buy/sell, discussion and occasional charity activities. Worth joining if the 50c series is your focus.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.facebook.com/groups/ACNBSSFNQ" target="_blank" rel="noopener">Australian Coins &amp; Notes — Buy Swap Sell</a></div>
-          <div class="res-desc">A buy/sell group worth knowing about. Approach with appropriate caution — verify sellers and be clear on what you're buying before committing.</div>
-        </div>
-      </div>
-      <div class="tip-box">
-        <strong>Tip:</strong> In any buy/sell Facebook group, only purchase from sellers verified by the page administrators. Be alert to scammers who infiltrate these groups — if a deal looks too good to be true, it usually is. eBay's buyer protection makes it a safer platform for purchases if you're not confident in a seller.
-      </div>
+      <div class="warn-box"><b>A word of warning:</b> it’s easy to join lots of Facebook coin groups, but most are buy/sell groups and some can be predatory. Start with the friendly ones below, watch for a while, and ask the questions you think are dumb — they never are.</div>
+      <div class="res-group">Online</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.facebook.com/groups/pnccollectorsaustralia" target="_blank" rel="noopener">PNC Collectors Australia</a><span class="res-tag tag-personal">Kev’s pick</span></div>
+        <div class="res-desc">The best Australian community for Philatelic Numismatic Covers. Knowledgeable, and strong on identifying and valuing PNCs.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.facebook.com/groups/455285999193710" target="_blank" rel="noopener">Aussie Coin Noodlers</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">Discussion only — no buying or selling — and very welcoming to beginners. Great if you enjoy searching rolls of change for varieties.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.facebook.com/search/top?q=coinxchange" target="_blank" rel="noopener">CoinXchange</a></div>
+        <div class="res-desc">Worth joining for the conversation and show-and-tell as much as the trading. Generous, positive feedback.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.facebook.com/groups/172231941691602" target="_blank" rel="noopener"># FIFTY FIFTY #</a></div>
+        <div class="res-desc">The home of the 50c collecting community. A mix of discussion, buy/sell and the occasional charity drive.</div>
+      </div></div>
+      <div class="res-group">In person</div>
+      <p class="res-para">Your local numismatic or collectors’ club is the fastest way to learn — people who’ll look at a coin with you and answer honestly. Independent Coin News publishes a state-by-state list of clubs with meeting times in every issue. In Brisbane, the <a href="https://www.rns.org.au" target="_blank" rel="noopener">Redcliffe Numismatic Society</a> is very active and welcoming to all levels.</p>
+      <div class="res-group">Shows</div>
+      <p class="res-para">Coin shows are where you meet dealers and collectors face to face. <a href="https://anda.com.au/events" target="_blank" rel="noopener">ANDA Money Expos</a> run in several cities, and the Brisbane Stamp &amp; Coin Show is usually in November. Calendars aren’t always current, so confirm dates in the Facebook groups before you go.</p>
+      <div class="tip-box"><b>Buying in groups?</b> Only buy from sellers the group’s admins have verified. If a deal looks too good to be true, it usually is.</div>
     </div>
   </details>
 
-  <!-- 3. RESEARCHING & VALUING -->
-  <details class="acc">
+  <details class="acc" id="s3">
     <summary class="acc-head">
       <div class="acc-icon">3</div>
-      <div class="acc-heading">
-        <h3>Researching &amp; valuing coins</h3>
-        <p>Where to find mintage data, identify coins, and research real market values</p>
-      </div>
+      <div class="acc-heading"><h3>Research &amp; Value</h3><p>Find out what you have and what it’s worth · 7 picks</p></div>
       <span class="acc-arrow">▼</span>
     </summary>
     <div class="acc-body">
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.ebay.com.au" target="_blank" rel="noopener">eBay Australia — Sold listings</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">In my experience, eBay sold listings are the most reliable real-world benchmark for what coins actually trade for. Search for your coin, then filter to <strong>Sold Items</strong>. Take an average over a reasonable number of recent sales — and make sure you're describing the coin clearly enough to be comparing like with like. Asking prices tell you nothing useful.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.numista.com" target="_blank" rel="noopener">numista.com</a></div>
-          <div class="res-desc">The world's most comprehensive community coin database. Excellent for identifying coins, cross-referencing mintages and looking up design details. Community-sourced, so cross-check key figures against official mint sources for anything important.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.coinarchives.com" target="_blank" rel="noopener">coinarchives.com</a></div>
-          <div class="res-desc">Aggregates confirmed hammer prices from major international auction houses. Best for pre-decimal Australian coins, world coins, and rarer items that trade at auction. Less useful for modern RAM/Perth Mint commemoratives where eBay is more representative.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.thepurplepenny.com/articles" target="_blank" rel="noopener">thepurplepenny.com/articles</a> — The Purple Penny</div>
-          <div class="res-desc">An excellent archive of educational articles on Australian coins from the former owners of The Purple Penny dealership. Very readable, practically focused, and genuinely useful for building knowledge. The underlying content migrated from australia-coins.com — if you find old references to that address, this is where it lives now. Worth bookmarking while the site remains active.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.australian-coins.net" target="_blank" rel="noopener">australian-coins.net</a></div>
-          <div class="res-desc">A well-maintained reference site for Australian coins — regularly updated and a useful complement to the Purple Penny articles.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://en.numista.com/L101455" target="_blank" rel="noopener">Greg McDonald — Essential Reference Guide to PNCs</a> (Numista listing)</div>
-          <div class="res-desc">The definitive reference for Australian Philatelic Numismatic Covers, published September 2023. Essential if PNCs are part of your collection. Available from most reputable dealers or through your local numismatic society library (the Redcliffe Numismatic Society holds a copy).</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">ANDA Resources — <a href="https://anda.com.au/resources" target="_blank" rel="noopener">anda.com.au/resources</a></div>
-          <div class="res-desc">The Australasian Numismatic Dealers Association maintains a resources section worth bookmarking. Note: their event calendar is not reliably up to date — use Facebook groups and individual show websites for current dates.</div>
-        </div>
-      </div>
-
-      <!-- International -->
-      <div style="margin-top:20px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
-        letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
-        INTERNATIONAL — for Commonwealth &amp; world coins
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.royalmint.com/collect/archive" target="_blank" rel="noopener">royalmint.com/collect/archive</a> — Royal Mint Archive (UK)</div>
-          <div class="res-desc">Far more useful than the Royal Mint shop for researchers — full archive of past UK issues with specifications, mintages and design details. Essential for the UK Remembrance and military series.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.coinsandcanada.com/coins-prices-collection.php" target="_blank" rel="noopener">coinsandcanada.com</a></div>
-          <div class="res-desc">The best independent reference I've found for Canadian coins — prices, mintages, and catalogue information. Useful if Canadian Remembrance Day poppy coins are part of your focus.</div>
-        </div>
-      </div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.ebay.com.au" target="_blank" rel="noopener">eBay — sold listings</a><span class="res-tag tag-personal">Kev’s pick</span><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">Asking prices tell you nothing. Search for your coin, filter to <b>Sold items</b>, and look across several recent sales — condition and photos drive the price.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.numista.com" target="_blank" rel="noopener">Numista</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">The world’s biggest community coin database. Great for identifying coins and checking designs and mintages — cross-check anything important with the mint.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.coinarchives.com" target="_blank" rel="noopener">CoinArchives</a></div>
+        <div class="res-desc">Real auction results from major houses. Best for pre-decimal and rarer coins; for modern commemoratives, eBay sold is more useful.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.thepurplepenny.com/articles" target="_blank" rel="noopener">The Purple Penny — articles &amp; YouTube</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">Renowned for years as a guiding hand in the industry. The shop has wound down, but the articles archive and videos are still some of the best learning around. <span class="res-more"><a href="https://www.youtube.com/@thepurplepennycoins" target="_blank" rel="noopener">YouTube</a></span></div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.sterlingcurrency.com.au/blog/news-research/" target="_blank" rel="noopener">Sterling &amp; Currency — articles</a></div>
+        <div class="res-desc">A dealer who writes honestly about the market — including where the hype and the apps get it wrong.</div>
+      </div></div>
+      <div class="res-group">International</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.royalmint.com/collect/archive" target="_blank" rel="noopener">Royal Mint archive (UK)</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">Every past UK issue with specifications and mintages — far more useful for research than the shop.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.coinsandcanada.com/coins-prices-collection.php" target="_blank" rel="noopener">Coins and Canada</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">The best independent reference I’ve found for Canadian coins — prices, mintages and catalogue details.</div>
+      </div></div>
+      <p class="res-para res-note"><b>US and world coins:</b> I don’t collect these myself, so I won’t pretend to have a favourite reference. Ask in the communities in Find Your People — someone always knows.</p>
+      <div class="tip-box"><b>A word on coin ID apps:</b> they’re fun, but they regularly misidentify coins, miss rare varieties and get values badly wrong. Use them as a starting point, never as the answer. <a href="https://www.sterlingcurrency.com.au/blog/news-research/the-fine-art-of-numismatics/coinsnap-a-fantastic-app-thats-not-fit-for-purpose/" target="_blank" rel="noopener">Why, in detail</a>.</div>
     </div>
   </details>
 
-  <!-- 4. BUYING COINS -->
-  <details class="acc">
+  <details class="acc" id="s4">
     <summary class="acc-head">
       <div class="acc-icon">4</div>
-      <div class="acc-heading">
-        <h3>Buying coins</h3>
-        <p>Trusted sources — official mints, reputable dealers, and how to buy safely online</p>
-      </div>
+      <div class="acc-heading"><h3>Buying Coins</h3><p>Mints and dealers I trust · 9 picks</p></div>
       <span class="acc-arrow">▼</span>
     </summary>
     <div class="acc-body">
-      <div style="margin-bottom:16px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
-        letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
-        OFFICIAL MINTS — buy direct for new releases
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.ramint.gov.au" target="_blank" rel="noopener">ramint.gov.au</a> — Royal Australian Mint</div>
-          <div class="res-desc">The primary source for Australian collector coins. Worth creating an account for early notification of new releases — particularly the annual Remembrance Day issues around November, which sell out quickly.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.perthmint.com" target="_blank" rel="noopener">perthmint.com</a> — Perth Mint</div>
-          <div class="res-desc">A large and distinct catalogue from RAM — particularly strong on silver and gold collector coins, world issues, and the Lunar series. Sign up for their newsletter for release notifications.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.mint.ca/en/shop/coins" target="_blank" rel="noopener">mint.ca</a> — Royal Canadian Mint</div>
-          <div class="res-desc">Official source for Canadian collector coins including the annual Remembrance Day poppy series. Worth monitoring if Canadian coins are part of your focus.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.royalmint.com/shop" target="_blank" rel="noopener">royalmint.com/shop</a> — The Royal Mint (UK)</div>
-          <div class="res-desc">Official source for current UK releases including the annual Remembrance Day £5 commemoratives.</div>
-        </div>
-      </div>
-
-      <div style="margin:20px 0 16px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
-        letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
-        TRUSTED DEALERS
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://peterstrich.com.au" target="_blank" rel="noopener">peterstrich.com.au</a> — Peter Strich, Brisbane <span class="res-tag tag-personal">personal recommendation</span></div>
-          <div class="res-desc">My go-to local dealer. Petra (who runs the business day-to-day) has been genuinely helpful and trustworthy. A member of Collectors Club Queensland — I collect my orders at the monthly CCQ meeting, which avoids postage costs and gives you a chance to inspect before you commit. Can't recommend this relationship highly enough for Brisbane-based collectors.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.sterlingcurrency.com.au/coins" target="_blank" rel="noopener">sterlingcurrency.com.au</a> — Sterling &amp; Currency, Sydney</div>
-          <div class="res-desc">Specialist in Australian commemorative and military coins. Good for PNCs, C-mintmark releases and Remembrance Day series. Prices are retail asking — use eBay sold listings to benchmark before purchasing.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.thepurplepenny.com" target="_blank" rel="noopener">thepurplepenny.com</a> — The Purple Penny</div>
-          <div class="res-desc">Reputable dealer with good stock across Australian decimal commemoratives. Also maintains an excellent educational articles archive (listed separately in Research). Active but check current status before ordering.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://shieldsstamps.com.au" target="_blank" rel="noopener">shieldsstamps.com.au</a> — Shields Stamps &amp; Coins</div>
-          <div class="res-desc">Tony Shields has been trading full-time since 1976 — stamps, coins, banknotes and accessories. Strong eBay presence with excellent ratings. A reliable source particularly for stamps relating to PNC themes.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.prospectstampsandcoins.com.au" target="_blank" rel="noopener">prospectstampsandcoins.com.au</a> — Prospect Stamps &amp; Coins, Sydney</div>
-          <div class="res-desc">Blacktown NSW-based dealer covering numismatic and investment coins. An authorised RAM distributor — worth knowing for new releases if you're in Sydney.</div>
-        </div>
-      </div>
-      <div style="margin:20px 0 16px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
-        letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
-        BUYING ONLINE SAFELY
-      </div>
-      <div class="tip-box">
-        <strong>eBay buyer protection</strong> makes it one of the safer platforms for purchasing coins — disputes are generally resolved in the buyer's favour. For dealers I use regularly, I've found reliable sellers whose pricing, packaging and service I trust. If you're new to a seller, check their feedback carefully before committing to anything significant.
-      </div>
-      <div class="warn-box">
-        <strong>Local fairs and markets:</strong> Be careful — many dealers at local collectors fairs and general markets are happy to sell you anything at any price, knowing you may not understand what you're doing. Always research a coin's value before attending, and don't let the atmosphere pressure you into a quick decision.
-      </div>
+      <div class="res-group">Mints</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.ramint.gov.au" target="_blank" rel="noopener">Royal Australian Mint</a></div>
+        <div class="res-desc">Create an account for early notice of new releases — the Remembrance Day issues around November sell out fast.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.perthmint.com" target="_blank" rel="noopener">Perth Mint</a></div>
+        <div class="res-desc">A different catalogue from the RAM — strong on silver and gold, world issues and the Lunar series.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.mint.ca/en/shop/coins" target="_blank" rel="noopener">Royal Canadian Mint</a></div>
+        <div class="res-desc">Canadian collector coins, including the annual Remembrance Day poppy series.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.royalmint.com/shop" target="_blank" rel="noopener">The Royal Mint (UK)</a></div>
+        <div class="res-desc">Current UK releases, including the Remembrance Day £5 commemoratives.</div>
+      </div></div>
+      <div class="res-group">Dealers</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://peterstrich.com.au" target="_blank" rel="noopener">Peter Strich, Brisbane</a><span class="res-tag tag-personal">Kev’s pick</span><span class="res-tag tag-local">Brisbane</span></div>
+        <div class="res-desc">My local go-to. Sometimes a little dearer, but reliable — and being local saves on postage. Petra runs the day-to-day and is genuinely helpful.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.sterlingcurrency.com.au/coins" target="_blank" rel="noopener">Sterling &amp; Currency, Sydney</a></div>
+        <div class="res-desc">Specialists in Australian commemorative and military coins — strong on PNCs, C-mintmark and Remembrance Day issues.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://shieldsstamps.com.au" target="_blank" rel="noopener">Shields Stamps &amp; Coins</a></div>
+        <div class="res-desc">Trading full-time since 1976, with excellent eBay ratings. Especially good for stamps relating to PNC themes.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.prospectstampsandcoins.com.au" target="_blank" rel="noopener">Prospect Stamps &amp; Coins, Sydney</a></div>
+        <div class="res-desc">An authorised RAM distributor with a good range of accessories and Masterpieces sets.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name">Sandi Challis — Aussie Coins, Brisbane<span class="res-tag tag-local">Brisbane</span></div>
+        <div class="res-desc">Helped me a lot early on. Very active at Brisbane collectors’ fairs and coin shows — look for her stand.</div>
+      </div></div>
+      <div class="tip-box"><b>Buying online:</b> eBay’s buyer protection makes it one of the safer places to buy. Check seller feedback, and compare against sold listings before you pay.</div>
+      <div class="warn-box"><b>Fairs and markets:</b> some sellers will happily sell you anything at any price, knowing you may not know better. Check sold prices on your phone before you hand over cash.</div>
     </div>
   </details>
 
-  <!-- 5. BOOKS & DEEPER READING -->
-  <details class="acc">
+  <details class="acc" id="s5">
     <summary class="acc-head">
       <div class="acc-icon">5</div>
-      <div class="acc-heading">
-        <h3>Books &amp; deeper reading</h3>
-        <p>The references worth having on your shelf</p>
-      </div>
+      <div class="acc-heading"><h3>Go Deeper</h3><p>Books, channels, people and storage · 16 picks</p></div>
       <span class="acc-arrow">▼</span>
     </summary>
     <div class="acc-body">
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">Renniks Australian Coin &amp; Banknote Values — <a href="https://www.renniks.com.au" target="_blank" rel="noopener">renniks.com.au</a></div>
-          <div class="res-desc">The standard annual Australian coin catalogue. Updated each year with values across pre-decimal and decimal coins. Values are catalogue estimates — treat as a guide rather than market reality (eBay sold listings are more reliable for that). Essential reference for pre-decimal collectors.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.australiacoins.com.au/products/pirate-guide-to-collecting-australian-coins-paperback" target="_blank" rel="noopener">Pirate Guide to Collecting Australian Coins</a> — Damian &amp; Leisha Walker (Australia Coins) <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">An accessible, practical guide to the hobby from the team behind australiacoins.org. The best first book for anyone new to collecting — whether you've inherited a collection or are just starting out.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">The Essential Reference Guide to PNCs — Greg McDonald (Sep 2023) — <a href="https://en.numista.com/L101455" target="_blank" rel="noopener">Numista listing</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">The definitive PNC reference. If PNCs are part of your collection, this is essential. Available from most reputable dealers or through your local numismatic society library.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">The Australian Fifty Cent Coin — Jonathon Earl (Fifty Fifty Edition) <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">The reference guide for 50c collectors. Jonathon is one of the most knowledgeable people in the Australian collecting community on this denomination — and also a generous contributor to the hobby.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">How to Find the Value of Your Coins — Damian Walker (Australia Coins) <span class="res-tag tag-free">free PDF</span></div>
-          <div class="res-desc">A short, practical guide covering the three types of value, how to research a coin, grading basics, and where to find reliable information. Available free from australiacoins.org. The best first read for anyone who's inherited a collection.</div>
-        </div>
-      </div>
-    </div>
-  </details>
-
-  <!-- 6. CLUBS & SHOWS -->
-  <details class="acc">
-    <summary class="acc-head">
-      <div class="acc-icon">6</div>
-      <div class="acc-heading">
-        <h3>Clubs, societies &amp; shows</h3>
-        <p>Where to find your people in person</p>
-      </div>
-      <span class="acc-arrow">▼</span>
-    </summary>
-    <div class="acc-body">
-      <p style="font-size:13.5px;color:var(--mid);margin-bottom:16px;line-height:1.7">Joining a local numismatic society is one of the best things you can do early in the hobby. Monthly meetings give you access to knowledgeable collectors, member trade tables, auctions without dealer markups, guest presentations, and — most importantly — people who are genuinely happy to answer the dumb questions. The Redcliffe Numismatic Society also maintains what is widely regarded as the most comprehensive numismatic library in the country.</p>
-
-      <div style="margin-bottom:12px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
-        letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
-        QUEENSLAND SOCIETIES
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.rns.org.au" target="_blank" rel="noopener">Redcliffe Numismatic Society</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">A very active club catering to all skill levels — from casual noodlers to serious collectors. Covers coins, banknotes, tokens, phonecards and medals. Monthly newsletter and member trade tables. Meets 1st Tuesday of each month in Redcliffe. Home to the most comprehensive numismatic library in Australia.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://the-ans.com" target="_blank" rel="noopener">Australian Numismatic Society — Queensland Branch</a></div>
-          <div class="res-desc">One of Australia's oldest numismatic organisations (est. 1913). Monthly meetings with guest speakers, educational displays, member auctions and access to the society's research journal. Currently meets 3rd Tuesday of each month in Brisbane.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://qpc.org.au/collectors-club" target="_blank" rel="noopener">Collectors Club Queensland</a></div>
-          <div class="res-desc">A broader interest club for all kinds of collectors, including coins. Monthly Sunday morning meets at Carina — a great swap meet atmosphere with direct access to other collectors without dealer involvement.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="http://www.qns.org.au" target="_blank" rel="noopener">Queensland Numismatic Society</a></div>
-          <div class="res-desc">Dedicated to coin, medal and banknote collecting. Member lectures, variety discussions and regular buy/sell trade tables.</div>
-        </div>
-      </div>
-
-      <div style="margin:20px 0 12px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
-        letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
-        NATIONAL BODIES
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">Numismatic Association of Australia (NAA)</div>
-          <div class="res-desc">The overarching national body. Produces an annual peer-reviewed journal and hosts the biennial National Numismatic Conference. Ideal for collectors interested in the academic and historical sides of the hobby.</div>
-        </div>
-      </div>
-
-      <div style="margin:20px 0 12px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;
-        letter-spacing:1px;color:var(--silver);padding-bottom:8px;border-bottom:1px solid var(--rule)">
-        SHOWS &amp; EVENTS
-      </div>
-      <p style="font-size:13px;color:var(--mid);margin-bottom:12px;line-height:1.7">
-        Coin shows can be a little confronting at first — they can feel like a feeding frenzy. My advice: connect with a couple of trusted people before you go, have a plan and a specific focus, and don't feel pressured to buy anything. The Brisbane ANDA show was a turning point for me precisely because I went with questions rather than a shopping list.
-      </p>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.brisbanestampandcoinshow.com" target="_blank" rel="noopener">Brisbane Stamp &amp; Coin Show</a></div>
-          <div class="res-desc">The biggest Queensland show of the year, usually held in November — conveniently timed around the annual RAM Remembrance Day releases. Worth planning around.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">ANDA Money Fairs — <a href="https://anda.com.au/events" target="_blank" rel="noopener">anda.com.au/events</a></div>
-          <div class="res-desc">ANDA runs shows in multiple cities. Note: their website calendar is not always current — confirm via Facebook groups or the individual show pages for up-to-date dates and locations.</div>
-        </div>
-      </div>
-      <div class="tip-box">
-        <strong>Finding your local show:</strong> The best way to find events near you is through the Facebook groups listed above — shows are typically advertised there well in advance. Your local numismatic society will also have advance notice of upcoming events.
-      </div>
-    </div>
-  </details>
-
-  <!-- 7. YOUTUBE -->
-  <details class="acc">
-    <summary class="acc-head">
-      <div class="acc-icon">7</div>
-      <div class="acc-heading">
-        <h3>YouTube channels</h3>
-        <p>Watch and learn — the best Australian coin channels</p>
-      </div>
-      <span class="acc-arrow">▼</span>
-    </summary>
-    <div class="acc-body">
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.youtube.com/@ThompsonsCoins" target="_blank" rel="noopener">Thompson's Coins</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">Michael Thompson runs a bricks-and-mortar dealership in Melbourne and is also the event coordinator for ANDA. His videos are informative, pragmatic and genuinely engaging — excellent for market commentary, new releases, and understanding what's worth collecting and why.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.youtube.com/@thepurplepennycoins" target="_blank" rel="noopener">The Purple Penny</a> <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">Consistently informative, practical and well-produced. A great complement to the Purple Penny articles archive for learning about Australian coins.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.youtube.com/@AustraliaCoins" target="_blank" rel="noopener">Australia Coins</a> — Damian Walker <span class="res-tag tag-personal">recommended</span></div>
-          <div class="res-desc">Damian's YouTube presence, consistent with his website and Facebook page. Good for beginners learning the basics.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.youtube.com/@coincollectinganddetecting" target="_blank" rel="noopener">Coin Collecting and Detecting</a></div>
-          <div class="res-desc">Despite the name, this channel is about coin collecting — not metal detecting. Often features noodling sessions and good practical commentary on what to look for: errors, scarcity, varieties. Educational in an accessible way.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.youtube.com/@CraigCollects" target="_blank" rel="noopener">Craig Collects</a></div>
-          <div class="res-desc">Been around for a while — the back catalogue is worth working through for insights and tips that helped me early on. Good for building general knowledge of Australian coins.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name"><a href="https://www.youtube.com/@DantheCollectingMan" target="_blank" rel="noopener">Dan the Collecting Man</a></div>
-          <div class="res-desc">Good content, but be aware that some of it points toward paid valuation lists — which I wouldn't recommend given the costs involved and the fluid nature of the market. eBay sold listings are a better and free alternative for market values.</div>
-        </div>
-      </div>
-    </div>
-  </details>
-
-  <!-- 8. PEOPLE WORTH KNOWING -->
-  <details class="acc">
-    <summary class="acc-head">
-      <div class="acc-icon">8</div>
-      <div class="acc-heading">
-        <h3>People worth knowing</h3>
-        <p>Generous, knowledgeable voices in the Australian collecting community</p>
-      </div>
-      <span class="acc-arrow">▼</span>
-    </summary>
-    <div class="acc-body">
-      <p style="font-size:13.5px;color:var(--mid);margin-bottom:16px;line-height:1.7">
-        The single most valuable thing in this hobby isn't a website or a book — it's finding people who know more than you do and are willing to share it. These are some of the people who've been generous with their time and knowledge on my journey. You'll find most of them in the communities and channels listed above.
-      </p>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">Damian Walker — <a href="https://www.australiacoins.org" target="_blank" rel="noopener">australiacoins.org</a></div>
-          <div class="res-desc">The person whose presentation at Brisbane ANDA 2025 changed the course of my collecting journey. Author, educator and community builder. I'm looking forward to collaborating with him going forward.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">Jonathon Earl — Fifty Fifty community</div>
-          <div class="res-desc">Author of The Australian Fifty Cent Coin and one of the most knowledgeable people in the community on Australian decimal coins. Another person I'm hoping to collaborate with. Find him in the Fifty Fifty Facebook group.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">Petra Strich — <a href="https://peterstrich.com.au" target="_blank" rel="noopener">peterstrich.com.au</a>, Brisbane</div>
-          <div class="res-desc">Runs the day-to-day at Peter Strich Coins in Brisbane. Genuinely helpful, trustworthy, and great at keeping me informed about upcoming releases. A rare thing in any industry — a dealer you can actually trust.</div>
-        </div>
-      </div>
-      <div class="res-item">
-        <div class="res-dot"></div>
-        <div class="res-body">
-          <div class="res-name">Brodie Burke — various communities</div>
-          <div class="res-desc">Has been particularly generous with his time and knowledge. The kind of person who makes the online collecting community worth being part of. You'll find him across several of the Facebook groups listed above.</div>
-        </div>
-      </div>
-      <div class="tip-box">
-        <strong>The best advice I can give:</strong> Find your version of these people — patient, knowledgeable, willing to answer the questions you feel embarrassed to ask. They exist in every community listed here. The hobby is full of them, once you know where to look.
-      </div>
+      <div class="res-group">Books &amp; reading</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.renniks.com.au" target="_blank" rel="noopener">Renniks Australian Coin &amp; Banknote Values</a></div>
+        <div class="res-desc">The standard annual catalogue. Learn the language first (Pirate Guide), then this makes sense. Treat its values as a guide, not market reality.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://en.numista.com/L101455" target="_blank" rel="noopener">The Essential Reference Guide to PNCs — Greg McDonald</a><span class="res-tag tag-personal">Kev’s pick</span></div>
+        <div class="res-desc">The definitive PNC reference (2023). Essential if PNCs are part of your collection.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name">The Australian Fifty Cent Coin — Jonathon Earl</div>
+        <div class="res-desc">The reference for 50c collectors, from one of the most knowledgeable people in the community. Ask in the Fifty Fifty group.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.independentcoinnews.com" target="_blank" rel="noopener">Independent Coin News</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">Worth reading every issue — good insights, no bias.</div>
+      </div></div>
+      <div class="res-group">YouTube</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.youtube.com/@ThompsonsCoins" target="_blank" rel="noopener">Thompson’s Coins — Matt Thompson</a><span class="res-tag tag-personal">Kev’s pick</span></div>
+        <div class="res-desc">My top pick. Practical, honest and engaging — market commentary, new releases and how the hobby really works.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.youtube.com/@thepurplepennycoins" target="_blank" rel="noopener">The Purple Penny</a><span class="res-tag tag-free">Free</span></div>
+        <div class="res-desc">Consistently informative and well produced.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.youtube.com/@coincollectinganddetecting" target="_blank" rel="noopener">Coin Collecting and Detecting</a></div>
+        <div class="res-desc">Despite the name, it’s about collecting — noodling sessions and what to look for in errors and varieties.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.youtube.com/@CraigCollects" target="_blank" rel="noopener">Craig Collects</a></div>
+        <div class="res-desc">A deep back catalogue that helped me early on.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.youtube.com/@DantheCollectingMan" target="_blank" rel="noopener">Dan the Collecting Man</a><span class="res-tag tag-caution">Heads-up</span></div>
+        <div class="res-desc">Good snippets of insight. Some videos point to paid valuation lists — make up your own mind; eBay sold is free.</div>
+      </div></div>
+      <div class="res-group">Voices worth following</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.australiacoins.org" target="_blank" rel="noopener">Damian Walker</a></div>
+        <div class="res-desc">His talk at the 2025 Brisbane ANDA show changed the course of my collecting. A generous educator and community builder.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name">Jonathon Earl</div>
+        <div class="res-desc">Author of <i>The Australian Fifty Cent Coin</i> and generous with what he knows. Find him in the Fifty Fifty group.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name">Brodie Burke</div>
+        <div class="res-desc">Endlessly generous with his time and knowledge across the online groups — the kind of person who makes the community worth joining.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.youtube.com/@ThompsonsCoins" target="_blank" rel="noopener">Matt Thompson</a></div>
+        <div class="res-desc">Straight-talking and practical, whether on video or behind the counter.</div>
+      </div></div>
+      <div class="res-group">Protecting your collection</div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://www.light-horse-pnc-album-pages.com" target="_blank" rel="noopener">Light Horse PNC Albums &amp; Pages — Peter Zimmermann</a><span class="res-tag tag-personal">Kev’s pick</span></div>
+        <div class="res-desc">Premium storage for PNCs, carded, capsuled and slabbed coins. I was the first to use his C5 PNC page to display the RAM year mint sets Dad left behind — safe, and finally easy to enjoy.</div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://shop.bradfordcoins.com.au/lighthouse/" target="_blank" rel="noopener">Lighthouse (Leuchtturm)</a><span class="res-tag tag-personal">Kev’s pick</span></div>
+        <div class="res-desc">Albums, pages, capsules and 2×2 flips — my strong recommendation for flips and capsules. Available from most reputable dealers; I buy mine from Bradford Coins in Cairns for keen prices and quick, cheap postage. <span class="res-more"><a href="https://www.prospectstampsandcoins.com.au/coin-accessories-and-catalogues/australian-coin-size-guide/" target="_blank" rel="noopener">Capsule size guide</a></span></div>
+      </div></div>
+      <div class="res-item"><div class="res-dot"></div><div class="res-body">
+        <div class="res-name"><a href="https://vst.com.au" target="_blank" rel="noopener">VST</a></div>
+        <div class="res-desc">A good alternative for albums and accessories where Light Horse or Lighthouse don’t cover what you need.</div>
+      </div></div>
+      <div class="tip-box"><b>Not all suppliers do all things</b> — mix and match. Whatever you choose, use PVC-free holders: cheap plastic can quietly damage coins over time.</div>
     </div>
   </details>
 
@@ -785,7 +528,9 @@ details[open]>.acc-head .acc-arrow{transform:rotate(180deg);color:var(--gold)}
 
 <script>
 // Sections are native <details>, so they open and close without any script.
-// This script only adds "Expand all" and opens everything when printing.
+// This script only adds "Expand all", opens a section when its jump button is tapped, and opens everything when printing.
+function openSection(id){ const d=document.getElementById(id); if(d) d.open=true; updateExpandLabel(); }
+if(location.hash) openSection(location.hash.slice(1));
 function toggleAll(){
   const all=[...document.querySelectorAll('details.acc')];
   const open=!all.every(d=>d.open);
@@ -797,7 +542,7 @@ function updateExpandLabel(){
 }
 document.querySelectorAll('details.acc').forEach(d=>d.addEventListener('toggle',updateExpandLabel));
 let _printState=null;
-window.addEventListener('beforeprint',()=>{_printState=[...document.querySelectorAll('details.acc')].map(d=>d.open);document.querySelectorAll('details.acc').forEach(d=>d.open=true);});
+window.addEventListener('beforeprint',()=>{_printState=[...document.querySelectorAll('details.acc')].map(d=>d.open);document.querySelectorAll('details.acc').forEach(d=>d.open=true);const st=document.querySelector('details.story');if(st)st.open=true;});
 window.addEventListener('afterprint',()=>{if(_printState)document.querySelectorAll('details.acc').forEach((d,i)=>d.open=_printState[i]);updateExpandLabel();});
 </script>
 
