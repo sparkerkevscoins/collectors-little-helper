@@ -4,7 +4,9 @@
 
 **Describe a coin → ask any AI assistant → check the reply → paste into your catalogue.**
 
-Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
+Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
+
+**Upgrading from v1.5?** Download the new catalogue and Entry Form together: the v1.6 form needs the v1.6 catalogue, which adds three columns for graded coins (AD–AF). Columns B–AC haven't moved, so copy your Holdings rows from B to AC and paste them at column B of the new workbook. Full steps are in the workbook's START HERE tab, section ⑦.
 
 ---
 
@@ -13,7 +15,7 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 | File | Purpose |
 |---|---|
 | `CLH_Catalogue.xlsx` | Protected Excel workbook — your master database |
-| `CLH_Entry_Form.html` | AI-assisted entry form — open in any browser |
+| `CLH_Entry_Form.html` | AI-assisted form for adding and updating coins, including graded (slabbed) coins — open in any browser |
 | `CLH_QuickStart_Guide.html` | Printable quick start guide and field reference |
 | `CLH_Resources.html` | Curated guide to trusted dealers, communities, books and research sources, plus the kit author's own collecting story |
 
@@ -38,7 +40,7 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 | Check & Copy shows red cells | Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note. |
 | Excel says the cell is protected | You clicked a grey column. Click column B of an empty row and paste again. |
 | Item ID or another grey column is blank | Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value. |
-| I need to change a coin I've already added | Entry Form → Update Guide tab. It lists the cells to change; you make the changes in the catalogue yourself. |
+| I need to change a coin I've already added | Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B. |
 | Where are my totals? | CLH_Catalogue.xlsx → INDEX tab. |
 | What does a term mean? | Entry Form → Glossary & Resources tab, or the Quick Reference in the Quick Start Guide. |
 
@@ -54,6 +56,7 @@ Open `CLH_QuickStart_Guide.html` first — it covers:
 - The title naming convention
 - Field guide (required vs optional)
 - The five steps to add a coin, and what to do if you get stuck
+- Finishes and mintage explained, looking after your coins, and what to do if you've inherited a collection
 - Glossary of numismatic terms (Proof, UNC, NIFC/NCLT, mintmarks, grading, storage formats and more)
 - A pre-purchase checklist for first-time buyers
 
