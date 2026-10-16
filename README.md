@@ -38,7 +38,7 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 | Check & Copy shows red cells | Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note. |
 | Excel says the cell is protected | You clicked a grey column. Click column B of an empty row and paste again. |
 | Item ID or another grey column is blank | Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value. |
-| I need to change a coin I've already added | Entry Form → Update Existing tab. It tells you exactly which column to change. |
+| I need to change a coin I've already added | Entry Form → Update Guide tab. It lists the cells to change; you make the changes in the catalogue yourself. |
 | Where are my totals? | CLH_Catalogue.xlsx → INDEX tab. |
 | What does a term mean? | Entry Form → Glossary & Resources tab, or the Quick Reference in the Quick Start Guide. |
 
