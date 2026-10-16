@@ -6,6 +6,8 @@
 
 Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
 
+**Upgrading from v1.5?** Download the new catalogue and Entry Form together: the v1.6 form needs the v1.6 catalogue, which adds three columns for graded coins (AD–AF). Columns B–AC haven't moved, so copy your Holdings rows from B to AC and paste them at column B of the new workbook. Full steps are in the workbook's START HERE tab, section ⑦.
+
 ---
 
 ## What's in the kit

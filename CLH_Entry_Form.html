@@ -1270,7 +1270,7 @@ function checkRows(){
     : `<p class="chk-ok">✓ ${rows.length} row${rows.length>1?'s':''} ready.${totalFix?` ${totalFix} value${totalFix>1?'s were':' was'} tidied automatically (yellow).`:''}</p>`;
   const n=tsv.length;
   const btn = n ? `<button class="btn btn-primary" onclick="copyChecked()" style="margin-top:6px">Copy ${n} row${n>1?'s':''} for Holdings</button>
-    <p class="copy-notice">Then in Holdings: click column B of the first empty row and paste.${skipped?` (${skipped} row${skipped>1?'s':''} with the wrong number of fields left out.)`:''}</p>` : '';
+    <p class="copy-notice">Then in Holdings: click column B of the first empty row and paste. (This needs the v1.6 catalogue.)${skipped?` (${skipped} row${skipped>1?'s':''} with the wrong number of fields left out.)`:''}</p>` : '';
   out.innerHTML = head + btn + html;
 }
 function copyText(t, msg){
