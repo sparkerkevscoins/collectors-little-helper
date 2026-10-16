@@ -170,13 +170,20 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <select id="n-metal"><option value="">Select...</option>
             <option>Aluminium Bronze (AlBr)</option>
             <option>Bi-metallic (AlBr / Cupro-nickel)</option>
+            <option>Bi-metallic (other)</option>
             <option>Bronze</option>
             <option>Cupro-nickel</option>
+            <option>Nickel</option>
+            <option>Nickel-plated Steel</option>
+            <option>Multi-ply Plated Steel</option>
+            <option>Aureate (bronze-plated nickel)</option>
             <option>Silver (unspecified)</option>
             <option>Silver (.800)</option>
             <option>Silver (.925)</option>
             <option>Silver (.999)</option>
+            <option>Silver (.9999)</option>
             <option>Gold (.999)</option>
+            <option>Gold (.9999)</option>
             <option>Gold Plated</option>
             <option>Other (see notes)</option>
           </select></div>
@@ -217,6 +224,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <select id="n-pkg"><option value="">Select...</option>
             <option>Loose/Raw</option>
             <option>Official Mint Case/Box</option>
+            <option>Folder / Set Pack</option>
             <option>Capsule/Blister</option>
             <option>RAM Card</option>
             <option>Downies Card</option>
@@ -227,6 +235,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
             <option>PNC/PMC — Other</option>
             <option>Tube/Roll</option>
             <option>2×2</option>
+            <option>Graded Slab</option>
             <option>N/A - Not Applicable</option>
           </select></div>
         <div class="field"><label>Grade Confidence</label>
@@ -245,6 +254,14 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <select id="n-fps"><option>No</option><option>Yes</option></select></div>
         <div class="field"><label>NIFC Release?</label>
           <select id="n-nifc"><option>No</option><option>Yes</option></select></div>
+      </div>
+      <div class="field-grid three" style="margin-top:12px">
+        <div class="field"><label>Grading Service<span class="hint">graded (slabbed) coins only</span></label>
+          <select id="n-tpg"><option value=""></option><option>PCGS</option><option>NGC</option><option>ICCS</option><option>Other</option></select></div>
+        <div class="field"><label>Certified Grade<span class="hint">as printed on the label</span></label>
+          <input type="text" id="n-certgrade" placeholder="e.g. MS66, PR70 DCAM"></div>
+        <div class="field"><label>Grading Cert No.</label>
+          <input type="text" id="n-certno" placeholder="Number on the slab label"></div>
       </div>
     </div>
   </div>
@@ -594,6 +611,19 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
       </div>
 
       <div class="gloss-section">
+        <div class="gloss-section-title">CANADIAN TERMS</div>
+        <div class="gloss-grid">
+          <div class="gloss-item"><span class="gloss-term">RCM</span><span class="gloss-def">Royal Canadian Mint — Canada's mint, producing circulating coins in Winnipeg and collector and bullion coins in Ottawa.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Loonie</span><span class="gloss-def">The Canadian $1 coin, named after the common loon on its reverse. Introduced in 1987. Write it as CAD$1 in titles.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Toonie</span><span class="gloss-def">The Canadian $2 coin, a bi-metallic coin introduced in 1996. Write it as CAD$2 in titles.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Specimen</span><span class="gloss-def">A Canadian collector finish between uncirculated and proof, usually with satin and mirror areas. RCM Specimen sets are common. Choose Specimen in the Grade field.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Maple Leaf</span><span class="gloss-def">The RCM's bullion coins in gold and silver, mostly .9999 fine. Choose Gold (.9999) or Silver (.9999) in the Metal field.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Multi-ply plated steel</span><span class="gloss-def">The RCM's plated-steel coin metal: a steel core plated with layers of nickel, copper or brass. Used for most modern Canadian circulating coins.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Charlton</span><span class="gloss-def">The Charlton Standard Catalogue of Canadian Coins — Canada's standard price guide, published every year (Canada's equivalent of Renniks).</span></div>
+        </div>
+      </div>
+
+      <div class="gloss-section">
         <div class="gloss-section-title">METALS &amp; COMPOSITION</div>
         <div class="gloss-grid">
           <div class="gloss-item"><span class="gloss-term">AlBr</span><span class="gloss-def">Aluminium Bronze — the gold-coloured alloy used in Australian $1 and $2 coins since 1984.</span></div>
@@ -621,7 +651,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
             <strong>S</strong> — Sydney (former Sydney Mint, now closed; pre-decimal era)<br>
             <strong>B</strong> — Bombay (India) — used on some WWII-era Australian pennies struck in India<br>
             <strong>P</strong> — Perth (Perth Mint) — used on Perth Mint collector releases and some circulating coins<br>
-            Circulating coins generally carry no mintmark; collector releases often do to distinguish them.
+            Circulating coins generally carry no mintmark; collector releases often do to distinguish them. Many Canadian coins since 2006 carry the Royal Canadian Mint's logo as their mint mark.
           </span></div>
           <div class="gloss-item"><span class="gloss-term">Privy mark</span><span class="gloss-def">A small additional symbol added to a coin to denote a special or limited edition, coin fair exclusive, or commemorative variant — distinct from the standard mintmark. Examples: a small anchor for a naval theme, a tiny crown for a royal event, or an envelope symbol for a coin fair release.</span></div>
           <div class="gloss-item"><span class="gloss-term">Domed</span><span class="gloss-def">A coin with a curved (convex/concave) shape rather than flat — used on premium collector issues for visual effect.</span></div>
@@ -641,11 +671,6 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <div class="gloss-item"><span class="gloss-term">Denomination</span><span class="gloss-def">The face value of the coin — e.g. $2, 50c. In this catalogue, enter as a number: 2 for $2, 0.5 for 50c, 0.2 for 20c.</span></div>
           <div class="gloss-item" style="align-items:flex-start"><span class="gloss-term" style="padding-top:2px">Types of Value</span><span class="gloss-def">Every coin has up to three layers of value:<br>
             <strong>Face value</strong> — the denomination printed on the coin; the minimum it is worth as currency.<br>
-            <strong>Ingredient value</strong> — the value of the metal content. A pre-1966 Australian 50c contains silver worth significantly more than 50c at today's silver prices, regardless of numismatic condition.<br>
-            <strong>Numismatic / market value</strong> — what a collector will actually pay, determined by rarity, condition, and demand. The most complex and variable of the three.
-          </span></div>
-          <div class="gloss-item" style="align-items:flex-start"><span class="gloss-term" style="padding-top:2px">Types of Value</span><span class="gloss-def">Every coin has up to three layers of value:<br>
-            <strong>Face value</strong> — the denomination printed on the coin; the minimum it is worth as currency.<br>
             <strong>Ingredient value</strong> — the value of the metal content. A pre-1966 Australian 50c contains silver worth significantly more than 50c at today's silver prices, regardless of its numismatic condition.<br>
             <strong>Numismatic / market value</strong> — what a collector will actually pay, determined by rarity (mintage), condition, and demand. This is the most complex and variable of the three.
           </span></div>
@@ -657,7 +682,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
       <div class="gloss-section">
         <div class="gloss-section-title">STORAGE, GRADING &amp; CONDITION</div>
         <div class="gloss-grid">
-          <div class="gloss-item"><span class="gloss-term">Slab / Slabbed</span><span class="gloss-def">A coin that has been professionally graded and sealed in a tamper-evident hard plastic case by a grading service (e.g. PCGS, NGC). The grade is printed on the label. Slabbing protects the coin and provides third-party authentication.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Slab / Slabbed</span><span class="gloss-def">A coin that has been professionally graded and sealed in a tamper-evident hard plastic case by a grading service (e.g. PCGS, NGC, ICCS). The grade and a certification number are printed on the label. Slabbing protects the coin and provides third-party authentication. In the catalogue, choose Packaging: Graded Slab, then fill in Grading Service, Certified Grade and Grading Cert No. from the label.</span></div>
           <div class="gloss-item"><span class="gloss-term">Raw / Loose</span><span class="gloss-def">A coin that has not been professionally graded or slabbed — stored loose or in a basic holder. Most collector coins are raw. Also called "raw" when removed from original packaging.</span></div>
           <div class="gloss-item"><span class="gloss-term">Capsule</span><span class="gloss-def">A round or rectangular clear plastic holder that snaps shut around a coin, protecting it from handling and environmental damage without touching the coin surface. The preferred storage for most collector coins.</span></div>
           <div class="gloss-item"><span class="gloss-term">2×2</span><span class="gloss-def">A 2-inch × 2-inch cardboard and mylar coin holder — two pieces stapled together around a coin. Inexpensive and widely used for circulating and lower-value coins. Not recommended for silver coins (the cardboard can cause toning).</span></div>
@@ -672,7 +697,10 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           </span></div>
           <div class="gloss-item"><span class="gloss-term">Coin Roll Scam</span><span class="gloss-def">A known fraud where a valuable-looking coin is placed on top of a roll of ordinary or worthless coins. The roll must be destroyed to verify the contents. Buy coin rolls only from the Royal Australian Mint directly, or from a trusted dealer. Never buy an "uncirculated roll" you cannot inspect.</span></div>
           <div class="gloss-item"><span class="gloss-term">Toning</span><span class="gloss-def">Natural discolouration of a coin's surface over time, caused by chemical reactions with the environment. On silver coins, light toning is often considered desirable ("patina"); heavy or uneven toning reduces value. Never try to remove toning — cleaning is worse.</span></div>
-          <div class="gloss-item"><span class="gloss-term">PCGS / NGC</span><span class="gloss-def">Professional Coin Grading Service / Numismatic Guaranty Corporation — the two most widely recognised third-party coin grading companies. A PCGS or NGC grade on a slab adds confidence and often a premium to a coin's value.</span></div>
+          <div class="gloss-item"><span class="gloss-term">PCGS / NGC</span><span class="gloss-def">Professional Coin Grading Service / Numismatic Guaranty Corporation — the two most widely recognised third-party coin grading companies. A slab confirms authenticity and grade, but it only adds value when the grade is high for that issue: many modern slabbed coins sell for little more than raw ones.</span></div>
+          <div class="gloss-item"><span class="gloss-term">ICCS</span><span class="gloss-def">International Coin Certification Service — Canada's best-known third-party grading service, widely used for Canadian coins alongside PCGS and NGC.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Certified grade (1–70)</span><span class="gloss-def">The grade on a slab label, on the 1–70 (Sheldon) scale. MS = Mint State (uncirculated), PR or PF = Proof, SP = Specimen, AU = About Uncirculated. 70 is perfect. Extra letters describe the finish, e.g. DCAM (deep cameo). "Details" means the coin has a problem, such as cleaning or damage.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Cert number</span><span class="gloss-def">The unique certification number on a slab label. You can look it up on the grading service's website to confirm the slab is genuine.</span></div>
           <div class="gloss-item"><span class="gloss-term">Album / Folder</span><span class="gloss-def">A purpose-made binder or folder designed to hold and display coins in individual pockets. Lighthouse and Dansco are popular brands. Use archival-quality (PVC-free) pages to avoid chemical damage to coins.</span></div>
         </div>
       </div>
@@ -891,6 +919,9 @@ function getEntryFields(prefix) {
     ['Storage Location',  val(prefix+'storage')],
     ['From Year Proof Set?', val(prefix+'fps')],
     ['NIFC Release?',     val(prefix+'nifc')],
+    ['Grading Service',   val(prefix+'tpg')],
+    ['Certified Grade',   val(prefix+'certgrade')],
+    ['Grading Cert No.',  val(prefix+'certno')],
     ['Notes',             val(prefix+'notes')],
   ];
 }
@@ -919,13 +950,14 @@ function _oldGenerateAllEntries() {
 }
 
 
-// ── Holdings schema (CLH v1.5 and later) — columns B..AC, in order ─────────────────────
+// ── Holdings schema (CLH v1.6) — columns B..AF, in order ─────────────────────
 const L_TYPE=['Coin','Set','PNC','PMC','Banknote','Error Coin','Other'];
 const L_COUNTRY=['Australia','United Kingdom','Canada','New Zealand','United States','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue','Other'];
-const L_METAL=['Aluminium Bronze (AlBr)','Bi-metallic (AlBr / Cupro-nickel)','Bronze','Cupro-nickel','Silver (unspecified)','Silver (.800)','Silver (.925)','Silver (.999)','Gold (.999)','Gold Plated','Other (see notes)'];
+const L_METAL=['Aluminium Bronze (AlBr)','Bi-metallic (AlBr / Cupro-nickel)','Bi-metallic (other)','Bronze','Cupro-nickel','Nickel','Nickel-plated Steel','Multi-ply Plated Steel','Aureate (bronze-plated nickel)','Silver (unspecified)','Silver (.800)','Silver (.925)','Silver (.999)','Silver (.9999)','Gold (.999)','Gold (.9999)','Gold Plated','Other (see notes)'];
 const L_GRADE=['Proof','Specimen','FDC/BU','Gem UNC','Choice UNC','UNC','aUNC','gEF/gXF','EF/XF','aEF/aXF','gVF','VF','F','VG','G','Fr','P','Circulating (ungraded)'];
 const L_TREAT=['Coloured','Frosted','Gilded','Gold Plated','Antiqued','Domed','Ultra High Relief','Other'];
-const L_PKG=['Loose/Raw','Official Mint Case/Box','Capsule/Blister','RAM Card','Downies Card','Carded (Other)','PNC/PMC — Standard','PNC/PMC — C5','PNC/PMC — DL','PNC/PMC — Other','Tube/Roll','2×2','N/A - Not Applicable'];
+const L_PKG=['Loose/Raw','Official Mint Case/Box','Folder / Set Pack','Capsule/Blister','RAM Card','Downies Card','Carded (Other)','PNC/PMC — Standard','PNC/PMC — C5','PNC/PMC — DL','PNC/PMC — Other','Tube/Roll','2×2','Graded Slab','N/A - Not Applicable'];
+const L_SVC=['PCGS','NGC','ICCS','Other'];
 const L_CONF=['Confirmed','High','Medium','Low','TBC'];
 const L_STATUS=['Owned','Wanted','Ordered','Duplicate','Sold'];
 const COLS=[
@@ -936,7 +968,8 @@ const COLS=[
  {n:'Mintage',t:'int'},{n:'RAM Code',t:'text'},{n:'CoA Number',t:'text'},{n:'PNC Issue No.',t:'text'},
  {n:'Mintmark Ref',t:'text'},{n:'From Proof Set?',t:'yn'},{n:'NIFC?',t:'yn'},{n:'Status',t:'list',l:L_STATUS,req:1},
  {n:'Acquisition Date',t:'date'},{n:'Acquisition Source',t:'text'},{n:'Acq. Price',t:'num'},{n:'Est. Value',t:'num'},
- {n:'Storage Location',t:'text'},{n:'Notes',t:'text'},{n:'Reference Numbers',t:'text'},{n:'Effigy',t:'text'}
+ {n:'Storage Location',t:'text'},{n:'Notes',t:'text'},{n:'Reference Numbers',t:'text'},{n:'Effigy',t:'text'},
+ {n:'Grading Service',t:'list',l:L_SVC},{n:'Certified Grade',t:'certgrade'},{n:'Grading Cert No.',t:'text'}
 ];
 
 const AI_PROMPT = [
@@ -962,6 +995,7 @@ const AI_PROMPT = [
 "      Correct: 2023 Australia $2 Vietnam War 50th Anniversary — C-Mintmark Coloured Uncirculated RAM Card",
 "      Correct: 2015 Australia $5 ANZAC Centenary — Silver Proof (triangular, cased)",
 "      Correct: 2008 Canada 25c Remembrance Day Poppy — Coloured Uncirculated",
+"      Correct: 2012 Australia $2 Remembrance Day Red Poppy — C-Mintmark Coloured Uncirculated PCGS MS66   (for a graded slab, the format is the grading service and the certified grade)",
 "      Wrong: 2024 Australia $2 Poppy — Uncirculated Coloured   (treatment must come before the finish)",
 "      If my title doesn't follow this rule, rewrite it.",
 " 6. Denomination — a plain number in the main currency unit: 10c = 0.1, 50c = 0.5, $1 = 1, $2 = 2, 50p = 0.5. Empty for sets with mixed denominations.",
@@ -987,6 +1021,9 @@ const AI_PROMPT = [
 "26. Notes — one line, no pipe characters. Keep my notes. If you filled any field from your own knowledge rather than from what I gave you, add at the end: AI-filled (unverified): <field names>",
 "27. Reference Numbers — catalogue references (e.g. KM number) only if you're sure",
 "28. Effigy — obverse portrait and designer, e.g. Charles III — Dan Thorne",
+"29. Grading Service — only for a coin sealed in a grading company's holder (a slab): exactly one of: "+L_SVC.join(', ')+". Empty for ungraded coins. Copy mine only.",
+"30. Certified Grade — the grade printed on the slab label, e.g. MS66, PR70 DCAM, SP68. Copy mine only: never work out or guess a grade.",
+"31. Grading Cert No. — the certification number on the slab label. Copy mine only.",
 "",
 "EXAMPLE OF ONE ENTRY:",
 "=== ENTRY 1 ===",
@@ -995,6 +1032,9 @@ const AI_PROMPT = [
 "Year: 2024",
 "…and so on for all "+COLS.length+" fields, ending with",
 "Effigy: Charles III — Dan Thorne",
+"Grading Service: ",
+"Certified Grade: ",
+"Grading Cert No.: ",
 "",
 "RULES:",
 "- Keep everything I provided (except the Title, which must follow the rule above). Only correct obvious formatting (e.g. '10c' becomes 0.1 in Denomination).",
@@ -1032,7 +1072,8 @@ function matchList(v, list){
   const aliases={'uncirculated':'UNC','unc':'UNC','circulated':'Circulating (ungraded)','circulation':'Circulating (ungraded)','bu':'FDC/BU',
     'cupronickel':'Cupro-nickel','aluminiumbronze':'Aluminium Bronze (AlBr)','albr':'Aluminium Bronze (AlBr)','aluminumbronze':'Aluminium Bronze (AlBr)',
     'bimetallic':'Bi-metallic (AlBr / Cupro-nickel)','sterlingsilver':'Silver (.925)','loose':'Loose/Raw','raw':'Loose/Raw','none':'Loose/Raw','na':'N/A - Not Applicable',
-    'roll':'Tube/Roll','tube':'Tube/Roll','2x2':'2×2','flip':'2×2','capsule':'Capsule/Blister','uk':'United Kingdom','usa':'United States','nz':'New Zealand'};
+    'roll':'Tube/Roll','tube':'Tube/Roll','slab':'Graded Slab','slabbed':'Graded Slab','graded':'Graded Slab','folder':'Folder / Set Pack','setpack':'Folder / Set Pack',
+    'aureate':'Aureate (bronze-plated nickel)','multiply':'Multi-ply Plated Steel','multiplysteel':'Multi-ply Plated Steel','platedsteel':'Multi-ply Plated Steel','2x2':'2×2','flip':'2×2','capsule':'Capsule/Blister','uk':'United Kingdom','usa':'United States','nz':'New Zealand'};
   if (aliases[nv] && list.includes(aliases[nv])) return {v:aliases[nv],fixed:1};
   // starts-with / contains (e.g. "Cupro-Nickel (75% Cu / 25% Ni)")
   hit=list.filter(o=>{const no=norm(o); return no.length>2 && (nv.startsWith(no)||no.startsWith(nv)&&nv.length>3);})
@@ -1063,6 +1104,10 @@ function checkField(raw, col){
       else if((m=c.match(/^[$£€]?(\d+(?:\.\d+)?)(dollars?)?$/i))) { c=String(+m[1]); }
       if(!/^\d+(\.\d+)?$/.test(c)) r.err='must be a number, e.g. 0.1 for 10c, 2 for $2';
       else { if(c!==v) r.fixed=1; r.v=c; } break; }
+    case 'certgrade': {
+      const c=v.replace(/\s+/g,' ').replace(/^(MS|PR|PF|SP|PL|AU|XF|EF|VF|VG|AG|FR|PO|F|G)\s*-?\s*(\d{1,2}\+?)/i,(m,a,b)=>a.toUpperCase()+b);
+      if(!/^(MS|PR|PF|SP|PL|AU|XF|EF|VF|VG|AG|FR|PO|F|G)\d{1,2}\+?(\s.*)?$/.test(c) && !/details|genuine|authentic/i.test(c)) r.err='use the grade on the label, e.g. MS66 or PR70 DCAM';
+      else { if(c!==v) r.fixed=1; r.v=c; } break; }
     case 'yn': { if(/^y(es)?$/i.test(v)) r.v='Yes'; else if(/^no?$/i.test(v)) r.v='No'; else r.err='must be Yes or No'; if(!r.err && r.v!==v) r.fixed=1; break; }
     case 'date': {
       let m;
@@ -1085,7 +1130,9 @@ const LABELS=(()=>{ const m={};
     fromyearproofset:'From Proof Set?',fromproofset:'From Proof Set?',nifcrelease:'NIFC?',nifc:'NIFC?',ncl:'NIFC?',acqdate:'Acquisition Date',dateacquired:'Acquisition Date',
     acqsource:'Acquisition Source',source:'Acquisition Source',acquisitionprice:'Acq. Price',price:'Acq. Price',pricepaid:'Acq. Price',
     estimatedvalue:'Est. Value',currentestimatedvalue:'Est. Value',value:'Est. Value',storage:'Storage Location',location:'Storage Location',
-    note:'Notes',references:'Reference Numbers',referencenumber:'Reference Numbers',catalogueref:'Reference Numbers',obverse:'Effigy',portrait:'Effigy'};
+    note:'Notes',references:'Reference Numbers',gradingcompany:'Grading Service',tpg:'Grading Service',grader:'Grading Service',
+    slabgrade:'Certified Grade',tpggrade:'Certified Grade',labelgrade:'Certified Grade',
+    gradingcertnumber:'Grading Cert No.',gradingcertno:'Grading Cert No.',slabcertno:'Grading Cert No.',certificationnumber:'Grading Cert No.',slabcertnumber:'Grading Cert No.',referencenumber:'Reference Numbers',catalogueref:'Reference Numbers',obverse:'Effigy',portrait:'Effigy'};
   for(const k in al){ const i=COLS.findIndex(c=>c.n===al[k]); if(i>=0 && m[k]===undefined) m[k]=i; }
   return m; })();
 function labelIndex(lbl){ const k=norm(lbl.replace(/\(.*?\)/g,'')); return LABELS[k]!==undefined?LABELS[k]:(LABELS[norm(lbl)]!==undefined?LABELS[norm(lbl)]:-1); }
@@ -1158,9 +1205,11 @@ function buildTitle(res){
   const metalF=f('Metal'); const metal=/^Silver/.test(metalF)?'Silver':/^Gold \(/.test(metalF)?'Gold':metalF==='Gold Plated'?'Gold-Plated':'';
   const finish=GRADE_WORDS[f('Grade')]||'';
   const it=f('Item Type'), pk=f('Packaging');
-  const pack = /^PNC\/PMC/.test(pk)||it==='PNC'||it==='PMC' ? (it==='PMC'?'PMC':'PNC') : pk==='RAM Card'?'RAM Card':pk==='Downies Card'?'Downies Card':'';
+  const svcF=f('Grading Service')||'', cg=f('Certified Grade')||'';
+  const slab = (pk==='Graded Slab'||svcF) && (svcF||cg) ? [svcF==='Other'?'':svcF, cg].filter(Boolean).join(' ') : '';
+  const pack = slab ? slab : /^PNC\/PMC/.test(pk)||it==='PNC'||it==='PMC' ? (it==='PMC'?'PMC':'PNC') : pk==='RAM Card'?'RAM Card':pk==='Downies Card'?'Downies Card':'';
   // keep anything extra the AI wrote after the dash (e.g. "(triangular, cased)", "Limited Edition")
-  const known=new Set(['unc','uncirculated','proof','silver','gold','fine','pure','.999','.925','999','925','sterling','gold-plated','plated','mintmark','c-mintmark','privy','pnc','pmc','ram','card','roll','downies','carded','brilliant','gem','choice','about','specimen','circulated',
+  const known=new Set(['pcgs','ngc','iccs','slab','slabbed','graded',...cg.toLowerCase().split(/\s+/),'unc','uncirculated','proof','silver','gold','fine','pure','.999','.925','999','925','sterling','gold-plated','plated','mintmark','c-mintmark','privy','pnc','pmc','ram','card','roll','downies','carded','brilliant','gem','choice','about','specimen','circulated',
     ...L_TREAT.map(t=>t.toLowerCase()), ...(finish.toLowerCase().split(' ')), ...(mint.toLowerCase().split(/[\s-]+/)), mm.toLowerCase()]);
   const parens=(suf.match(/\([^)]*\)/g)||[]); let rest=suf.replace(/\([^)]*\)/g,' ');
   // drop packaging-list wording the AI copied into the title (e.g. "PNC/PMC — C5", "Official Mint Case/Box")
@@ -1289,7 +1338,7 @@ function removeBatchEntry(event, idx) {
 function clearAll() {
   ['n-type','n-country','n-year','n-title','n-series','n-denom','n-status','n-metal',
    'n-finish','n-treatment','n-pkg','n-conf','n-qty','n-mintage','n-coa',
-   'n-fps','n-nifc','n-acqdate','n-acqsrc','n-acqprice','n-estval','n-storage','n-notes'
+   'n-fps','n-nifc','n-tpg','n-certgrade','n-certno','n-acqdate','n-acqsrc','n-acqprice','n-estval','n-storage','n-notes'
   ].forEach(id => { const el=document.getElementById(id); if(el) el.value=id==='n-qty'?'1':''; });
   document.getElementById('batch-entries-container').innerHTML = '';
   document.getElementById('new-output').style.display = 'none';
@@ -1303,7 +1352,7 @@ function copyOutput(id) {
 function clearNew() {
   ['n-type','n-country','n-year','n-title','n-series','n-denom','n-status','n-metal',
    'n-finish','n-treatment','n-pkg','n-conf','n-qty','n-mintage','n-coa',
-   'n-fps','n-nifc','n-acqdate','n-acqsrc','n-acqprice','n-estval','n-storage','n-notes'
+   'n-fps','n-nifc','n-tpg','n-certgrade','n-certno','n-acqdate','n-acqsrc','n-acqprice','n-estval','n-storage','n-notes'
   ].forEach(id => { const el=document.getElementById(id); if(el) el.value = id==='n-qty'?'1':''; });
   document.getElementById('new-output').style.display = 'none';
 }
@@ -1312,9 +1361,10 @@ function clearNew() {
 // Copy the coin's row out of Holdings, change it (by hand or with an AI), check it, paste it back at column B.
 const CI = n => COLS.findIndex(c=>c.n===n);
 const NOTES_I = CI('Notes'), TITLE_I = CI('Title'), GRADE_I = CI('Grade');
-const OWNER_FIELDS = ['Status','Qty','Acquisition Date','Acquisition Source','Acq. Price','Est. Value','Storage Location'];
+const OWNER_FIELDS = ['Status','Qty','Acquisition Date','Acquisition Source','Acq. Price','Est. Value','Storage Location','Grading Service','Certified Grade','Grading Cert No.'];
+const TEXT_GUARD = ['Grading Service','Certified Grade','Grading Cert No.'];   // slab details: only what the owner wrote
 const NUMBER_GUARD = ['Qty','Acq. Price','Est. Value'];   // the AI may only use a number the owner gave it
-const TITLE_FIELDS = ['Item Type','Country','Year','Title','Denomination','Metal','Grade','Treatment','Packaging','Mintmark Ref'];
+const TITLE_FIELDS = ['Item Type','Country','Year','Title','Denomination','Metal','Grade','Treatment','Packaging','Mintmark Ref','Grading Service','Certified Grade'];
 let U_ID='', U_ORIG=null, UPDATED_TSV='';
 // the owner's own values: free-text fields are kept exactly as typed (a trailing ? in Notes is the owner's, not an AI flag)
 function ownField(v,c){
@@ -1369,6 +1419,8 @@ function loadUpdateRow(){
   const raw = COLS.map((c,i)=>(rec[i+off]||'').trim());
   if(raw.filter(Boolean).length<4 || !raw[CI('Title')]){
     msg.innerHTML='<p class="chk-err">That doesn\'t look like a row from the Holdings tab. Click the row number at the left of the coin\'s row, copy, and paste again.</p>'; return; }
+  if(/^(AUD|GBP|CAD|NZD|USD|EUR)$/.test(raw[CI('Grading Service')])){
+    msg.innerHTML='<p class="chk-err">This row looks like it\'s from a v1.5 (or older) catalogue. This form needs the v1.6 catalogue, which has new columns for graded coins. See the START HERE tab, section ⑦, to move your coins across. It only takes one copy and paste.</p>'; return; }
   const res = COLS.map((c,i)=>ownField(raw[i],c));
   U_ID = startsAtB ? '' : (rec[0]||'').trim();
   U_ORIG = res.map(r=>r.v);
@@ -1410,7 +1462,7 @@ between('FIELDS (','EXAMPLE OF ONE ENTRY'),
 "- Start from the current details. Change only what my update asks for. You may also fill an EMPTY field if you are confident the value is correct for this exact coin.",
 "- Never change "+OWNER_FIELDS.join(', ')+" unless my update gives you the new value. Never work these out yourself.",
 "- Never estimate a value. If I ask what the coin is worth, leave Est. Value as it is and answer in the summary after the code block: use eBay SOLD listings only (never asking prices), give a low–high range, the number of sales and their dates, and say it's a guide only.",
-"- Never change the Grade unless I tell you the new grade. Don't judge a grade from a description or photo.",
+"- Never change the Grade or Certified Grade unless I tell you the new grade. Don't judge a grade from a description or photo.",
 "- Notes: keep my current notes word for word and add anything new at the end. If you filled or changed any field from your own knowledge rather than from what I told you, add at the end: AI-filled (unverified): <field names>",
 "- After the code block, list every field you changed, from what to what, and why.",
 "",
@@ -1456,6 +1508,9 @@ function checkAIUpdate(){
     if(NUMBER_GUARD.includes(c.n) && after!=='' && !nums.includes(+after)){
       msgs.push(`<li class="chk-warn">The AI changed ${c.n} to ${escHtml(after)}, which isn't a figure you gave it. Kept your current value (${escHtml(before||'blank')}).</li>`);
       res[i]=ownField(cur[i],c); return; }
+    if(TEXT_GUARD.includes(c.n) && after!=='' && !change.toLowerCase().replace(/\s+/g,'').includes(after.toLowerCase().replace(/\s+/g,''))){
+      msgs.push(`<li class="chk-warn">The AI changed ${c.n} to ${escHtml(after)}, which isn't something you gave it. Slab details only come from the label, so your current value (${escHtml(before||'blank')}) was kept.</li>`);
+      res[i]=ownField(cur[i],c); return; }
     if(i===GRADE_I && !new RegExp(after.replace(/[.*+?^${}()|[\]\\\/]/g,'\\$&'),'i').test(change) && !(GRADE_WORDS[after] && new RegExp(GRADE_WORDS[after],'i').test(change))){
       msgs.push(`<li class="chk-warn">The AI changed the Grade to ${escHtml(after)}. AI doesn't grade coins in this kit, so your current grade (${escHtml(before||'blank')}) was kept.</li>`);
       res[i]=ownField(cur[i],c); return; }
@@ -1482,7 +1537,7 @@ function finishUpdate(res, msgs){
   // rebuild the title to the naming rule when anything that feeds it has changed
   if(TITLE_FIELDS.some(n=>changed(CI(n))) && !res[0].err && !res[1].err && !res[2].err){
     const bt=buildTitle(res);
-    if(bt.title!==res[TITLE_I].v){ msgs.push(`<li class="chk-warn">Title rebuilt to the naming rule (it was going to be: "${escHtml(res[TITLE_I].v)}").</li>`); res[TITLE_I].v=bt.title; res[TITLE_I].fixed=1; }
+    if(bt.title!==res[TITLE_I].v){ if(bt.title!==U_ORIG[TITLE_I]) msgs.push(`<li class="chk-warn">Title rebuilt to the naming rule (it was going to be: "${escHtml(res[TITLE_I].v)}").</li>`); res[TITLE_I].v=bt.title; res[TITLE_I].fixed=1; }
     bt.warn.forEach(w=>msgs.push(`<li class="chk-warn">Check: ${escHtml(w)}.</li>`));
   }
   res[NOTES_I].v=res[NOTES_I].v.replace(/\|/g,'/');
@@ -1502,7 +1557,7 @@ function finishUpdate(res, msgs){
       + diff.map(i=>`<tr><td>${escHtml(COLS[i].n)}</td><td>${escHtml(U_ORIG[i]||'—')}</td><td class="${res[i].err?'err':'fix'}">${escHtml(res[i].v||'—')}</td></tr>`).join('')
       + '</table>'
       + `<button class="btn btn-primary" onclick="copyUpdated()" style="margin-top:12px">Copy Updated Row</button>
-         <p class="copy-notice">Then in Holdings: find ${where}, click its cell in column B and paste. This replaces columns B to AC of that row only. If you paste on the wrong row, undo straight away (Ctrl+Z, or ⌘Z on a Mac).</p>`;
+         <p class="copy-notice">Then in Holdings: find ${where}, click its cell in column B and paste. This replaces columns B to AF of that row only. If you paste on the wrong row, undo straight away (Ctrl+Z, or ⌘Z on a Mac).</p>`;
   if(msgs.length) html+='<ul class="chk-msgs">'+msgs.join('')+'</ul>';
   box.innerHTML=html; card.style.display='block'; card.scrollIntoView({behavior:'smooth'});
 }

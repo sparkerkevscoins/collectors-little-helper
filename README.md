@@ -13,7 +13,7 @@ Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/col
 | File | Purpose |
 |---|---|
 | `CLH_Catalogue.xlsx` | Protected Excel workbook — your master database |
-| `CLH_Entry_Form.html` | AI-assisted form for adding and updating coins — open in any browser |
+| `CLH_Entry_Form.html` | AI-assisted form for adding and updating coins, including graded (slabbed) coins — open in any browser |
 | `CLH_QuickStart_Guide.html` | Printable quick start guide and field reference |
 | `CLH_Resources.html` | Curated guide to trusted dealers, communities, books and research sources, plus the kit author's own collecting story |
 
