@@ -4,7 +4,7 @@
 
 **Describe a coin → ask any AI assistant → check the reply → paste into your catalogue.**
 
-Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
+Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
 
 ---
 
@@ -13,7 +13,7 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 | File | Purpose |
 |---|---|
 | `CLH_Catalogue.xlsx` | Protected Excel workbook — your master database |
-| `CLH_Entry_Form.html` | AI-assisted entry form — open in any browser |
+| `CLH_Entry_Form.html` | AI-assisted form for adding and updating coins — open in any browser |
 | `CLH_QuickStart_Guide.html` | Printable quick start guide and field reference |
 | `CLH_Resources.html` | Curated guide to trusted dealers, communities, books and research sources, plus the kit author's own collecting story |
 
@@ -38,7 +38,7 @@ Version 1.5 — see the [version history](https://sparkerkevscoins.github.io/col
 | Check & Copy shows red cells | Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note. |
 | Excel says the cell is protected | You clicked a grey column. Click column B of an empty row and paste again. |
 | Item ID or another grey column is blank | Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value. |
-| I need to change a coin I've already added | Entry Form → Update Guide tab. It lists the cells to change; you make the changes in the catalogue yourself. |
+| I need to change a coin I've already added | Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B. |
 | Where are my totals? | CLH_Catalogue.xlsx → INDEX tab. |
 | What does a term mean? | Entry Form → Glossary & Resources tab, or the Quick Reference in the Quick Start Guide. |
 

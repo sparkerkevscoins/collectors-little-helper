@@ -103,7 +103,7 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
   <div class="hero-brand">COLLECTOR'S LITTLE HELPER™</div>
   <h1>A coin catalogue starter kit<br>for <em>every</em> collector</h1>
   <div class="hero-sub">Spreadsheet template · AI-assisted entry form · Quick start guide · Curated resources &amp; references</div>
-  <div class="hero-version">Version 1.5 — October 2026</div>
+  <div class="hero-version">Version 1.6 — October 2026</div>
   <div class="hero-btns">
   <a href="CLH_Catalogue.xlsx" class="btn-download" download>⬇ Download the Catalogue</a>
   <a href="CLH_Entry_Form.html" class="btn-secondary" download>⬇ Download the Entry Form</a>
@@ -135,7 +135,7 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
     <div class="file-card gold">
       <div class="file-num">FILE 2</div>
       <div class="file-name"><a href="CLH_Entry_Form.html" download style="color:var(--navy);text-decoration:none;border-bottom:1px solid var(--gold)">CLH_Entry_Form.html</a></div>
-      <div class="file-desc">Open in any browser. Describe a coin, generate a structured entry, and paste it to Claude or another AI assistant. The AI completes missing details and formats a row you paste directly into your spreadsheet.</div>
+      <div class="file-desc">Open in any browser. Describe a coin, generate a structured entry, and paste it to Claude or another AI assistant. The AI completes missing details and the form checks its reply, giving you a row that pastes directly into your spreadsheet. You can also update coins you've already added.</div>
     </div>
     <div class="file-card teal">
       <div class="file-num">FILE 3</div>
@@ -182,7 +182,7 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
     </div>
   </div>
   <h3 style="margin-top:28px;color:var(--navy);font-size:16px">Stuck?</h3>
-  <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Guide tab. It lists the cells to change; you make the changes in the catalogue yourself.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
+  <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
   <p style="font-size:12.5px;color:var(--mid);margin-top:10px">The same steps and this table are in the Entry Form's <strong>How to Use</strong> tab, the <strong>Quick Start Guide</strong>, and the catalogue's <strong>START HERE</strong> tab.</p>
 </div>
 
@@ -196,7 +196,17 @@ p{max-width:640px;color:var(--mid);margin-bottom:12px}
     </thead>
     <tbody>
       <tr>
-        <td><strong>1.5</strong> <span class="version-badge">CURRENT</span></td>
+        <td><strong>1.6</strong> <span class="version-badge">CURRENT</span></td>
+        <td>Oct 2026</td>
+        <td>
+          <strong>Update a coin you've already added, with or without AI.</strong> The Entry Form's new <strong>Update a Coin</strong> tab replaces the old Update Existing tab, which only listed the cells to change by hand. Copy the coin's row from Holdings and paste it in: the form loads all its current details. Change any field yourself, or describe the change in plain words and the form writes a prompt for any AI assistant, with the coin's current details included. The form checks the result, shows what changed, and copies an updated row that pastes back over the same row at column B.<br><br>
+          <strong>Guard rails for AI updates:</strong> the AI can't change status, quantity, acquisition details, value or storage unless you gave it the new value, can't change a grade, and can't remove your notes. Anything it fills from its own knowledge is labelled <em>AI-filled (unverified)</em>. If you ask what a coin is worth, it answers from eBay <strong>sold</strong> listings in its summary, not in the Est. Value column.<br><br>
+          <strong>Also:</strong> dates copied from Excel in any common format (16/10/2026, 16-Oct-26) are now read correctly. Sterling &amp; Currency's location (Fremantle) and web address corrected.<br><br>
+          <strong>Upgrading from v1.5?</strong> No catalogue changes: keep your existing workbook and just download the new Entry Form.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>1.5</strong></td>
         <td>Oct 2026</td>
         <td>
           <strong>Reliable AI-to-spreadsheet paste, end to end.</strong> The Entry Form's output now contains the complete AI instructions (no separate prompt to copy) and works with any AI assistant — Claude, ChatGPT, Gemini or Copilot. The AI returns each coin as labelled lines (<em>Country: Australia</em>), so a missed field can't push values into the wrong column. A new <strong>Check &amp; Copy</strong> tab reads the AI's reply, checks every field against the catalogue's dropdown lists, tidies what it safely can, and copies rows that paste cleanly into Holdings. The AI no longer adds estimated values, and anything it fills from its own knowledge is labelled <em>AI-filled (unverified)</em> in Notes.<br><br>

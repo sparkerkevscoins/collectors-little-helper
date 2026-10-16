@@ -71,6 +71,8 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 .chk-table th{background:var(--navy);color:#fff;font-weight:600}
 .chk-table td.err{background:#fde7e7}.chk-table td.fix{background:#fff6d6}
 .chk-msgs{font-size:12px;margin:8px 0 0 18px}.chk-msgs li{margin:2px 0}
+.diff-table{display:table;font-size:12px}.diff-table td{white-space:normal;max-width:420px}
+.u-step{font-size:13px;color:var(--mid);margin:0 0 12px}
 .stuck-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
 .stuck-table th,.stuck-table td{border-bottom:1px solid #e6e0d0;padding:8px 10px;text-align:left;vertical-align:top;line-height:1.5}
 .stuck-table th{font-size:11px;letter-spacing:.5px;color:#7a8ba0;font-weight:700;text-transform:uppercase}
@@ -111,7 +113,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 <div class="tabs">
   <div class="tab" onclick="switchTab('new')">New Entry</div>
   <div class="tab" onclick="switchTab('check')">Check &amp; Copy</div>
-  <div class="tab" onclick="switchTab('update')">Update Guide (manual)</div>
+  <div class="tab" onclick="switchTab('update')">Update a Coin</div>
   <div class="tab active" onclick="switchTab('howto')">How to Use</div>
   <div class="tab" onclick="switchTab('glossary')">Glossary &amp; Resources</div>
 </div>
@@ -305,45 +307,59 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 
 <div id="tab-update" class="tab-content">
   <div class="card">
-    <div class="card-header">Update Guide (manual)</div>
+    <div class="card-header">Update a Coin <span>change a coin that's already in your catalogue</span></div>
     <div class="card-body">
-      <div class="field-grid">
-        <div class="field"><label>Item ID<span class="hint">e.g. AU-2024-0015</span></label>
-          <input type="text" id="u-id" placeholder="AU-2024-0015"></div>
-        <div class="field"><label>Title (reference)</label>
-          <input type="text" id="u-title-ref" placeholder="Approximate title for reference"></div>
+      <p class="u-step"><strong>1. Copy the coin's row from Holdings.</strong> In the Holdings tab, click the row number at the left of the coin's row to select the whole row. Copy it (Ctrl+C, or ⌘C on a Mac) and paste it below.</p>
+      <div class="field-grid full"><div class="field">
+        <textarea id="u-paste" placeholder="Paste the coin's row here"></textarea></div></div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn btn-primary" onclick="loadUpdateRow()">Load This Coin</button>
+        <button class="btn btn-secondary" onclick="clearUpdate()">Start Again</button>
       </div>
-      <p style="font-size:12px;color:var(--silver);margin-top:12px">Fill in only the fields you want to change. This tab lists which cells to change in the Holdings tab; it doesn't change the catalogue for you.</p>
-      <div class="field-grid three" style="margin-top:16px">
-        <div class="field"><label>New Status</label>
-          <select id="u-status"><option value=""></option>
-            <option>Owned</option><option>Wanted</option><option>Ordered</option>
-            <option>Duplicate</option><option>Sold</option></select></div>
-        <div class="field"><label>New Title</label><input type="text" id="u-title"></div>
-        <div class="field"><label>Qty</label><input type="number" id="u-qty" min="1"></div>
-        <div class="field"><label>Mintage</label><input type="number" id="u-mintage"></div>
-        <div class="field"><label>CoA Number</label><input type="text" id="u-coa"></div>
-        <div class="field"><label>Acq. Date</label><input type="date" id="u-acqdate"></div>
-        <div class="field"><label>Acq. Source</label><input type="text" id="u-acqsrc"></div>
-        <div class="field"><label>Acq. Price</label><input type="number" id="u-acqprice" step="0.01"></div>
-        <div class="field"><label>Est. Value</label><input type="number" id="u-estval" step="0.01"></div>
-        <div class="field"><label>Storage Location</label><input type="text" id="u-storage"></div>
-        <div class="field"><label>Order / Shipping Notes</label>
-          <input type="text" id="u-ordernotes" placeholder="Tracking number, carrier, expected date..."></div>
-      </div>
-      <div class="field-grid full" style="margin-top:12px">
-        <div class="field"><label>Notes (append)</label>
-          <textarea id="u-notes" placeholder="Text to append to existing notes..."></textarea></div>
-      </div>
+      <div id="u-load-msg" style="margin-top:10px"></div>
     </div>
   </div>
-  <div class="actions">
-    <button class="btn btn-primary" onclick="generateUpdate()">List the Changes</button>
-    <button class="btn btn-secondary" onclick="clearUpdate()">Clear Form</button>
-  </div>
-  <div id="update-output" style="display:none;margin-top:20px">
-    <div class="output-box" id="update-output-text"></div>
-    <button class="btn btn-secondary" onclick="copyOutput('update-output-text')" style="margin-top:8px">Copy to Clipboard</button>
+
+  <div id="u-edit" style="display:none">
+    <div class="card">
+      <div class="card-header">2. Make your changes <span id="u-coin-label"></span></div>
+      <div class="card-body">
+        <p class="u-step"><strong>Change it yourself:</strong> edit any field below, then click <em>Check My Changes</em>. Good for quick jobs, like an order arriving or a coin being sold.</p>
+        <div class="field-grid three" id="u-fields"></div>
+        <div class="field-grid full" style="margin-top:12px"><div class="field"><label>Notes</label>
+          <textarea id="u-f25"></textarea></div></div>
+        <div class="actions" style="margin-top:12px">
+          <button class="btn btn-primary" onclick="checkManualUpdate()">Check My Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Or ask an AI <span>describe the change in plain words, or ask it to fill gaps</span></div>
+      <div class="card-body">
+        <div class="field-grid full"><div class="field"><label>What's changed?</label>
+          <textarea id="u-change" placeholder="e.g. My order arrived on 16 October and came with certificate 141372. Can you also find the mintage and RAM product code?"></textarea></div></div>
+        <div class="actions" style="margin-top:12px">
+          <button class="btn btn-primary" onclick="buildUpdatePrompt()">Create AI Prompt</button>
+        </div>
+        <div id="u-prompt-msg" style="margin-top:10px"></div>
+        <div id="u-prompt-out" style="display:none">
+          <div class="output-box" id="u-prompt-text"></div>
+          <p class="copy-notice">Copy this, paste it into a new chat with any AI assistant, then paste its reply in the box below.</p>
+          <button class="btn btn-primary" onclick="copyOutput('u-prompt-text')" style="margin-top:8px">Copy to Clipboard</button>
+        </div>
+        <div class="field-grid full" style="margin-top:16px"><div class="field"><label>Paste the AI's reply</label>
+          <textarea id="u-reply" placeholder="Paste the AI's whole reply here"></textarea></div></div>
+        <div class="actions" style="margin-top:12px">
+          <button class="btn btn-primary" onclick="checkAIUpdate()">Check the AI's Reply</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="u-result-card" style="display:none">
+      <div class="card-header">3. Check and paste back</div>
+      <div class="card-body" id="u-result"></div>
+    </div>
   </div>
 </div>
 
@@ -493,7 +509,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <span class="acc-arrow">▼</span>
         </summary>
         <div class="acc-body">
-          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update Guide tab. It lists the cells to change; you make the changes in the catalogue yourself.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
+          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
         </div>
       </details>
 
@@ -795,13 +811,13 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 <div style="background:#f0f2f5;border-top:1px solid var(--rule);
   padding:10px 24px;font-family:system-ui,sans-serif;font-size:11px;
   color:var(--silver);text-align:center">
-  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.5</strong>
+  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.6</strong>
   &nbsp;·&nbsp; October 2026
   &nbsp;·&nbsp; <a href="CLH_Landing_Page.html" style="color:var(--gold);text-decoration:none">
   Check for updates</a>
 </div>
 <div class="copyright">
-  <strong>Collector's Little Helper™</strong> — Version 1.5 — October 2026<br>
+  <strong>Collector's Little Helper™</strong> — Version 1.6 — October 2026<br>
   © 2026 Kevin Burdette (Sparker Kev's Coins). All rights reserved.<br>
   Collector's Little Helper™ is a trademark of Kevin Burdette (Sparker Kev's Coins), Brisbane, Australia.<br>
   <a href="mailto:sparkerkevscoins@gmail.com">sparkerkevscoins@gmail.com</a> &nbsp;·&nbsp; +61 (0)438 820 469<br>
@@ -903,7 +919,7 @@ function _oldGenerateAllEntries() {
 }
 
 
-// ── Holdings schema (CLH v1.5) — columns B..AC, in order ─────────────────────
+// ── Holdings schema (CLH v1.5 and later) — columns B..AC, in order ─────────────────────
 const L_TYPE=['Coin','Set','PNC','PMC','Banknote','Error Coin','Other'];
 const L_COUNTRY=['Australia','United Kingdom','Canada','New Zealand','United States','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue','Other'];
 const L_METAL=['Aluminium Bronze (AlBr)','Bi-metallic (AlBr / Cupro-nickel)','Bronze','Cupro-nickel','Silver (unspecified)','Silver (.800)','Silver (.925)','Silver (.999)','Gold (.999)','Gold Plated','Other (see notes)'];
@@ -1051,7 +1067,11 @@ function checkField(raw, col){
     case 'date': {
       let m;
       if(/^\d{4}-\d{2}-\d{2}$/.test(v)) break;
-      if((m=v.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/))) { r.v=`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`; r.fixed=1; }
+      const yr=y=>y.length===2?'20'+y:y, pad=n=>String(n).padStart(2,'0');
+      const MON=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+      if((m=v.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4}|\d{2})$/))) { let d=+m[1], mo=+m[2]; if(mo>12 && d<=12){ [d,mo]=[mo,d]; }   // day first, unless that's impossible
+        if(mo<1||mo>12||d<1||d>31) r.err='use YYYY-MM-DD'; else { r.v=`${yr(m[3])}-${pad(mo)}-${pad(d)}`; r.fixed=1; } }
+      else if((m=v.match(/^(\d{1,2})[\s.-]+([A-Za-z]{3})[A-Za-z]*\.?[\s.,-]+(\d{4}|\d{2})$/)) && MON.includes(m[2].toLowerCase())) { r.v=`${yr(m[3])}-${pad(MON.indexOf(m[2].toLowerCase())+1)}-${pad(m[1])}`; r.fixed=1; }
       else r.err='use YYYY-MM-DD'; break; }
     default: r.v=v.replace(/[\t\r\n]+/g,' ');
   }
@@ -1216,21 +1236,6 @@ function fallbackCopy(t,done){
 }
 function copyChecked(){ copyText(CHECKED_TSV, 'Copied! In Holdings, click column B of the first empty row and paste.'); }
 
-// ── Update existing ──────────────────────────────────────────────────────────
-function generateUpdate(){
-  const id=val('u-id'), ref=val('u-title-ref');
-  const map=[['u-status','Status','U'],['u-title','Title','F'],['u-qty','Qty','M'],['u-mintage','Mintage','N'],['u-coa','CoA Number','P'],
-    ['u-acqdate','Acquisition Date','V'],['u-acqsrc','Acquisition Source','W'],['u-acqprice','Acq. Price','X'],['u-estval','Est. Value','Y'],['u-storage','Storage Location','Z']];
-  const lines=[`UPDATE — ${id||'(no Item ID)'}${ref?' — '+ref:''}`, `In the Holdings tab, find the row with Item ID ${id||'?'} (column A), then change:`];
-  let n=0;
-  map.forEach(([fid,name,col])=>{ const v=val(fid); if(v){ lines.push(`  Column ${col} — ${name}: ${v}`); n++; } });
-  const notes=[val('u-ordernotes'),val('u-notes')].filter(Boolean).join(' / ');
-  if(notes){ lines.push(`  Column AA — Notes: add to the end → ${notes}`); n++; }
-  if(!n) lines.push('  (nothing to change — fill in at least one field)');
-  document.getElementById('update-output-text').textContent=lines.join('\n');
-  document.getElementById('update-output').style.display='block';
-}
-
 function generateNewEntry() { generateAllEntries(); }
 
 // Each added coin is an exact copy of the first coin's form (same labels, hints and examples), with its own ids.
@@ -1303,11 +1308,211 @@ function clearNew() {
   document.getElementById('new-output').style.display = 'none';
 }
 
-function clearUpdate() {
-  ['u-id','u-title-ref','u-title','u-status','u-qty','u-mintage','u-coa',
-   'u-acqdate','u-acqsrc','u-acqprice','u-estval','u-storage','u-ordernotes','u-notes'
-  ].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-  document.getElementById('update-output').style.display = 'none';
+// ── Update a coin (v1.6) ─────────────────────────────────────────────────────
+// Copy the coin's row out of Holdings, change it (by hand or with an AI), check it, paste it back at column B.
+const CI = n => COLS.findIndex(c=>c.n===n);
+const NOTES_I = CI('Notes'), TITLE_I = CI('Title'), GRADE_I = CI('Grade');
+const OWNER_FIELDS = ['Status','Qty','Acquisition Date','Acquisition Source','Acq. Price','Est. Value','Storage Location'];
+const NUMBER_GUARD = ['Qty','Acq. Price','Est. Value'];   // the AI may only use a number the owner gave it
+const TITLE_FIELDS = ['Item Type','Country','Year','Title','Denomination','Metal','Grade','Treatment','Packaging','Mintmark Ref'];
+let U_ID='', U_ORIG=null, UPDATED_TSV='';
+// the owner's own values: free-text fields are kept exactly as typed (a trailing ? in Notes is the owner's, not an AI flag)
+function ownField(v,c){
+  if(c.t!=='text') return checkField(v,c);
+  const t=(v||'').replace(/[\t\r\n]+/g,' ').trim();
+  return {v:t, fixed:0, unverified:0, err:(c.req&&!t)?'required':''};
+}
+
+// read Excel / Numbers clipboard text (tab-separated; cells with tabs, quotes or line breaks are quoted)
+function parseTSV(text){
+  const recs=[]; let rec=[], f='', q=false;
+  text=text.replace(/\r\n?/g,'\n');
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(q){ if(ch==='"'){ if(text[i+1]==='"'){ f+='"'; i++; } else q=false; } else f+=ch; continue; }
+    if(ch==='"' && f==='') { q=true; continue; }
+    if(ch==='\t'){ rec.push(f); f=''; continue; }
+    if(ch==='\n'){ rec.push(f); recs.push(rec); rec=[]; f=''; continue; }
+    f+=ch;
+  }
+  rec.push(f); recs.push(rec);
+  return recs.filter(r=>r.some(c=>c.trim()));
+}
+
+function buildUpdateFields(){
+  const box=document.getElementById('u-fields'); if(box.childElementCount) return;
+  box.innerHTML = COLS.map((c,i)=>{
+    if(i===NOTES_I) return '';
+    const req = c.req ? '<span class="req">*</span>' : '';
+    let ctl;
+    if(c.t==='list') ctl=`<select id="u-f${i}"><option value=""></option>${c.l.map(o=>`<option>${escHtml(o)}</option>`).join('')}</select>`;
+    else if(c.t==='yn') ctl=`<select id="u-f${i}"><option value=""></option><option>Yes</option><option>No</option></select>`;
+    else { const ph={treat:'None, or e.g. Coloured + Frosted',date:'YYYY-MM-DD',denom:'e.g. 0.5 for 50c, 2 for $2'}[c.t]||'';
+      ctl=`<input type="text" id="u-f${i}" placeholder="${ph}">`; }
+    return `<div class="field"><label>${escHtml(c.n)}${req}</label>${ctl}</div>`;
+  }).join('');
+}
+function setUpdateFields(vals){
+  COLS.forEach((c,i)=>{ const el=document.getElementById('u-f'+i); if(!el) return; const v=vals[i]||'';
+    if(el.tagName==='SELECT' && v && ![...el.options].some(o=>o.value===v)){ const o=document.createElement('option'); o.textContent=v; el.appendChild(o); }
+    el.value=v; });
+}
+function getUpdateFields(){ return COLS.map((c,i)=>val('u-f'+i)); }
+
+function loadUpdateRow(){
+  const msg=document.getElementById('u-load-msg');
+  const recs=parseTSV(document.getElementById('u-paste').value).filter(r=>norm(r[0]||'')!=='itemid');
+  if(!recs.length){ msg.innerHTML='<p class="chk-err">Nothing to load yet. Copy the coin\'s row in Holdings and paste it in the box.</p>'; return; }
+  const rec=recs[0];
+  const startsAtB = !matchList((rec[0]||'').trim(),L_TYPE).err && !/^[A-Z]{2,3}-\d{4}-\d{4}$/.test((rec[0]||'').trim());
+  const off = startsAtB ? 0 : 1;
+  const raw = COLS.map((c,i)=>(rec[i+off]||'').trim());
+  if(raw.filter(Boolean).length<4 || !raw[CI('Title')]){
+    msg.innerHTML='<p class="chk-err">That doesn\'t look like a row from the Holdings tab. Click the row number at the left of the coin\'s row, copy, and paste again.</p>'; return; }
+  const res = COLS.map((c,i)=>ownField(raw[i],c));
+  U_ID = startsAtB ? '' : (rec[0]||'').trim();
+  U_ORIG = res.map(r=>r.v);
+  buildUpdateFields(); setUpdateFields(U_ORIG);
+  const odd = COLS.filter((c,i)=>res[i].err && raw[i]).map(c=>c.n);
+  const label = (U_ID ? U_ID+' — ' : '') + U_ORIG[TITLE_I];
+  document.getElementById('u-coin-label').textContent = label;
+  msg.innerHTML = `<p class="chk-ok">✓ Loaded: ${escHtml(label)}</p>`
+    + (U_ID ? '' : '<p class="chk-warn">The Item ID wasn\'t in what you pasted. That\'s fine: just make sure you paste back on the same row.</p>')
+    + (recs.length>1 ? '<p class="chk-warn">You pasted more than one row. Only the first has been loaded; update one coin at a time.</p>' : '')
+    + (odd.length ? `<p class="chk-warn">These current values don't match the catalogue's lists, so they'll show in red when you check: ${escHtml(odd.join(', '))}.</p>` : '');
+  ['u-change','u-reply'].forEach(id=>document.getElementById(id).value='');
+  ['u-prompt-out','u-result-card'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('u-prompt-msg').innerHTML='';
+  document.getElementById('u-edit').style.display='block';
+}
+
+function checkManualUpdate(){
+  if(!U_ORIG) return;
+  const res=getUpdateFields().map((v,i)=>ownField(v,COLS[i]));
+  finishUpdate(res, []);
+}
+
+function buildUpdatePrompt(){
+  if(!U_ORIG) return;
+  const change=val('u-change'), msg=document.getElementById('u-prompt-msg');
+  if(!change){ msg.innerHTML='<p class="chk-err">Write what\'s changed first, in plain words.</p>'; return; }
+  msg.innerHTML='';
+  const between=(a,b)=>{ const s=AI_PROMPT.indexOf(a), e=AI_PROMPT.indexOf(b,s); return AI_PROMPT.slice(s,e).trim(); };
+  const cur=getUpdateFields();
+  const lines=[
+"You are helping me update ONE coin that's already in my Collector's Little Helper spreadsheet. Its current details and what I want to change are at the bottom of this message. Send back the complete, updated entry.",
+"",
+between('OUTPUT FORMAT','FIELDS ('),
+"",
+between('FIELDS (','EXAMPLE OF ONE ENTRY'),
+"",
+"RULES FOR AN UPDATE:",
+"- Start from the current details. Change only what my update asks for. You may also fill an EMPTY field if you are confident the value is correct for this exact coin.",
+"- Never change "+OWNER_FIELDS.join(', ')+" unless my update gives you the new value. Never work these out yourself.",
+"- Never estimate a value. If I ask what the coin is worth, leave Est. Value as it is and answer in the summary after the code block: use eBay SOLD listings only (never asking prices), give a low–high range, the number of sales and their dates, and say it's a guide only.",
+"- Never change the Grade unless I tell you the new grade. Don't judge a grade from a description or photo.",
+"- Notes: keep my current notes word for word and add anything new at the end. If you filled or changed any field from your own knowledge rather than from what I told you, add at the end: AI-filled (unverified): <field names>",
+"- After the code block, list every field you changed, from what to what, and why.",
+"",
+"CURRENT DETAILS:",
+"=== ENTRY 1 ===",
+...COLS.map((c,i)=>`${c.n}: ${cur[i]}`),
+"",
+"WHAT'S CHANGED:",
+change ];
+  document.getElementById('u-prompt-text').textContent=lines.join('\n');
+  const out=document.getElementById('u-prompt-out'); out.style.display='block'; out.scrollIntoView({behavior:'smooth'});
+}
+
+function checkAIUpdate(){
+  if(!U_ORIG) return;
+  const box=document.getElementById('u-result'), card=document.getElementById('u-result-card');
+  const rows=extractRows(document.getElementById('u-reply').value);
+  if(!rows.length){
+    card.style.display='block';
+    box.innerHTML=`<p class="chk-err">No entry found in the reply.</p><p style="font-size:12px;color:var(--mid)">The checker looks for lines like <em>Country: Australia</em>. Ask the AI: <em>"Please resend the entry inside a code block, with every field on its own line as Field name: value."</em></p>`;
+    card.scrollIntoView({behavior:'smooth'}); return;
+  }
+  const row=rows[0], msgs=[];
+  if(rows.length>1) msgs.push('<li class="chk-warn">The reply had more than one entry. Only the first was used.</li>');
+  if(!row.labelled && row.length!==COLS.length){
+    card.style.display='block';
+    box.innerHTML=`<p class="chk-err">The AI's row has ${row.length} fields instead of ${COLS.length}, so values would land in the wrong columns. Ask it: <em>"Please resend the entry as labelled lines, one Field name: value per line."</em></p>`; return; }
+  const cur=getUpdateFields(), change=val('u-change');
+  const parts=row.labelled?row.parts:row;
+  const res=COLS.map((c,i)=>{
+    if(row.labelled && !row.seen.has(i)) return ownField(cur[i],c);
+    return checkField(parts[i],c); });
+  if(row.labelled && row.missing.length) msgs.push(`<li class="chk-warn">The AI left out ${escHtml(row.missing.join(', '))}. Kept the current value${row.missing.length>1?'s':''}.</li>`);
+  // AI-flagged ("?") values: money removed, others labelled
+  const unv=COLS.filter((c,i)=>res[i].unverified).map(c=>c.n);
+  COLS.forEach((c,i)=>{ if(res[i].unverified && c.t==='num'){ msgs.push(`<li class="chk-warn">${c.n} "${escHtml(res[i].v)}" was marked uncertain by the AI. Kept your current value.</li>`); res[i]=ownField(cur[i],c); } });
+  // guard rails: owner fields, numbers the owner didn't give, grades
+  const nums=(change.match(/\d[\d,]*(?:\.\d+)?/g)||[]).map(n=>+n.replace(/,/g,''));
+  COLS.forEach((c,i)=>{
+    const before=ownField(cur[i],c).v, after=res[i].v;
+    if(after===before) return;
+    if(['num','int','denom'].includes(c.t) && after!=='' && before!=='' && +after===+before){ res[i]=ownField(cur[i],c); return; }   // same number, different formatting
+    if(NUMBER_GUARD.includes(c.n) && after!=='' && !nums.includes(+after)){
+      msgs.push(`<li class="chk-warn">The AI changed ${c.n} to ${escHtml(after)}, which isn't a figure you gave it. Kept your current value (${escHtml(before||'blank')}).</li>`);
+      res[i]=ownField(cur[i],c); return; }
+    if(i===GRADE_I && !new RegExp(after.replace(/[.*+?^${}()|[\]\\\/]/g,'\\$&'),'i').test(change) && !(GRADE_WORDS[after] && new RegExp(GRADE_WORDS[after],'i').test(change))){
+      msgs.push(`<li class="chk-warn">The AI changed the Grade to ${escHtml(after)}. AI doesn't grade coins in this kit, so your current grade (${escHtml(before||'blank')}) was kept.</li>`);
+      res[i]=ownField(cur[i],c); return; }
+    if(OWNER_FIELDS.includes(c.n)) msgs.push(`<li class="chk-warn">The AI changed ${c.n} from "${escHtml(before||'blank')}" to "${escHtml(after||'blank')}". Make sure that's what you asked for.</li>`);
+  });
+  // notes: the owner's existing notes always stay
+  // one "AI-filled (unverified)" tag at the end, listing every field it covers
+  const TAG=/\s*[\/|;]?\s*AI-filled \(unverified\):\s*([^\/|]*)/gi;
+  const tagged=new Set(); const strip=t=>t.replace(TAG,(m,f)=>{ f.split(',').map(x=>x.trim()).filter(Boolean).forEach(x=>tagged.add(x)); return ''; }).trim();
+  const curNotes=strip(ownField(cur[NOTES_I],COLS[NOTES_I]).v);
+  let aiNotes=strip(res[NOTES_I].v);
+  if(curNotes && !aiNotes.includes(curNotes)){
+    if(aiNotes && !curNotes.includes(aiNotes)) msgs.push('<li class="chk-warn">The AI changed your existing notes. Your original notes were kept, with the AI\'s additions after them.</li>');
+    aiNotes = curNotes + (aiNotes && !curNotes.includes(aiNotes) ? ' / '+aiNotes : '');
+  }
+  unv.filter(n=>!['Acq. Price','Est. Value'].includes(n) && res[CI(n)].v).forEach(n=>tagged.add(n));
+  res[NOTES_I].v = aiNotes + (tagged.size ? (aiNotes?' / ':'')+'AI-filled (unverified): '+[...tagged].join(', ') : '');
+  finishUpdate(res, msgs);
+}
+
+function finishUpdate(res, msgs){
+  const box=document.getElementById('u-result'), card=document.getElementById('u-result-card');
+  const changed = i => res[i].v !== U_ORIG[i];
+  // rebuild the title to the naming rule when anything that feeds it has changed
+  if(TITLE_FIELDS.some(n=>changed(CI(n))) && !res[0].err && !res[1].err && !res[2].err){
+    const bt=buildTitle(res);
+    if(bt.title!==res[TITLE_I].v){ msgs.push(`<li class="chk-warn">Title rebuilt to the naming rule (it was going to be: "${escHtml(res[TITLE_I].v)}").</li>`); res[TITLE_I].v=bt.title; res[TITLE_I].fixed=1; }
+    bt.warn.forEach(w=>msgs.push(`<li class="chk-warn">Check: ${escHtml(w)}.</li>`));
+  }
+  res[NOTES_I].v=res[NOTES_I].v.replace(/\|/g,'/');
+  let errs=0;
+  COLS.forEach((c,i)=>{ if(res[i].err){ errs++; msgs.push(`<li class="chk-err">${c.n}: ${escHtml(res[i].err)}</li>`); } });
+  if(changed(CI('Country'))||changed(CI('Year'))) msgs.push('<li class="chk-warn">Country or Year has changed, so the catalogue will give this coin a new Item ID. Other coins with the same country and year further down may get new IDs too.</li>');
+  if(res[CI('Status')].v==='Sold' && changed(CI('Status'))) msgs.push('<li class="chk-warn">Tip: add the sale date and price to Notes, so your records show what happened to it.</li>');
+  setUpdateFields(res.map(r=>r.v));   // the form now shows the checked values, ready for any final tweaks
+  const diff=COLS.map((c,i)=>i).filter(changed);
+  UPDATED_TSV = res.map(r=>r.v.replace(/[\t\r\n]+/g,' ')).join('\t');
+  const where = U_ID ? `the row with Item ID <strong>${escHtml(U_ID)}</strong> (column A)` : 'the same row you copied';
+  let html = !diff.length
+    ? '<p class="chk-warn">No changes found: the coin is the same as what you loaded.</p>'
+    : (errs ? `<p class="chk-err">${errs} problem${errs>1?'s':''} found (red). Fix ${errs>1?'them':'it'} in the fields above and click Check My Changes, or copy anyway and correct ${errs>1?'those cells':'that cell'} in the spreadsheet.</p>`
+            : `<p class="chk-ok">✓ ${diff.length} change${diff.length>1?'s':''} ready.</p>`)
+      + `<table class="chk-table diff-table"><tr><th>Field</th><th>Was</th><th>Now</th></tr>`
+      + diff.map(i=>`<tr><td>${escHtml(COLS[i].n)}</td><td>${escHtml(U_ORIG[i]||'—')}</td><td class="${res[i].err?'err':'fix'}">${escHtml(res[i].v||'—')}</td></tr>`).join('')
+      + '</table>'
+      + `<button class="btn btn-primary" onclick="copyUpdated()" style="margin-top:12px">Copy Updated Row</button>
+         <p class="copy-notice">Then in Holdings: find ${where}, click its cell in column B and paste. This replaces columns B to AC of that row only. If you paste on the wrong row, undo straight away (Ctrl+Z, or ⌘Z on a Mac).</p>`;
+  if(msgs.length) html+='<ul class="chk-msgs">'+msgs.join('')+'</ul>';
+  box.innerHTML=html; card.style.display='block'; card.scrollIntoView({behavior:'smooth'});
+}
+function copyUpdated(){ copyText(UPDATED_TSV, 'Copied! In Holdings, click column B on the same coin\'s row and paste.'); }
+
+function clearUpdate(){
+  U_ID=''; U_ORIG=null; UPDATED_TSV='';
+  ['u-paste','u-change','u-reply'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('u-load-msg').innerHTML='';
+  document.getElementById('u-edit').style.display='none';
 }
 </script>
 </body></html>
