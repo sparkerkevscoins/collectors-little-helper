@@ -41,6 +41,7 @@ Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/col
 | Excel says the cell is protected | You clicked a grey column. Click column B of an empty row and paste again. |
 | Item ID or another grey column is blank | Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value. |
 | I need to change a coin I've already added | Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B. |
+| I need to remove a coin, or the example in row 2 | Sold or given away: change its Status to Sold. Added by mistake: select its cells from B to AF and press Delete. Select the cells, not the whole row, which is protected. |
 | Where are my totals? | CLH_Catalogue.xlsx → INDEX tab. |
 | What does a term mean? | Entry Form → Glossary & Resources tab, or the Quick Reference in the Quick Start Guide. |
 
