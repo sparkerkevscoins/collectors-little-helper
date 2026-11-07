@@ -42,6 +42,7 @@ Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/col
 | Item ID or another grey column is blank | Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value. |
 | I need to change a coin I've already added | Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B. |
 | I need to remove a coin, or the example in row 2 | Sold or given away: change its Status to Sold. Added by mistake: select its cells from B to AF and press Delete. Select the cells, not the whole row, which is protected. |
+| The Entry Form's buttons don't work on my iPad or iPhone | Use the online Entry Form in Safari: sparkerkevscoins.github.io/collectors-little-helper/CLH_Entry_Form.html. A downloaded copy opened from Files can't run its buttons. Nothing you type is sent anywhere. |
 | Where are my totals? | CLH_Catalogue.xlsx → INDEX tab. |
 | What does a term mean? | Entry Form → Glossary & Resources tab, or the Quick Reference in the Quick Start Guide. |
 
