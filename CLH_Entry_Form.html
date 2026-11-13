@@ -151,8 +151,8 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
         <div class="field"><label>Series / Theme</label>
           <input type="text" id="n-series" placeholder="Remembrance Day"></div>
         <div class="field required"><label>Denomination <span class="req">*</span>
-          <span class="hint">Numeric: 2=$2, 0.5=50c</span></label>
-          <input type="number" id="n-denom" placeholder="2" step="0.01"></div>
+          <span class="hint">2=$2, 0.5=50c, or Penny, Florin…</span></label>
+          <input type="text" id="n-denom" placeholder="2" inputmode="decimal" autocomplete="off"></div>
         <div class="field required"><label>Status <span class="req">*</span></label>
           <select id="n-status"><option value="">Select...</option>
             <option>Owned</option><option>Wanted</option><option>Ordered</option>
@@ -526,7 +526,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <span class="acc-arrow">▼</span>
         </summary>
         <div class="acc-body">
-          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B.</td></tr><tr><td>I need to remove a coin, or the example in row 2</td><td>Sold or given away: change its Status to Sold. Added by mistake: select its cells from B to AF and press Delete. Select the cells, not the whole row, which is protected.</td></tr><tr><td>The Entry Form's buttons don't work on my iPad or iPhone</td><td>Use the online Entry Form in Safari: sparkerkevscoins.github.io/collectors-little-helper/CLH_Entry_Form.html. A downloaded copy opened from Files can't run its buttons. Nothing you type is sent anywhere.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
+          <table class="stuck-table"><tr><th>If this happens…</th><th>Do this</th></tr><tr><td>I don't know some of the details</td><td>Leave them blank. The AI fills only what it's sure of. For research, see the Resources page.</td></tr><tr><td>The AI's reply has no grey code box, or the checker finds no entries</td><td>Ask the AI: <i>“Please resend each entry inside a code block, with every field on its own line as Field name: value.”</i></td></tr><tr><td>Check &amp; Copy shows red cells</td><td>Fix the value in the box and click Check again — or copy anyway and correct that cell in the spreadsheet. Any field the AI left out is left blank — you'll see a note.</td></tr><tr><td>Excel says the cell is protected</td><td>You clicked a grey column. Click column B of an empty row and paste again.</td></tr><tr><td>Item ID or another grey column is blank</td><td>Item ID needs Country, Year and Title. Currency and Full Denomination need Denomination. The value columns need Acq. Price or Est. Value.</td></tr><tr><td>I need to change a coin I've already added</td><td>Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B.</td></tr><tr><td>I need to remove a coin, or the example in row 2</td><td>Sold or given away: change its Status to Sold. Added by mistake: select its cells from B to AF and press Delete. Select the cells, not the whole row, which is protected.</td></tr><tr><td>The Entry Form's buttons don't work on my iPad or iPhone</td><td>Use the online Entry Form in Safari: sparkerkevscoins.github.io/collectors-little-helper/CLH_Entry_Form.html. A downloaded copy opened from Files can't run its buttons. Nothing you type is sent anywhere.</td></tr><tr><td>I want to see only some coins (Wanted, one country, one denomination)</td><td>Use the filter arrows on the Holdings header row. Filtering changes nothing. To see your coins in a different order, copy Holdings into a new workbook and sort the copy.</td></tr><tr><td>Can I write the Item ID on a coin's holder?</td><td>Yes. Each Item ID is fixed to its row, so it doesn't change when you add, update or clear other coins.</td></tr><tr><td>My coin is pre-decimal or from another country</td><td>Type the denomination as a word: Penny, Florin, Half Crown, or as it's written on the coin (10 Pfennig). Decimal coins stay as numbers: 2 for $2, 0.5 for 50c.</td></tr><tr><td>Where are my totals?</td><td>CLH_Catalogue.xlsx → INDEX tab.</td></tr><tr><td>What does a term mean?</td><td>Entry Form → Glossary &amp; Resources tab, or the Quick Reference in the Quick Start Guide.</td></tr></table>
         </div>
       </details>
 
@@ -668,7 +668,7 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
           <div class="gloss-item"><span class="gloss-term">Reverse</span><span class="gloss-def">The "tails" side — carries the main design, denomination, and country name.</span></div>
           <div class="gloss-item"><span class="gloss-term">FPS</span><span class="gloss-def">From Proof Set — indicates the coin was originally issued as part of a proof year set rather than as a standalone release.</span></div>
           <div class="gloss-item"><span class="gloss-term">RAM</span><span class="gloss-def">Royal Australian Mint — Australia's official coin producer, based in Canberra. Produces all circulating Australian coinage and many collector releases.</span></div>
-          <div class="gloss-item"><span class="gloss-term">Denomination</span><span class="gloss-def">The face value of the coin — e.g. $2, 50c. In this catalogue, enter as a number: 2 for $2, 0.5 for 50c, 0.2 for 20c.</span></div>
+          <div class="gloss-item"><span class="gloss-term">Denomination</span><span class="gloss-def">The face value of the coin — e.g. $2, 50c. In this catalogue, enter decimal coins as a number: 2 for $2, 0.5 for 50c, 0.2 for 20c. Pre-decimal coins use the name (Penny, Threepence, Florin, Half Crown), and coins from other countries can be written as on the coin (e.g. 10 Pfennig).</span></div>
           <div class="gloss-item" style="align-items:flex-start"><span class="gloss-term" style="padding-top:2px">Types of Value</span><span class="gloss-def">Every coin has up to three layers of value:<br>
             <strong>Face value</strong> — the denomination printed on the coin; the minimum it is worth as currency.<br>
             <strong>Ingredient value</strong> — the value of the metal content. A pre-1966 Australian 50c contains silver worth significantly more than 50c at today's silver prices, regardless of its numismatic condition.<br>
@@ -839,13 +839,13 @@ body{background:#f0f2f5;font:14px/1.5 system-ui,sans-serif;color:var(--ink)}
 <div style="background:#f0f2f5;border-top:1px solid var(--rule);
   padding:10px 24px;font-family:system-ui,sans-serif;font-size:11px;
   color:var(--silver);text-align:center">
-  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.6</strong>
-  &nbsp;·&nbsp; October 2026
+  Collector's Little Helper™ &nbsp;·&nbsp; <strong style="color:var(--navy)">Version 1.7</strong>
+  &nbsp;·&nbsp; November 2026
   &nbsp;·&nbsp; <a href="CLH_Landing_Page.html" style="color:var(--gold);text-decoration:none">
   Check for updates</a>
 </div>
 <div class="copyright">
-  <strong>Collector's Little Helper™</strong> — Version 1.6 — October 2026<br>
+  <strong>Collector's Little Helper™</strong> — Version 1.7 — November 2026<br>
   © 2026 Kevin Burdette (Sparker Kev's Coins). All rights reserved.<br>
   Collector's Little Helper™ is a trademark of Kevin Burdette (Sparker Kev's Coins), Brisbane, Australia.<br>
   <a href="mailto:sparkerkevscoins@gmail.com">sparkerkevscoins@gmail.com</a> &nbsp;·&nbsp; +61 (0)438 820 469<br>
@@ -950,7 +950,7 @@ function _oldGenerateAllEntries() {
 }
 
 
-// ── Holdings schema (CLH v1.6) — columns B..AF, in order ─────────────────────
+// ── Holdings schema (CLH v1.6 and v1.7) — columns B..AF, in order ─────────────────────
 const L_TYPE=['Coin','Set','PNC','PMC','Banknote','Error Coin','Other'];
 const L_COUNTRY=['Australia','United Kingdom','Canada','New Zealand','United States','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue','Other'];
 const L_METAL=['Aluminium Bronze (AlBr)','Bi-metallic (AlBr / Cupro-nickel)','Bi-metallic (other)','Bronze','Cupro-nickel','Nickel','Nickel-plated Steel','Multi-ply Plated Steel','Aureate (bronze-plated nickel)','Silver (unspecified)','Silver (.800)','Silver (.925)','Silver (.999)','Silver (.9999)','Gold (.999)','Gold (.9999)','Gold Plated','Other (see notes)'];
@@ -990,7 +990,7 @@ const AI_PROMPT = [
 " 4. Series / Theme — e.g. Remembrance Day, Lyrebird (standard reverse)",
 " 5. Title — build it from the other fields in exactly this order:",
 "      Year Country Denomination Subject — Mintmark Treatment Metal Finish Packaging",
-"      Before the dash: 4-digit year, full country name (same as the Country field), denomination as written ($2, 50c, £5, 50p — Canadian dollars as CAD$20), then a plain-English subject.",
+"      Before the dash: 4-digit year, full country name (same as the Country field), denomination as written ($2, 50c, £5, 50p — Canadian dollars as CAD$20; pre-decimal coins by name, e.g. Penny, Florin), then a plain-English subject.",
 "      After the dash, only what applies, in this order: mintmark (e.g. C-Mintmark), treatment (e.g. Coloured), precious metal only (Silver or Gold — never AlBr or cupro-nickel), the finish in words (Proof, Uncirculated — always write Uncirculated in full, never UNC), then the format (RAM Card, PNC).",
 "      Correct: 2023 Australia $2 Vietnam War 50th Anniversary — C-Mintmark Coloured Uncirculated RAM Card",
 "      Correct: 2015 Australia $5 ANZAC Centenary — Silver Proof (triangular, cased)",
@@ -998,7 +998,7 @@ const AI_PROMPT = [
 "      Correct: 2012 Australia $2 Remembrance Day Red Poppy — C-Mintmark Coloured Uncirculated PCGS MS66   (for a graded slab, the format is the grading service and the certified grade)",
 "      Wrong: 2024 Australia $2 Poppy — Uncirculated Coloured   (treatment must come before the finish)",
 "      If my title doesn't follow this rule, rewrite it.",
-" 6. Denomination — a plain number in the main currency unit: 10c = 0.1, 50c = 0.5, $1 = 1, $2 = 2, 50p = 0.5. Empty for sets with mixed denominations.",
+" 6. Denomination — for decimal coins, a plain number in the main currency unit: 10c = 0.1, 50c = 0.5, $1 = 1, $2 = 2, 50p = 0.5. For pre-decimal coins, the name: Farthing, Halfpenny, Penny, Threepence, Sixpence, Shilling, Florin, Double Florin, Half Crown, Crown, Half Sovereign or Sovereign. For coins from countries not in the Country list (Country: Other), write it as on the coin, e.g. 10 Pfennig. Empty for sets with mixed denominations.",
 " 7. Metal — exactly one of: "+L_METAL.join(', '),
 " 8. Grade — exactly one of: "+L_GRADE.join(', '),
 " 9. Treatment — None, or one or more of: "+L_TREAT.join(', ')+" (join several with ' + ')",
@@ -1102,8 +1102,11 @@ function checkField(raw, col){
       let c=v.replace(/\s/g,''); let m;
       if((m=c.match(/^(\d+(?:\.\d+)?)(c|¢|p|cents?)$/i))) { c=String(+(m[1]/100).toFixed(4)); }
       else if((m=c.match(/^[$£€]?(\d+(?:\.\d+)?)(dollars?)?$/i))) { c=String(+m[1]); }
-      if(!/^\d+(\.\d+)?$/.test(c)) r.err='must be a number, e.g. 0.1 for 10c, 2 for $2';
-      else { if(c!==v) r.fixed=1; r.v=c; } break; }
+      if(/^\d+(\.\d+)?$/.test(c)) { if(c!==v) r.fixed=1; r.v=c; break; }
+      const pd=preDecimal(v);
+      if(pd) { if(pd!==v) r.fixed=1; r.v=pd; break; }
+      if(/[a-z]/i.test(v) && v.length<=30) { r.v=v.replace(/\s+/g,' '); break; }   // a world coin's denomination as written, e.g. 10 Pfennig (checked against Country later)
+      r.err='must be a number (0.1 for 10c, 2 for $2) or a pre-decimal name such as Penny or Florin'; break; }
     case 'certgrade': {
       const c=v.replace(/\s+/g,' ').replace(/^(MS|PR|PF|SP|PL|AU|XF|EF|VF|VG|AG|FR|PO|F|G)\s*-?\s*(\d{1,2}\+?)/i,(m,a,b)=>a.toUpperCase()+b);
       if(!/^(MS|PR|PF|SP|PL|AU|XF|EF|VF|VG|AG|FR|PO|F|G)\d{1,2}\+?(\s.*)?$/.test(c) && !/details|genuine|authentic/i.test(c)) r.err='use the grade on the label, e.g. MS66 or PR70 DCAM';
@@ -1179,7 +1182,22 @@ const GRADE_WORDS={'Proof':'Proof','Specimen':'Specimen','FDC/BU':'Brilliant Unc
 const CUR_SYM={'Australia':['$','c'],'Kiribati':['$','c'],'Solomon Islands':['$','c'],'United Kingdom':['£','p'],'Guernsey':['£','p'],
  'Canada':['CAD$','c'],'New Zealand':['NZ$','c'],'Niue':['NZ$','c'],'United States':['US$','c'],'Eurozone':['€','c']};
 const COUNTRY_ALIASES=['Australia','United Kingdom','UK','Great Britain','Britain','Canada','New Zealand','NZ','United States','USA','US','Eurozone','Kiribati','Solomon Islands','Guernsey','Niue'];
-function fmtDenom(d,country){ const n=+d; if(!d||isNaN(n)||n===0) return ''; const [big,small]=CUR_SYM[country]||['$','c'];
+// Pre-decimal denominations: written by name. Aliases cover common shorthand (1d, 2/-, 2/6).
+const PREDEC={'Farthing':['farthing','¼d','1/4d','quarterpenny'],'Halfpenny':['halfpenny','half penny','ha\'penny','hapenny','½d','1/2d','½ penny','1/2 penny','halfpennies'],
+ 'Penny':['penny','1d','one penny','1 penny','pennies'],'Threepence':['threepence','3d','threepenny','thruppence','thrupence','3 pence'],
+ 'Sixpence':['sixpence','6d','6 pence','sixpenny'],'Shilling':['shilling','1/-','1s','one shilling','1 shilling'],'Florin':['florin','2/-','2s','two shillings','2 shillings','1 florin'],
+ 'Double Florin':['double florin','4/-','4s'],'Half Crown':['half crown','halfcrown','2/6','2s6d','2s 6d','2 shillings and sixpence'],'Crown':['crown','5/-','5s','5 shillings','one crown'],
+ 'Half Sovereign':['half sovereign','½ sovereign','1/2 sovereign'],'Sovereign':['sovereign','1 sovereign','one sovereign','full sovereign']};
+function preDecimal(v){ const k=(v||'').toLowerCase().replace(/\s+/g,' ').trim();
+  for(const [name,al] of Object.entries(PREDEC)) if(al.includes(k)) return name; return ''; }
+function isPreDecimal(v){ return Object.keys(PREDEC).includes(v); }
+// A written (non-number) denomination must be a pre-decimal name unless the country is "Other"
+function checkDenomCountry(res){
+  const di=COLS.findIndex(c=>c.n==='Denomination'), ci=COLS.findIndex(c=>c.n==='Country');
+  const d=res[di], country=res[ci].v;
+  if(d.err || !d.v || /^\d+(\.\d+)?$/.test(d.v) || isPreDecimal(d.v) || !country || country==='Other') return;
+  d.err=`for ${country} coins, use a number (0.5 for 50c, 2 for $2) or a pre-decimal name such as Penny or Florin`; }
+function fmtDenom(d,country){ if(d && isNaN(+d)) return String(d).trim(); const n=+d; if(!d||isNaN(n)||n===0) return ''; const [big,small]=CUR_SYM[country]||['$','c'];
   return n<1 ? Math.round(n*100)+small : big+(Number.isInteger(n)?n:n.toFixed(2)); }
 function buildTitle(res){
   const f=n=>res[COLS.findIndex(c=>c.n===n)].v;
@@ -1193,6 +1211,7 @@ function buildTitle(res){
     if(c){ if(norm(c)!==norm(country) && !(country==='United Kingdom'&&/^(uk|great britain|britain)$/i.test(c)) && !(country==='United States'&&/^(usa|us)$/i.test(c)) && !(country==='New Zealand'&&/^nz$/i.test(c)))
              warn.push(`the title said "${c}" but Country is ${country}`);
            subj=subj.slice(c.length).trim(); continue; }
+    if(denom && isNaN(+f('Denomination')) && subj.toLowerCase().startsWith(denom.toLowerCase()+' ')){ subj=subj.slice(denom.length).trim(); continue; }
     const dm=subj.match(/^((?:[A-Z]{2,3})?[$£€]\s?(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s?(?:c|p|cents?))\s+/i);
     if(dm){ const val=dm[2]!==undefined? +dm[2] : +dm[3]/100;
       if(Math.abs(val-(+f('Denomination')))<1e-9 && !(country==='Canada' && (+f('Denomination'))>=1)) denom=dm[1].replace(/\s/g,'');   // Canadian dollars are always written CAD$   // keep the AI's own symbol when the value matches
@@ -1220,7 +1239,9 @@ function buildTitle(res){
   if(pack && new RegExp('\\s'+pack+'$','i').test(subj)) subj=subj.replace(new RegExp('\\s'+pack+'$','i'),'');
   const tail=[mint,...treat,metal,finish,pack,...extras,...parens].filter(Boolean);
   const dedup=tail.filter((w,i)=>tail.findIndex(x=>x.toLowerCase()===w.toLowerCase())===i);
-  const title=[year,country,denom,subj].filter(Boolean).join(' ')+(dedup.length?' — '+dedup.join(' '):'');
+  // Country "Other": the real country (and usually the denomination) is already in the subject, e.g. "Germany 10 Pfennig Oak"
+  const other=country==='Other', denomOut=(other && denom && subj.toLowerCase().includes(denom.toLowerCase()))?'':denom;
+  const title=[year,other?'':country,denomOut,subj].filter(Boolean).join(' ')+(dedup.length?' — '+dedup.join(' '):'');
   return {title, warn};
 }
 
@@ -1243,6 +1264,7 @@ function checkRows(){
     if(row.labelled && row.missing.length) msgs.push(`<li class="chk-warn">The AI left out ${row.missing.length} field${row.missing.length>1?'s':''} (${escHtml(row.missing.join(', '))}) — left blank.</li>`);
     if(badCount){ msgs.push(`<li class="chk-err">Row ${ri+1} has ${parts.length} fields — it needs exactly ${COLS.length}, otherwise values land in the wrong columns. This row will NOT be copied. Ask the AI: <em>"Please resend row ${ri+1} as labelled lines, one Field name: value per line."</em></li>`); totalErr++; skipped++; }
     const res=COLS.map((c,i)=>checkField(parts[i]||'',c));
+    checkDenomCountry(res);
     { const ti=COLS.findIndex(c=>c.n==='Title');
       if(!badCount && !res[ti].err && !res[0].err && !res[1].err && !res[2].err){
         const bt=buildTitle(res);
@@ -1270,7 +1292,7 @@ function checkRows(){
     : `<p class="chk-ok">✓ ${rows.length} row${rows.length>1?'s':''} ready.${totalFix?` ${totalFix} value${totalFix>1?'s were':' was'} tidied automatically (yellow).`:''}</p>`;
   const n=tsv.length;
   const btn = n ? `<button class="btn btn-primary" onclick="copyChecked()" style="margin-top:6px">Copy ${n} row${n>1?'s':''} for Holdings</button>
-    <p class="copy-notice">Then in Holdings: click column B of the first empty row and paste. (This needs the v1.6 catalogue.)${skipped?` (${skipped} row${skipped>1?'s':''} with the wrong number of fields left out.)`:''}</p>` : '';
+    <p class="copy-notice">Then in Holdings: click column B of the first empty row and paste. (This needs the v1.6 or v1.7 catalogue.)${skipped?` (${skipped} row${skipped>1?'s':''} with the wrong number of fields left out.)`:''}</p>` : '';
   out.innerHTML = head + btn + html;
 }
 function copyText(t, msg){
@@ -1397,7 +1419,7 @@ function buildUpdateFields(){
     let ctl;
     if(c.t==='list') ctl=`<select id="u-f${i}"><option value=""></option>${c.l.map(o=>`<option>${escHtml(o)}</option>`).join('')}</select>`;
     else if(c.t==='yn') ctl=`<select id="u-f${i}"><option value=""></option><option>Yes</option><option>No</option></select>`;
-    else { const ph={treat:'None, or e.g. Coloured + Frosted',date:'YYYY-MM-DD',denom:'e.g. 0.5 for 50c, 2 for $2'}[c.t]||'';
+    else { const ph={treat:'None, or e.g. Coloured + Frosted',date:'YYYY-MM-DD',denom:'e.g. 0.5 for 50c, 2 for $2, or Penny'}[c.t]||'';
       ctl=`<input type="text" id="u-f${i}" placeholder="${ph}">`; }
     return `<div class="field"><label>${escHtml(c.n)}${req}</label>${ctl}</div>`;
   }).join('');
@@ -1420,7 +1442,7 @@ function loadUpdateRow(){
   if(raw.filter(Boolean).length<4 || !raw[CI('Title')]){
     msg.innerHTML='<p class="chk-err">That doesn\'t look like a row from the Holdings tab. Click the row number at the left of the coin\'s row, copy, and paste again.</p>'; return; }
   if(/^(AUD|GBP|CAD|NZD|USD|EUR)$/.test(raw[CI('Grading Service')])){
-    msg.innerHTML='<p class="chk-err">This row looks like it\'s from a v1.5 (or older) catalogue. This form needs the v1.6 catalogue, which has new columns for graded coins. See the START HERE tab, section ⑦, to move your coins across. It only takes one copy and paste.</p>'; return; }
+    msg.innerHTML='<p class="chk-err">This row looks like it\'s from a v1.5 (or older) catalogue. This form needs the v1.6 or v1.7 catalogue, which has columns for graded coins. See the START HERE tab, section ⑦, to move your coins across. It only takes one copy and paste.</p>'; return; }
   const res = COLS.map((c,i)=>ownField(raw[i],c));
   U_ID = startsAtB ? '' : (rec[0]||'').trim();
   U_ORIG = res.map(r=>r.v);
@@ -1532,6 +1554,7 @@ function checkAIUpdate(){
 }
 
 function finishUpdate(res, msgs){
+  checkDenomCountry(res);
   const box=document.getElementById('u-result'), card=document.getElementById('u-result-card');
   const changed = i => res[i].v !== U_ORIG[i];
   // rebuild the title to the naming rule when anything that feeds it has changed
