@@ -4,9 +4,9 @@
 
 **Describe a coin → ask any AI assistant → check the reply → paste into your catalogue.**
 
-Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
+Version 1.7 — see the [version history](https://sparkerkevscoins.github.io/collectors-little-helper) for what's changed.
 
-**Upgrading from v1.5?** Download the new catalogue and Entry Form together: the v1.6 form needs the v1.6 catalogue, which adds three columns for graded coins (AD–AF). Columns B–AC haven't moved, so copy your Holdings rows from B to AC and paste them at column B of the new workbook. Full steps are in the workbook's START HERE tab, section ⑦.
+**Upgrading from v1.6?** Nothing has moved: copy your Holdings rows from B to AF and paste them at column B of the new workbook. v1.7 holds 5,000 coins, keeps each Item ID fixed to its row, lets you filter Holdings, and accepts pre-decimal and world denominations (Penny, Florin, 10 Pfennig). **From v1.5:** the v1.6 and v1.7 catalogues add three columns for graded coins (AD–AF); copy B to AC instead. Full steps are in the workbook's START HERE tab, section ⑦.
 
 ---
 
@@ -43,6 +43,9 @@ Version 1.6 — see the [version history](https://sparkerkevscoins.github.io/col
 | I need to change a coin I've already added | Entry Form → Update a Coin tab. Paste in the coin's row from Holdings, change it yourself or with the AI, then paste the updated row back over the same row at column B. |
 | I need to remove a coin, or the example in row 2 | Sold or given away: change its Status to Sold. Added by mistake: select its cells from B to AF and press Delete. Select the cells, not the whole row, which is protected. |
 | The Entry Form's buttons don't work on my iPad or iPhone | Use the online Entry Form in Safari: sparkerkevscoins.github.io/collectors-little-helper/CLH_Entry_Form.html. A downloaded copy opened from Files can't run its buttons. Nothing you type is sent anywhere. |
+| I want to see only some coins (Wanted, one country, one denomination) | Use the filter arrows on the Holdings header row: you can filter on any column, and filtering changes nothing. Sorting is switched off on purpose: allowing it would mean unlocking the grey columns, and then a row pasted one column out could overwrite your formulas. To see your coins in a different order, copy Holdings into a new workbook and sort the copy. |
+| Can I write the Item ID on a coin's holder? | Yes. Each Item ID is fixed to its row, so it doesn't change when you add, update or clear other coins. |
+| My coin is pre-decimal or from another country | Type the denomination as a word: Penny, Florin, Half Crown, or as it's written on the coin (10 Pfennig). Decimal coins stay as numbers: 2 for $2, 0.5 for 50c. |
 | Where are my totals? | CLH_Catalogue.xlsx → INDEX tab. |
 | What does a term mean? | Entry Form → Glossary & Resources tab, or the Quick Reference in the Quick Start Guide. |
 
