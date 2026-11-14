@@ -990,7 +990,7 @@ const AI_PROMPT = [
 " 4. Series / Theme — e.g. Remembrance Day, Lyrebird (standard reverse)",
 " 5. Title — build it from the other fields in exactly this order:",
 "      Year Country Denomination Subject — Mintmark Treatment Metal Finish Packaging",
-"      Before the dash: 4-digit year, full country name (same as the Country field), denomination as written ($2, 50c, £5, 50p — Canadian dollars as CAD$20; pre-decimal coins by name, e.g. Penny, Florin), then a plain-English subject.",
+"      Before the dash: 4-digit year, full country name (same as the Country field; if Country is Other, the coin's actual country, e.g. Germany, never the word \"Other\"), denomination as written ($2, 50c, £5, 50p — Canadian dollars as CAD$20; pre-decimal coins by name, e.g. Penny, Florin), then a plain-English subject.",
 "      After the dash, only what applies, in this order: mintmark (e.g. C-Mintmark), treatment (e.g. Coloured), precious metal only (Silver or Gold — never AlBr or cupro-nickel), the finish in words (Proof, Uncirculated — always write Uncirculated in full, never UNC), then the format (RAM Card, PNC).",
 "      Correct: 2023 Australia $2 Vietnam War 50th Anniversary — C-Mintmark Coloured Uncirculated RAM Card",
 "      Correct: 2015 Australia $5 ANZAC Centenary — Silver Proof (triangular, cased)",
@@ -1207,6 +1207,7 @@ function buildTitle(res){
   // subject: strip leading year / country / denomination tokens from the part before the dash
   let subj=(pre||'').replace(/^\s*\d{4}\s+/,'');
   for(let k=0;k<3;k++){
+    if(country==='Other' && /^other\s/i.test(subj)){ subj=subj.slice(6).trim(); continue; }   // the word "Other" isn't a country name
     const c=COUNTRY_ALIASES.find(a=>subj.toLowerCase().startsWith(a.toLowerCase()+' '));
     if(c){ if(norm(c)!==norm(country) && !(country==='United Kingdom'&&/^(uk|great britain|britain)$/i.test(c)) && !(country==='United States'&&/^(usa|us)$/i.test(c)) && !(country==='New Zealand'&&/^nz$/i.test(c)))
              warn.push(`the title said "${c}" but Country is ${country}`);
